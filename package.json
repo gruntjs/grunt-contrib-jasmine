@@ -25,9 +25,12 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/grunt-cli/bin/grunt test -vd"
   },
   "dependencies": {
+    "grunt-lib-phantomjs": "~0.1.0",
+    "grunt-contrib-connect": "~0.1.0",
+    "grunt-contrib-watch": "~0.1.4"
   },
   "devDependencies": {
     "grunt": "~0.4.0a",
