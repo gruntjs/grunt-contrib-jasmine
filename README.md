@@ -28,47 +28,193 @@ If the plugin has been installed correctly, running `grunt --help` at the comman
 
 ## The jasmine task
 
-#### Overview
+### Overview
+
+grunt-contrib-jasmine automatically builds and maintains your spec runner and runs your tests headlessly through
+phantomjs
+
+Substantial credit goes to [Camille Reynders](http://creynders.be/) (@creynders) for the first decent implementation
+of jasmine through grunt which served as motivation for all the future work.
+
+#### Run specs locally or on an ad hoc server
+
+Run your tests on your local filesystem or via a server task like [grunt-contrib-connect][].
+
+#### AMD Support
+
+Includes a SpecRunner template customized for use with AMD modules and requirejs.
+
+#### Customize your SpecRunner with your own template
+
+Supply your own underscore template to automatically build your SpecRunner custom to your use.
+
+### Flags
+
+Name: `build`
+
+Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
+running in a browser, or as part of a watch chain for use in a web browser, e.g.
+
+```js
+  watch: {
+    pivotal : {
+      files: ['test/fixtures/pivotal/**/*.js'],
+      tasks: 'jasmine:pivotal:build'
+    }
+  }
+```
+
+```js
+  grunt.registerTask('dev', ['connect', 'watch']);
+```
+
+[grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
+
 
 
 ### Options
 
-#### option1
-Type: `Integer`  
-Default: `8080`
+#### src
+Type: `String|Array`
 
-descr
+*Minimatch* - This defines your source files. These are the files that you are testing.
 
-#### option2
-Type: `String`  
-Default: `foo`
+#### options.specs
+Type: `String|Array`
 
-descr
+*Minimatch* - These are your Jasmine specs.
 
-#### option3
-Type: `String`  
-Default: `.`
+#### options.vendor
+Type: `String|Array`
 
-descr
+*Minimatch* - These are third party libraries, generally loaded before anything else happens in your tests. You'll likely add things
+like jQuery and Backbone here.
 
-#### option4
-Type: `Boolean`  
-Default: `false`
+#### options.helpers
+Type: `String|Array`
 
-descr
+*Minimatch* - These are non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
 
-#### options5
-Type: `Function`  
-Default:
+#### options.outfile
+Type: `String`<br>
+Default: `_SpecRunner.html`
+
+This is the auto-generated specfile that phantomjs will use to run your tests. This is automatically deleted upon normal
+runs
+
+#### options.host
+Type: `String`<br>
+Default: ''
+
+This is the host you want phantomjs to connect against to run your tests.
+
+e.g. if using an ad hoc server from within grunt
 
 ```js
-function() {
+  host : 'http://127.0.0.1:8000/'
+```
+
+Or, using templates
+
+```js
+  host : 'http://127.0.0.1:<%= connect.port %>/'
+```
+
+Not defining a host will mean your specs will be run from the local filesystem.
+
+#### options.template
+Type: `String`<br>
+Default: `default`<br>
+Options: `default`, `requirejs`, `yourcustomtemplate.tmpl`
+
+Specify a custom template to use when generating your Spec Runner. Templates are parsed as underscore templates and provided
+the expanded list of files needed to build a specrunner.
+
+#### options.templateOptions
+Type: `Object`<br>
+Default: `{}`
+
+These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
+
+**'requirejs'** default templateOptions :
+
+```js
+  requirejs : __dirname + '/../vendor/require-#.#.#.js',
+  baseUrl   : ''
+```
+
+- requirejs : the location of the included requirejs.
+- baseUrl : set in `require.config({})`, sets the baseUrl for your modules (usually the directory your 'src' files are located in.
+
+
+
+
+#### Basic Use
+
+Sample configuration to run Pivotal Labs' example Jasmine application.
+
+```js
+jasmine : {
+  pivotal : {
+    src     : 'test/fixtures/pivotal/src/**/*.js'
+    options : {
+      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
+      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
+    }
+  }
 }
 ```
 
-### Usage examples
+#### Supplying a custom template
 
-#### Basic Use
+Supplying a custom template to the above example
+
+```js
+jasmine : {
+  customTemplate : {
+    src : 'test/fixtures/pivotal/src/**/*.js',
+    options : {
+      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
+      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
+      template : 'test/fixtures/customTemplate/custom.tmpl'
+    }
+  }
+}
+```
+
+#### Sample RequireJS usage
+
+```js
+jasmine : {
+  requirejs : {
+    src      : 'test/fixtures/requirejs/src/**/*.js',
+    options : {
+      specs    : 'test/fixtures/requirejs/spec/*Spec.js',
+      helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
+      host     : 'http://127.0.0.1:<%= connect.port %>/',
+      template : 'requirejs',
+      templateOptions  : {
+        baseUrl : './test/fixtures/requirejs/src/'
+      }
+    }
+  }
+}
+```
+
+#### RequireJS note
+
+If you end up using the requirejs template, it's worth looking at the [RequireJS template](blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl) in order to
+familiarize yourself with how it loads your files. The gist of it is:
+
+```js
+require([*YOUR SOURCE*], function() {
+  require([*YOUR SPECS*], function() {
+    require([*JASMINE FILES*], function() {
+      // at this point your tests are already running.
+    }
+  }
+}
+```
 
 
 ## Release History
@@ -78,4 +224,4 @@ function() {
 --
 Task submitted by <a href="http://jarrodoverson.com">Jarrod Overson</a>.
 
-*Generated on Thu Nov 01 2012 22:01:17.*
+*Generated on Tue Nov 06 2012 11:39:43.*
