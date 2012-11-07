@@ -25,7 +25,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "./node_modules/grunt-cli/bin/grunt test -vd"
+    "test": "./node_modules/grunt-cli/bin/grunt test"
   },
   "dependencies": {
     "grunt-lib-phantomjs": "~0.1.0",
