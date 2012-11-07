@@ -29,15 +29,13 @@ function buildSpecrunner(src, options){
   var context = {
     css  : getRelativeFileList(jasmineCss),
     scripts : {
-      core      : {
-        init    : getRelativeFileList(jasmineCore),
-        helpers : getRelativeFileList(jasmineHelper)
-      },
+      jasmine   : getRelativeFileList(jasmineCore),
       helpers   : getRelativeFileList(options.helpers),
       specs     : getRelativeFileList(options.specs),
       src       : getRelativeFileList(src),
       vendor    : getRelativeFileList(options.vendor),
-      reporters : getRelativeFileList(reporters)
+      reporters : getRelativeFileList(reporters),
+      start     : getRelativeFileList(jasmineHelper)
     },
     options : options.templateOptions || {}
   };
