@@ -54,7 +54,7 @@ jasmine : {
 
 ## RequireJS note
 
-If you end up using the requirejs template, it's worth looking at the [RequireJS template](blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl) in order to
+If you end up using the requirejs template, it's worth looking at the [RequireJS template](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl) in order to
 familiarize yourself with how it loads your files. The gist of it is:
 
 ```js
