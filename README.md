@@ -96,14 +96,14 @@ Type: `String|Array`
 *Minimatch* - These are non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
 
 #### options.outfile
-Type: `String`<br>
+Type: `String`
 Default: `_SpecRunner.html`
 
 This is the auto-generated specfile that phantomjs will use to run your tests. This is automatically deleted upon normal
 runs
 
 #### options.host
-Type: `String`<br>
+Type: `String`
 Default: ''
 
 This is the host you want phantomjs to connect against to run your tests.
@@ -123,15 +123,15 @@ Or, using templates
 Not defining a host will mean your specs will be run from the local filesystem.
 
 #### options.template
-Type: `String`<br>
-Default: `default`<br>
+Type: `String`
+Default: `default`
 Options: `default`, `requirejs`, `yourcustomtemplate.tmpl`
 
 Specify a custom template to use when generating your Spec Runner. Templates are parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
 
 #### options.templateOptions
-Type: `Object`<br>
+Type: `Object`
 Default: `{}`
 
 These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
@@ -219,9 +219,9 @@ require([*YOUR SOURCE*], function() {
 
 ## Release History
 
- * 2012-10-31 - v0.1.0 - Work in progress, not yet officially released.
+ * 2012-11-06 - v0.1.0 - Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
 
 --
 Task submitted by <a href="http://jarrodoverson.com">Jarrod Overson</a>.
 
-*Generated on Tue Nov 06 2012 11:39:43.*
+*Generated on Wed Nov 07 2012 09:28:12.*
