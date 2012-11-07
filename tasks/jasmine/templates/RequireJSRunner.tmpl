@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <script src="<%= options.requirejs %>"></script>
+  <script>
+    require.config({
+      baseUrl : '<%= options.baseUrl %>'
+    });
+  </script>
+
+  <% css.forEach(function(style){ %>
+  <link rel="stylesheet" type="text/css" href="<%= style %>">
+  <% }) %>
+
+  <% with (scripts) { %>
+  <% [].concat(core.init, vendor, helpers).forEach(function(script){ %>
+  <script type="text/javascript" src="<%= script %>"></script>
+  <% }) %>
+  <% }; %>
+
+  <script>
+    require([
+      <% scripts.src.forEach(function(script, i){ %>
+      // <%= script %>  <%= options.baseUrl %>
+      '<%= script.replace(new RegExp('^' + options.baseUrl),"").replace(/\.js$/,"") %>' <% if (i !== scripts.src.length-1){ %>,<% } %>
+      <% }) %>
+      ], function(){
+        require([
+          <% scripts.specs.forEach(function(script, i){ %>
+          '<%= script %>' <% if (i !== scripts.specs.length-1){ %>,<% } %>
+          <% }) %>
+          ], function(){
+          require([
+            <% [].concat(scripts.reporters, scripts.core.helpers).forEach(function(script, i){ %>
+            '<%= script %>' <% if (i !== [].concat(scripts.reporters, scripts.core.helpers).length-1){ %>,<% } %>
+            <% }) %>
+          ], function(){
+            // good to go!
+          })
+
+        })
+
+    })
+  </script>
+
+</head>
+
+<body>
+</body>
+</html>
