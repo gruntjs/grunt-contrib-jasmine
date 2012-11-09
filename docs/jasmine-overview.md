@@ -18,25 +18,9 @@ Includes a SpecRunner template customized for use with AMD modules and requirejs
 
 Supply your own underscore template to automatically build your SpecRunner custom to your use.
 
-# Flags
+## Example application usage
 
-Name: `build`
-
-Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
-running in a browser, or as part of a watch chain for use in a web browser, e.g.
-
-```js
-  watch: {
-    pivotal : {
-      files: ['test/fixtures/pivotal/**/*.js'],
-      tasks: 'jasmine:pivotal:build'
-    }
-  }
-```
-
-```js
-  grunt.registerTask('dev', ['connect', 'watch']);
-```
+- [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
 

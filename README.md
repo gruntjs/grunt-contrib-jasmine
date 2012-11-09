@@ -48,28 +48,11 @@ Includes a SpecRunner template customized for use with AMD modules and requirejs
 
 Supply your own underscore template to automatically build your SpecRunner custom to your use.
 
-### Flags
+#### Example application usage
 
-Name: `build`
-
-Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
-running in a browser, or as part of a watch chain for use in a web browser, e.g.
-
-```js
-  watch: {
-    pivotal : {
-      files: ['test/fixtures/pivotal/**/*.js'],
-      tasks: 'jasmine:pivotal:build'
-    }
-  }
-```
-
-```js
-  grunt.registerTask('dev', ['connect', 'watch']);
-```
+- [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
-
 
 
 ### Options
@@ -146,6 +129,25 @@ These options will be passed to your template as an 'options' hash so that you c
 - requirejs : the location of the included requirejs.
 - baseUrl : set in `require.config({})`, sets the baseUrl for your modules (usually the directory your 'src' files are located in.
 
+### Flags
+
+Name: `build`
+
+Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
+running in a browser, or as part of a watch chain for use in a web browser, e.g.
+
+```js
+  watch: {
+    pivotal : {
+      files: ['test/fixtures/pivotal/**/*.js'],
+      tasks: 'jasmine:pivotal:build'
+    }
+  }
+```
+
+```js
+  grunt.registerTask('dev', ['connect', 'watch']);
+```
 
 
 
@@ -225,4 +227,4 @@ require([*YOUR SOURCE*], function() {
 --
 Task submitted by <a href="http://jarrodoverson.com">Jarrod Overson</a>.
 
-*Generated on Wed Nov 07 2012 11:50:33.*
+*Generated on Thu Nov 08 2012 16:56:54.*

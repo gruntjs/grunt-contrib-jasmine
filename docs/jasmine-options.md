@@ -1,4 +1,3 @@
-
 # Options
 
 ## src
@@ -73,3 +72,22 @@ These options will be passed to your template as an 'options' hash so that you c
 - requirejs : the location of the included requirejs.
 - baseUrl : set in `require.config({})`, sets the baseUrl for your modules (usually the directory your 'src' files are located in.
 
+# Flags
+
+Name: `build`
+
+Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
+running in a browser, or as part of a watch chain for use in a web browser, e.g.
+
+```js
+  watch: {
+    pivotal : {
+      files: ['test/fixtures/pivotal/**/*.js'],
+      tasks: 'jasmine:pivotal:build'
+    }
+  }
+```
+
+```js
+  grunt.registerTask('dev', ['connect', 'watch']);
+```
