@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 
     setup(options);
 
-    var files = grunt.file.expandFiles(grunt.util._.pluck(this.files, 'src'));
+    var files = this.file.src;
     jasmine.buildSpecrunner(files,options);
 
     // If we're just building (e.g. for web), skip phantom.
