@@ -24,8 +24,10 @@ module.exports = function(grunt) {
       tasks: 'jasmine:pivotal:build'
     },
     connect : {
-      port : 8000,
-      base : '.'
+      test : {
+        port : 8000,
+        base : '.'
+      }
     },
     jasmine : {
       options : {
@@ -46,7 +48,7 @@ module.exports = function(grunt) {
         options : {
           specs    : 'test/fixtures/requirejs/spec/*Spec.js',
           helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-          host     : 'http://127.0.0.1:<%= connect.port %>/',
+          host     : 'http://127.0.0.1:<%= connect.test.port %>/',
           template : 'requirejs',
           templateOptions  : {
             baseUrl : './test/fixtures/requirejs/src/'
@@ -65,11 +67,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-internal');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('watch-test', ['connect', 'watch']);
 
-  grunt.registerTask('test', ['jasmine:pivotal', 'jasmine:customTemplate', 'connect', 'jasmine:requirejs', 'nodeunit']);
+  grunt.registerTask('test', ['jasmine:pivotal', 'jasmine:customTemplate', 'connect', 'jasmine:requirejs']);
   grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
 };

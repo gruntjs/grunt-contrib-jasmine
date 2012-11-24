@@ -193,7 +193,7 @@ jasmine : {
     options : {
       specs    : 'test/fixtures/requirejs/spec/*Spec.js',
       helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-      host     : 'http://127.0.0.1:<%= connect.port %>/',
+      host     : 'http://127.0.0.1:8000/', // your connect server config
       template : 'requirejs',
       templateOptions  : {
         baseUrl : './test/fixtures/requirejs/src/'
@@ -221,10 +221,11 @@ require([*YOUR SOURCE*], function() {
 
 ## Release History
 
+ * 2012-11-23 - v0.1.2 - Updated for new grunt/grunt-contrib apis
  * 2012-11-06 - v0.1.1 - Fixed race condition in requirejs template
  * 2012-11-06 - v0.1.0 - Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
 
 --
 Task submitted by <a href="http://jarrodoverson.com">Jarrod Overson</a>.
 
-*Generated on Thu Nov 08 2012 16:56:54.*
+*Generated on Sat Nov 24 2012 15:36:33.*

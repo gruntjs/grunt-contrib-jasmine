@@ -1,3 +1,7 @@
+v0.1.2:
+  date: 2012-11-24
+  changes:
+    - Updated for new grunt/grunt-contrib apis
 v0.1.1:
   date: 2012-11-07
   changes:

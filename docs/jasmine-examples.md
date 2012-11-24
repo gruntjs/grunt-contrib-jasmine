@@ -42,7 +42,7 @@ jasmine : {
     options : {
       specs    : 'test/fixtures/requirejs/spec/*Spec.js',
       helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-      host     : 'http://127.0.0.1:<%= connect.port %>/',
+      host     : 'http://127.0.0.1:8000/', // your connect server config
       template : 'requirejs',
       templateOptions  : {
         baseUrl : './test/fixtures/requirejs/src/'
