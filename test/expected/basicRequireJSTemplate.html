@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+  <script src=""></script>
+  <script>
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="css/a.css">
+  <script src="J1.js"></script>
+  <script src="J2.js"></script>
+  <script src="V1.js"></script>
+  <script src="V2.js"></script>
+  <script src="H1.js"></script>
+  <script src="H2.js"></script>
+  <script>
+    require([
+      'foo/bar/SRC1',
+      'foo/bar/SRC2'
+    ],
+      function(){
+        require(['SPEC1.js','SPEC2.js','R1.js'], function(){
+          require(['START.js'], function(){
+            // good to go! Our tests should already be running.
+          })
+        })
+      }
+    )
+  </script>
+</head>
+<body>
+</body>
+</html>

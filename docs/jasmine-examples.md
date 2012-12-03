@@ -5,12 +5,15 @@
 Sample configuration to run Pivotal Labs' example Jasmine application.
 
 ```js
-jasmine : {
-  pivotal : {
-    src     : 'test/fixtures/pivotal/src/**/*.js'
-    options : {
-      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
-      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    pivotal: {
+      src: 'src/**/*.js'
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+      }
     }
   }
 }
@@ -21,13 +24,16 @@ jasmine : {
 Supplying a custom template to the above example
 
 ```js
-jasmine : {
-  customTemplate : {
-    src : 'test/fixtures/pivotal/src/**/*.js',
-    options : {
-      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
-      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
-      template : 'test/fixtures/customTemplate/custom.tmpl'
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+        template: 'custom.tmpl'
+      }
     }
   }
 }
@@ -36,31 +42,47 @@ jasmine : {
 ## Sample RequireJS usage
 
 ```js
-jasmine : {
-  requirejs : {
-    src      : 'test/fixtures/requirejs/src/**/*.js',
-    options : {
-      specs    : 'test/fixtures/requirejs/spec/*Spec.js',
-      helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-      host     : 'http://127.0.0.1:8000/', // your connect server config
-      template : 'requirejs',
-      templateOptions  : {
-        baseUrl : './test/fixtures/requirejs/src/'
+// Example configuration
+grunt.initConfig({
+  connect: {
+    test : {
+      port : 8000
+    }
+  }
+  jasmine: {
+    requirejs: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        host: 'http://127.0.0.1:8000/',
+        template: 'requirejs',
+        templateOptions: {
+          requireConfig: {
+            baseUrl: 'src/'
+          }
+        }
       }
     }
   }
 }
 ```
+*Note* the usage of the 'connect' task configuration. You will need to use a task like
+[grunt-contrib-connect][] if you need to test your tasks on a running server.
 
-## RequireJS note
+[grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
 
-If you end up using the requirejs template, it's worth looking at the [RequireJS template](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl) in order to
-familiarize yourself with how it loads your files. The gist of it is:
+## RequireJS notes
+
+If you end up using the requirejs template, it's worth looking at the
+[RequireJS template source](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl)
+in order to familiarize yourself with how it loads your files. The load process essentially
+consists of a series of nested `require` blocks, incrementally loading your source and specs:
 
 ```js
 require([*YOUR SOURCE*], function() {
   require([*YOUR SPECS*], function() {
-    require([*JASMINE FILES*], function() {
+    require([*GRUNT-CONTRIB-JASMINE FILES*], function() {
       // at this point your tests are already running.
     }
   }

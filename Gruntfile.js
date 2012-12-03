@@ -23,36 +23,37 @@ module.exports = function(grunt) {
       files: ['test/fixtures/pivotal/**/*.js'],
       tasks: 'jasmine:pivotal:build'
     },
-    connect : {
-      test : {
-        port : 8000,
-        base : '.'
+    connect: {
+      test: {
+        port: 8000,
+        base: '.'
       }
     },
-    jasmine : {
-      options : {
-        specs   : 'test/fixtures/pivotal/spec/*Spec.js',
-        helpers : 'test/fixtures/pivotal/spec/*Helper.js'
+    jasmine: {
+      options: {
+        specs: 'test/fixtures/pivotal/spec/*Spec.js',
+        helpers: 'test/fixtures/pivotal/spec/*Helper.js'
       },
-      pivotal : {
-        src     : 'test/fixtures/pivotal/src/**/*.js'
+      pivotal: {
+        src: 'test/fixtures/pivotal/src/**/*.js'
       },
-      customTemplate : {
-        src : 'test/fixtures/pivotal/src/**/*.js',
-        options : {
-          template : 'test/fixtures/customTemplate/custom.tmpl'
+      customTemplate: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          template: 'test/fixtures/customTemplate/custom.tmpl'
         }
       },
-      requirejs : {
-        src      : 'test/fixtures/requirejs/src/**/*.js',
-        options : {
-          specs    : 'test/fixtures/requirejs/spec/*Spec.js',
-          helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-          host     : 'http://127.0.0.1:<%= connect.test.port %>/',
-          template : 'requirejs',
-          templateOptions  : {
-            baseUrl : './test/fixtures/requirejs/src/'
-//          requirejs : 'vendor/require-2.1.1.js'
+      requirejs: {
+        src: 'test/fixtures/requirejs/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/requirejs/spec/*Spec.js',
+          helpers: 'test/fixtures/requirejs/spec/*Helper.js',
+          host: 'http://127.0.0.1:<%= connect.test.port %>/',
+          template: 'requirejs',
+          templateOptions: {
+            requireConfig : {
+              baseUrl: './test/fixtures/requirejs/src/'
+            }
           }
         }
       }
@@ -72,6 +73,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('watch-test', ['connect', 'watch']);
 
-  grunt.registerTask('test', ['jasmine:pivotal', 'jasmine:customTemplate', 'connect', 'jasmine:requirejs']);
+  grunt.registerTask('test', ['jasmine:pivotal', 'jasmine:customTemplate', 'connect', 'jasmine:requirejs', 'nodeunit']);
   grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
 };

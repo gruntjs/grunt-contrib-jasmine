@@ -37,13 +37,13 @@ This is the host you want phantomjs to connect against to run your tests.
 e.g. if using an ad hoc server from within grunt
 
 ```js
-  host : 'http://127.0.0.1:8000/'
+host : 'http://127.0.0.1:8000/'
 ```
 
 Or, using templates
 
 ```js
-  host : 'http://127.0.0.1:<%= connect.port %>/'
+host : 'http://127.0.0.1:<%= connect.port %>/'
 ```
 
 Not defining a host will mean your specs will be run from the local filesystem.
@@ -62,32 +62,44 @@ Default: `{}`
 
 These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
 
-**'requirejs'** default templateOptions :
-
-```js
-  requirejs : __dirname + '/../vendor/require-#.#.#.js',
-  baseUrl   : ''
-```
-
-- requirejs : the location of the included requirejs.
-- baseUrl : set in `require.config({})`, sets the baseUrl for your modules (usually the directory your 'src' files are located in.
-
 # Flags
 
 Name: `build`
 
-Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
-running in a browser, or as part of a watch chain for use in a web browser, e.g.
+Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troublshooting templates,
+running in a browser, or as part of a watch chain e.g.
 
 ```js
-  watch: {
-    pivotal : {
-      files: ['test/fixtures/pivotal/**/*.js'],
-      tasks: 'jasmine:pivotal:build'
-    }
+watch: {
+  pivotal : {
+    files: ['src/**/*.js', 'specs/**/*.js'],
+    tasks: 'jasmine:pivotal:build'
   }
+}
 ```
 
-```js
-  grunt.registerTask('dev', ['connect', 'watch']);
-```
+# Template Options
+
+## Default template
+
+No specific options are expected or used.
+
+## RequireJS template
+
+### templateOptions.requirejs
+Type: `String`
+
+The path to requirejs if you need to specify an alternate version.
+
+### templateOptions.loaderPlugin
+Type: `String`
+
+The loader plugin to prefix all loaded `src` files. This is useful for processing
+your specs through the likes of CoffeeScript or TypeScript plugins. Keep in mind
+you will need to specify the path to the plugin in the require config.
+
+### templateOptions.requireConfig
+Type: `Object`
+
+This object is `JSON.stringify()`-ed into the template and passed into `require.config()`
+

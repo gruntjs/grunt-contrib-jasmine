@@ -5,28 +5,30 @@
   <title>Jasmine Spec Runner</title>
   <script src="<%= options.requirejs %>"></script>
   <script>
-    require.config({
-      baseUrl : '<%= options.baseUrl %>'
-    });
+    <% if (options.requireConfig) { %>
+    require.config(<%= JSON.stringify(options.requireConfig) %>);
+    <% } %>
   </script>
   <% css.forEach(function(style){ %>
   <link rel="stylesheet" type="text/css" href="<%= style %>">
   <% }) %>
   <% with (scripts) { %>
-  <% [].concat(jasmine, vendor, helpers).forEach(function(script){ %>
-  <script src="<%= script %>"></script>
-  <% }) %>
+    <% [].concat(jasmine, vendor, helpers).forEach(function(script){ %>
+    <script src="<%= script %>"></script>
+    <% }) %>
   <% }; %>
   <script>
     require([
       <% scripts.src.forEach(function(script, i){ %>
-      '<%= script.replace(new RegExp('^' + options.baseUrl),"").replace(/\.js$/,"") %>' <% if (i !== scripts.src.length-1){ %>,<% } %>
+        <% if (options.requireConfig && options.requireConfig.baseUrl) script = script.replace(new RegExp('^' + options.requireConfig.baseUrl),""); %>
+        <% if (options.loaderPlugin) script = options.loaderPlugin + '!' + script %>
+         '<%= script.replace(/\.js$/,"") %>' <%= i < scripts.src.length-1 ? ',' : '' %>
       <% }) %>
       ],
       function(){
         require(['<%= [].concat(scripts.specs,scripts.reporters).join("','") %>'], function(){
           require(['<%= scripts.start.join("','") %>'], function(){
-            // good to go!
+            // good to go! Our tests should already be running.
           })
         })
       }

@@ -2,31 +2,20 @@
 
 > Run jasmine specs headlessly through PhantomJS.
 
-_Note that this plugin has not yet been released, and only works with the latest bleeding-edge, in-development version of grunt. See the [When will I be able to use in-development feature 'X'?](https://github.com/gruntjs/grunt/blob/devel/docs/faq.md#when-will-i-be-able-to-use-in-development-feature-x) FAQ entry for more information._
 
 ## Getting Started
-_If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
+If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide, as it explains how to create a [gruntfile][Getting Started] as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
 
-From the same directory as your project's [Gruntfile][Getting Started] and [package.json][], install this plugin with the following command:
-
-```bash
+```shell
 npm install grunt-contrib-jasmine --save-dev
 ```
 
-Once that's done, add this line to your project's Gruntfile:
-
-```js
-grunt.loadNpmTasks('grunt-contrib-jasmine');
-```
-
-If the plugin has been installed correctly, running `grunt --help` at the command line should list the newly-installed plugin's task or tasks. In addition, the plugin should be listed in package.json as a `devDependency`, which ensures that it will be installed whenever the `npm install` command is run.
-
 [grunt]: http://gruntjs.com/
 [Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
-[package.json]: https://npmjs.org/doc/json.html
 
 
-## The jasmine task
+## Jasmine task
+_Run this task with the `grunt jasmine` command._
 
 ### Overview
 
@@ -94,13 +83,13 @@ This is the host you want phantomjs to connect against to run your tests.
 e.g. if using an ad hoc server from within grunt
 
 ```js
-  host : 'http://127.0.0.1:8000/'
+host : 'http://127.0.0.1:8000/'
 ```
 
 Or, using templates
 
 ```js
-  host : 'http://127.0.0.1:<%= connect.port %>/'
+host : 'http://127.0.0.1:<%= connect.port %>/'
 ```
 
 Not defining a host will mean your specs will be run from the local filesystem.
@@ -119,35 +108,47 @@ Default: `{}`
 
 These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
 
-**'requirejs'** default templateOptions :
-
-```js
-  requirejs : __dirname + '/../vendor/require-#.#.#.js',
-  baseUrl   : ''
-```
-
-- requirejs : the location of the included requirejs.
-- baseUrl : set in `require.config({})`, sets the baseUrl for your modules (usually the directory your 'src' files are located in.
-
 ### Flags
 
 Name: `build`
 
-Specify this flag in order to rebuild the specrunner and not delete it. This is useful when troublshooting templates,
-running in a browser, or as part of a watch chain for use in a web browser, e.g.
+Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troublshooting templates,
+running in a browser, or as part of a watch chain e.g.
 
 ```js
-  watch: {
-    pivotal : {
-      files: ['test/fixtures/pivotal/**/*.js'],
-      tasks: 'jasmine:pivotal:build'
-    }
+watch: {
+  pivotal : {
+    files: ['src/**/*.js', 'specs/**/*.js'],
+    tasks: 'jasmine:pivotal:build'
   }
+}
 ```
 
-```js
-  grunt.registerTask('dev', ['connect', 'watch']);
-```
+### Template Options
+
+#### Default template
+
+No specific options are expected or used.
+
+#### RequireJS template
+
+##### templateOptions.requirejs
+Type: `String`
+
+The path to requirejs if you need to specify an alternate version.
+
+##### templateOptions.loaderPlugin
+Type: `String`
+
+The loader plugin to prefix all loaded `src` files. This is useful for processing
+your specs through the likes of CoffeeScript or TypeScript plugins. Keep in mind
+you will need to specify the path to the plugin in the require config.
+
+##### templateOptions.requireConfig
+Type: `Object`
+
+This object is `JSON.stringify()`-ed into the template and passed into `require.config()`
+
 
 
 
@@ -156,12 +157,15 @@ running in a browser, or as part of a watch chain for use in a web browser, e.g.
 Sample configuration to run Pivotal Labs' example Jasmine application.
 
 ```js
-jasmine : {
-  pivotal : {
-    src     : 'test/fixtures/pivotal/src/**/*.js'
-    options : {
-      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
-      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    pivotal: {
+      src: 'src/**/*.js'
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+      }
     }
   }
 }
@@ -172,13 +176,16 @@ jasmine : {
 Supplying a custom template to the above example
 
 ```js
-jasmine : {
-  customTemplate : {
-    src : 'test/fixtures/pivotal/src/**/*.js',
-    options : {
-      specs   : 'test/fixtures/pivotal/spec/*Spec.js',
-      helpers : 'test/fixtures/pivotal/spec/*Helper.js'
-      template : 'test/fixtures/customTemplate/custom.tmpl'
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+        template: 'custom.tmpl'
+      }
     }
   }
 }
@@ -187,31 +194,47 @@ jasmine : {
 #### Sample RequireJS usage
 
 ```js
-jasmine : {
-  requirejs : {
-    src      : 'test/fixtures/requirejs/src/**/*.js',
-    options : {
-      specs    : 'test/fixtures/requirejs/spec/*Spec.js',
-      helpers  : 'test/fixtures/requirejs/spec/*Helper.js',
-      host     : 'http://127.0.0.1:8000/', // your connect server config
-      template : 'requirejs',
-      templateOptions  : {
-        baseUrl : './test/fixtures/requirejs/src/'
+// Example configuration
+grunt.initConfig({
+  connect: {
+    test : {
+      port : 8000
+    }
+  }
+  jasmine: {
+    requirejs: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        host: 'http://127.0.0.1:8000/',
+        template: 'requirejs',
+        templateOptions: {
+          requireConfig: {
+            baseUrl: 'src/'
+          }
+        }
       }
     }
   }
 }
 ```
+*Note* the usage of the 'connect' task configuration. You will need to use a task like
+[grunt-contrib-connect][] if you need to test your tasks on a running server.
 
-#### RequireJS note
+[grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
 
-If you end up using the requirejs template, it's worth looking at the [RequireJS template](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl) in order to
-familiarize yourself with how it loads your files. The gist of it is:
+#### RequireJS notes
+
+If you end up using the requirejs template, it's worth looking at the
+[RequireJS template source](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl)
+in order to familiarize yourself with how it loads your files. The load process essentially
+consists of a series of nested `require` blocks, incrementally loading your source and specs:
 
 ```js
 require([*YOUR SOURCE*], function() {
   require([*YOUR SPECS*], function() {
-    require([*JASMINE FILES*], function() {
+    require([*GRUNT-CONTRIB-JASMINE FILES*], function() {
       // at this point your tests are already running.
     }
   }
@@ -221,11 +244,13 @@ require([*YOUR SOURCE*], function() {
 
 ## Release History
 
- * 2012-11-23 - v0.1.2 - Updated for new grunt/grunt-contrib apis
- * 2012-11-06 - v0.1.1 - Fixed race condition in requirejs template
- * 2012-11-06 - v0.1.0 - Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
+ * 2012-12-02   v0.2.0   Generalized requirejs template config, added loader plugin, tests for templates, updated jasmine to 1.3.0
+ * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
+ * 2012-11-06   v0.1.1   Fixed race condition in requirejs template
+ * 2012-11-06   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
 
---
-Task submitted by <a href="http://jarrodoverson.com">Jarrod Overson</a>.
+---
 
-*Generated on Sat Nov 24 2012 15:36:33.*
+Task submitted by [Jarrod Overson](http://jarrodoverson.com)
+
+*This file was generated on Mon Dec 03 2012 00:32:53.*

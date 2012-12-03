@@ -16,12 +16,12 @@ function buildSpecrunner(src, options){
   ];
 
   var jasmineCss = [
-    __dirname + '/../../vendor/jasmine/lib/jasmine-core/jasmine.css'
+    __dirname + '/../../vendor/jasmine-1.3.0/jasmine.css'
   ];
 
   var jasmineCore = [
-    __dirname + '/../../vendor/jasmine/lib/jasmine-core/jasmine.js',
-    __dirname + '/../../vendor/jasmine/lib/jasmine-core/jasmine-html.js'
+    __dirname + '/../../vendor/jasmine-1.3.0/jasmine.js',
+    __dirname + '/../../vendor/jasmine-1.3.0/jasmine-html.js'
   ];
 
   var jasmineHelper = __dirname + '/../jasmine/jasmine-helper.js';
