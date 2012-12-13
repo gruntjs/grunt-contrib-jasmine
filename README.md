@@ -244,7 +244,7 @@ require([*YOUR SOURCE*], function() {
 
 ## Release History
 
- * 2012-12-02   v0.2.0   Generalized requirejs template config, added loader plugin, tests for templates, updated jasmine to 1.3.0
+ * 2012-12-02   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
  * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
  * 2012-11-06   v0.1.1   Fixed race condition in requirejs template
  * 2012-11-06   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
@@ -253,4 +253,4 @@ require([*YOUR SOURCE*], function() {
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Dec 03 2012 00:32:53.*
+*This file was generated on Thu Dec 13 2012 09:07:25.*
