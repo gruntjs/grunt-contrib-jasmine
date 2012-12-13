@@ -36,7 +36,7 @@
     "grunt-contrib-nodeunit": "~0.1.1",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-watch": "~0.1.4",
-    "grunt": "~0.4.0a"
+    "grunt": "~0.4.0"
   },
   "keywords": [
     "gruntplugin",
