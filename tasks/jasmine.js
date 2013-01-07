@@ -143,13 +143,14 @@ module.exports = function(grunt) {
       grunt.event.emit.apply(grunt.event, args);
     });
 
-    phantomjs.on('jasmine.writeFile',function(type,filename, xml){
-      var dir = options[type] && options[type].output;
-      if (dir) {
-        grunt.file.mkdir(dir);
-        grunt.file.write(path.join(dir, filename), xml);
-      }
-    });
+    // Not used?
+//    phantomjs.on('jasmine.writeFile',function(type,filename, xml){
+//      var dir = options[type] && options[type].output;
+//      if (dir) {
+//        grunt.file.mkdir(dir);
+//        grunt.file.write(path.join(dir, filename), xml);
+//      }
+//    });
 
 
     phantomjs.on('jasmine.reportRunnerStarting',function(suites) {
