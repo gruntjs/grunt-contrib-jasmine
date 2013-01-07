@@ -32,7 +32,8 @@ module.exports = function(grunt) {
 
   var runners = {
     default   : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
-    requirejs : __dirname + '/jasmine/templates/RequireJSRunner.tmpl'
+    requirejs : __dirname + '/jasmine/templates/RequireJSRunner.tmpl',
+    junit     : __dirname + '/jasmine/templates/JUnit.tmpl'
   };
 
   var runnerOptions = {
@@ -53,7 +54,8 @@ module.exports = function(grunt) {
       host    : '',
       template: 'default',
       templateOptions : {},
-      phantomjs : {}
+      phantomjs : {},
+      junit: {}
     });
 
     grunt.util._.defaults(options.templateOptions, runnerOptions[options.template] || {});
@@ -204,6 +206,21 @@ module.exports = function(grunt) {
       status.skipped += skippedAssertions;
     });
 
+    phantomjs.on('jasmine.reportJUnitResults',function(junitData){
+      if (options.junit && options.junit.path) {
+        grunt.file.copy(runners.junit, path.join(options.junit.path,'out-TEST.xml'), {
+          process : function(src) {
+            return grunt.util._.template(
+              src,
+              {
+                testsuites: junitData
+              }
+            );
+          }
+        })
+      }
+    });
+
     phantomjs.on('jasmine.done',function(elapsed){
       phantomjs.halt();
       status.duration = elapsed;
@@ -220,6 +237,3 @@ module.exports = function(grunt) {
   }
 
 };
-
-
-
