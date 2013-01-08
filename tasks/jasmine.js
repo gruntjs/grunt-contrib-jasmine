@@ -32,7 +32,8 @@ module.exports = function(grunt) {
 
   var runners = {
     default   : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
-    requirejs : __dirname + '/jasmine/templates/RequireJSRunner.tmpl'
+    requirejs : __dirname + '/jasmine/templates/RequireJSRunner.tmpl',
+    junit     : __dirname + '/jasmine/templates/JUnit.tmpl'
   };
 
   var runnerOptions = {
@@ -53,7 +54,8 @@ module.exports = function(grunt) {
       host    : '',
       template: 'default',
       templateOptions : {},
-      phantomjs : {}
+      phantomjs : {},
+      junit: {}
     });
 
     grunt.util._.defaults(options.templateOptions, runnerOptions[options.template] || {});
@@ -143,13 +145,14 @@ module.exports = function(grunt) {
       grunt.event.emit.apply(grunt.event, args);
     });
 
-    phantomjs.on('jasmine.writeFile',function(type,filename, xml){
-      var dir = options[type] && options[type].output;
-      if (dir) {
-        grunt.file.mkdir(dir);
-        grunt.file.write(path.join(dir, filename), xml);
-      }
-    });
+    // Not used?
+//    phantomjs.on('jasmine.writeFile',function(type,filename, xml){
+//      var dir = options[type] && options[type].output;
+//      if (dir) {
+//        grunt.file.mkdir(dir);
+//        grunt.file.write(path.join(dir, filename), xml);
+//      }
+//    });
 
 
     phantomjs.on('jasmine.reportRunnerStarting',function(suites) {
@@ -203,6 +206,46 @@ module.exports = function(grunt) {
       status.skipped += skippedAssertions;
     });
 
+    phantomjs.on('jasmine.reportJUnitResults',function(junitData){
+      if (options.junit && options.junit.path) {
+
+        if (options.junit.consolidate) {
+
+          grunt.util._(junitData.consolidatedSuites).each(
+              function(suites)
+              {
+                grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml'), {
+                  process: function(src) {
+                    return grunt.util._.template(
+                        src,
+                        {
+                          testsuites: suites
+                        }
+                    );
+                  }
+                });
+              }
+          );
+        } else {
+          junitData.suites.forEach(
+            function(suiteData)
+            {
+              grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml'), {
+                process: function(src) {
+                  return grunt.util._.template(
+                    src,
+                    {
+                      testsuites: [suiteData]
+                    }
+                  );
+                }
+              });
+            }
+          );
+        }
+      }
+    });
+
     phantomjs.on('jasmine.done',function(elapsed){
       phantomjs.halt();
       status.duration = elapsed;
@@ -219,6 +262,3 @@ module.exports = function(grunt) {
   }
 
 };
-
-
-
