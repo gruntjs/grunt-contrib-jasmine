@@ -5,7 +5,7 @@
     <% testsuite.testcases.forEach(function(testcase) { %>
       <testcase classname="<%- testcase.classname %>" name="<%- testcase.name %>" time="<%= testcase.time %>">
         <% if (testcase.failureMessage) { %>
-        <failure><%= testsuite.failureMessage %></failure>
+        <failure><%= testcase.failureMessage %></failure>
         <% } %>
       </testcase>
     <% }) %>
