@@ -1,67 +1,103 @@
-/*jshint latedef:false, curly:false*/
 
 'use strict';
 
-var grunt = require('grunt'),
-    path = require('path');
+exports.init = function(grunt) {
+  // node api
+  var fs = require('fs'),
+      path = require('path');
 
-var baseDir = '.';
+  // npm
+  var rimraf = require('rimraf');
 
-exports.buildSpecrunner     = buildSpecrunner;
-exports.getRelativeFileList = getRelativeFileList;
+  var baseDir = '.',
+      tempDir = '.grunt/grunt-contrib-jasmine';
 
-function buildSpecrunner(src, options){
-  var reporters = [
-    __dirname + '/../jasmine/reporters/PhantomReporter.js'
-  ];
+  var exports = {};
 
-  var jasmineCss = [
-    __dirname + '/../../vendor/jasmine-1.3.0/jasmine.css'
-  ];
-
-  var jasmineCore = [
-    __dirname + '/../../vendor/jasmine-1.3.0/jasmine.js',
-    __dirname + '/../../vendor/jasmine-1.3.0/jasmine-html.js'
-  ];
-
-  var jasmineHelper = __dirname + '/../jasmine/jasmine-helper.js';
-
-  var context = {
-    css  : getRelativeFileList(jasmineCss),
-    scripts : {
-      jasmine   : getRelativeFileList(jasmineCore),
-      helpers   : getRelativeFileList(options.helpers),
-      specs     : getRelativeFileList(options.specs),
-      src       : getRelativeFileList(src),
-      vendor    : getRelativeFileList(options.vendor),
-      reporters : getRelativeFileList(reporters),
-      start     : getRelativeFileList(jasmineHelper)
-    },
-    options : options.templateOptions || {}
+  exports.writeTempFile = function(dest, contents) {
+    var file = path.join(tempDir,dest);
+    grunt.file.write(file, contents);
   };
 
-  var source = '';
-  grunt.file.copy(options.template, path.join(baseDir,options.outfile), {
-    process : function(src) {
-      source = grunt.util._.template(src, context);
-      return source;
+  exports.copyTempFile = function(src, dest) {
+    var file = path.join(tempDir,dest);
+    grunt.file.copy(src, file);
+  };
+
+  exports.cleanTemp = function() {
+    rimraf.sync(tempDir);
+  };
+
+  exports.buildSpecrunner = function (src, options){
+
+    exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine.css', 'jasmine.css');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine.js', 'jasmine.js');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine-html.js', 'jasmine-html.js');
+    exports.copyTempFile(__dirname + '/../jasmine/jasmine-helper.js', 'jasmine-helper.js');
+
+    var reporters = [
+      tempDir + '/reporter.js'
+    ];
+
+    var jasmineCss = [
+      tempDir + '/jasmine.css'
+    ];
+
+    var jasmineCore = [
+      tempDir + '/jasmine.js',
+      tempDir + '/jasmine-html.js'
+    ];
+
+    var jasmineHelper = tempDir + '/jasmine-helper.js';
+
+    var context = {
+      temp : tempDir,
+      css  : jasmineCss,
+      scripts : {
+        jasmine   : exports.getRelativeFileList(jasmineCore),
+        helpers   : exports.getRelativeFileList(options.helpers),
+        specs     : exports.getRelativeFileList(options.specs),
+        src       : exports.getRelativeFileList(src),
+        vendor    : exports.getRelativeFileList(options.vendor),
+        reporters : exports.getRelativeFileList(reporters),
+        start     : exports.getRelativeFileList(jasmineHelper)
+      },
+      options : options.templateOptions || {}
+    };
+
+    var source = '',
+      specrunner = path.join(baseDir,options.outfile);
+
+    if (options.template.process) {
+      source = options.template.process(grunt, exports, context);
+      grunt.file.write(specrunner, source);
+    } else {
+      grunt.file.copy(options.template, specrunner, {
+        process : function(src) {
+          source = grunt.util._.template(src, context);
+          return source;
+        }
+      });
     }
-  });
-  return source;
-}
 
+    return source;
+  };
 
-function getRelativeFileList(/* args... */) {
+  exports.getRelativeFileList = function (/* args... */) {
 
-  var list = Array.prototype.slice.call(arguments);
-  var base = path.resolve(baseDir);
-  var files = [];
-  list.forEach(function(listItem){
-    if (listItem) files = files.concat(grunt.file.expandFiles(listItem));
-  });
-  files = grunt.util._(files).map(function(file){
-    return path.resolve(file).replace(base,'.').replace(/\\/g,'/');
-  });
-  return files;
-}
+    var list = Array.prototype.slice.call(arguments);
+    var base = path.resolve(baseDir);
+    var files = [];
+    list.forEach(function(listItem){
+      if (listItem) files = files.concat(grunt.file.expandFiles(listItem));
+    });
+    files = grunt.util._(files).map(function(file){
+      return path.resolve(file).replace(base,'.').replace(/\\/g,'/');
+    });
+    return files;
+  };
+
+  return exports;
+};
 

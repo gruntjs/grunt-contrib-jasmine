@@ -5,21 +5,21 @@
  * Licensed under the MIT license.
  */
 
-/*jshint node:true, curly:false*/
-
 'use strict';
 
 module.exports = function(grunt) {
 
   // node api
   var fs   = require('fs'),
-      path = require('path');
+    path = require('path');
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
 
   // local lib
-  var jasmine = require('./lib/jasmine');
+  var jasmine = require('./lib/jasmine').init(grunt);
+
+  var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
   var status = {
     specs    : 0,
@@ -28,18 +28,6 @@ module.exports = function(grunt) {
     total    : 0,
     skipped  : 0,
     duration : 0
-  };
-
-  var runners = {
-    default   : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
-    requirejs : __dirname + '/jasmine/templates/RequireJSRunner.tmpl',
-    junit     : __dirname + '/jasmine/templates/JUnit.tmpl'
-  };
-
-  var runnerOptions = {
-    requirejs : {
-      requirejs : jasmine.getRelativeFileList(__dirname + '/../vendor/require-2.1.1.js')[0]
-    }
   };
 
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
@@ -52,14 +40,11 @@ module.exports = function(grunt) {
       vendor  : [],
       outfile : '_SpecRunner.html',
       host    : '',
-      template: 'default',
+      template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
       phantomjs : {},
       junit: {}
     });
-
-    grunt.util._.defaults(options.templateOptions, runnerOptions[options.template] || {});
-    if (!options.template.match(/\.tmpl$/)) options.template = runners[options.template];
 
     if (grunt.option('debug')) {
       grunt.log.debug(options);
@@ -84,7 +69,6 @@ module.exports = function(grunt) {
 
   });
 
-
   function phantomRunner(options,cb){
     var file = options.outfile;
 
@@ -101,11 +85,11 @@ module.exports = function(grunt) {
         cb(err,status);
       }
     });
-
   }
 
   function teardown(options) {
     if (fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
+    jasmine.cleanTemp();
 
     // Have to explicitly unregister nested wildcards. Need to file a bug for EventEmitter2
     phantomjs.removeAllListeners('*');
@@ -144,16 +128,6 @@ module.exports = function(grunt) {
       var args = [this.event].concat(grunt.util.toArray(arguments));
       grunt.event.emit.apply(grunt.event, args);
     });
-
-    // Not used?
-//    phantomjs.on('jasmine.writeFile',function(type,filename, xml){
-//      var dir = options[type] && options[type].output;
-//      if (dir) {
-//        grunt.file.mkdir(dir);
-//        grunt.file.write(path.join(dir, filename), xml);
-//      }
-//    });
-
 
     phantomjs.on('jasmine.reportRunnerStarting',function(suites) {
       grunt.verbose.writeln('Starting...');
@@ -208,40 +182,17 @@ module.exports = function(grunt) {
 
     phantomjs.on('jasmine.reportJUnitResults',function(junitData){
       if (options.junit && options.junit.path) {
-
+        var template = grunt.file.read(junitTemplate);
         if (options.junit.consolidate) {
-
-          grunt.util._(junitData.consolidatedSuites).each(
-              function(suites)
-              {
-                grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml'), {
-                  process: function(src) {
-                    return grunt.util._.template(
-                        src,
-                        {
-                          testsuites: suites
-                        }
-                    );
-                  }
-                });
-              }
-          );
+          grunt.util._(junitData.consolidatedSuites).each(function(suites){
+            var xmlFile = path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml');
+            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: suites}));
+          });
         } else {
-          junitData.suites.forEach(
-            function(suiteData)
-            {
-              grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml'), {
-                process: function(src) {
-                  return grunt.util._.template(
-                    src,
-                    {
-                      testsuites: [suiteData]
-                    }
-                  );
-                }
-              });
-            }
-          );
+          junitData.suites.forEach(function(suiteData){
+            var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
+            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: [suiteData] }));
+          });
         }
       }
     });

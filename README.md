@@ -31,11 +31,11 @@ Run your tests on your local filesystem or via a server task like [grunt-contrib
 
 #### AMD Support
 
-Includes a SpecRunner template customized for use with AMD modules and requirejs.
+Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) module
 
 #### Customize your SpecRunner with your own template
 
-Supply your own underscore template to automatically build your SpecRunner custom to your use.
+Supply your templates that will be used to automatically build the SpecRunner.
 
 #### Example application usage
 
@@ -71,8 +71,20 @@ Type: `String|Array`
 Type: `String`
 Default: `_SpecRunner.html`
 
-This is the auto-generated specfile that phantomjs will use to run your tests. This is automatically deleted upon normal
-runs
+This is the auto-generated specfile that phantomjs will use to run your tests.
+This is automatically deleted upon normal runs
+
+#### options.junit.path
+Type: `String`
+Default: undefined
+
+Path to output JUnit xml
+
+#### options.junit.consolidate
+Type: `Boolean`
+Default: `false`
+
+Consolidate the JUnit XML so that there is one file per top level suite.
 
 #### options.host
 Type: `String`
@@ -95,12 +107,14 @@ host : 'http://127.0.0.1:<%= connect.port %>/'
 Not defining a host will mean your specs will be run from the local filesystem.
 
 #### options.template
-Type: `String`
-Default: `default`
-Options: `default`, `requirejs`, `yourcustomtemplate.tmpl`
+Type: `String` `Object`
+Default: undefined
 
-Specify a custom template to use when generating your Spec Runner. Templates are parsed as underscore templates and provided
+Specify a custom template used to generate your Spec Runner. Templates are parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
+
+You can specify an object with a `process` method that will be called as a template function.
+See the [Template API Documentation](needs-wiki-link) for more details.
 
 #### options.templateOptions
 Type: `Object`
@@ -123,32 +137,6 @@ watch: {
   }
 }
 ```
-
-### Template Options
-
-#### Default template
-
-No specific options are expected or used.
-
-#### RequireJS template
-
-##### templateOptions.requirejs
-Type: `String`
-
-The path to requirejs if you need to specify an alternate version.
-
-##### templateOptions.loaderPlugin
-Type: `String`
-
-The loader plugin to prefix all loaded `src` files. This is useful for processing
-your specs through the likes of CoffeeScript or TypeScript plugins. Keep in mind
-you will need to specify the path to the plugin in the require config.
-
-##### templateOptions.requireConfig
-Type: `Object`
-
-This object is `JSON.stringify()`-ed into the template and passed into `require.config()`
-
 
 
 
@@ -193,57 +181,12 @@ grunt.initConfig({
 
 #### Sample RequireJS usage
 
-```js
-// Example configuration
-grunt.initConfig({
-  connect: {
-    test : {
-      port : 8000
-    }
-  }
-  jasmine: {
-    requirejs: {
-      src: 'src/**/*.js',
-      options: {
-        specs: 'spec/*Spec.js',
-        helpers: 'spec/*Helper.js',
-        host: 'http://127.0.0.1:8000/',
-        template: 'requirejs',
-        templateOptions: {
-          requireConfig: {
-            baseUrl: 'src/'
-          }
-        }
-      }
-    }
-  }
-}
-```
-*Note* the usage of the 'connect' task configuration. You will need to use a task like
-[grunt-contrib-connect][] if you need to test your tasks on a running server.
-
-[grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
-
-#### RequireJS notes
-
-If you end up using the requirejs template, it's worth looking at the
-[RequireJS template source](https://github.com/gruntjs/grunt-contrib-jasmine/blob/master/tasks/jasmine/templates/RequireJSRunner.tmpl)
-in order to familiarize yourself with how it loads your files. The load process essentially
-consists of a series of nested `require` blocks, incrementally loading your source and specs:
-
-```js
-require([*YOUR SOURCE*], function() {
-  require([*YOUR SPECS*], function() {
-    require([*GRUNT-CONTRIB-JASMINE FILES*], function() {
-      // at this point your tests are already running.
-    }
-  }
-}
-```
+Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs)
 
 
 ## Release History
 
+ * 2013-01-07   v0.3.0   Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
  * 2012-12-02   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
  * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
  * 2012-11-06   v0.1.1   Fixed race condition in requirejs template
@@ -253,4 +196,4 @@ require([*YOUR SOURCE*], function() {
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Dec 13 2012 09:07:25.*
+*This file was generated on Tue Jan 08 2013 11:28:08.*

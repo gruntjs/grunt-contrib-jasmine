@@ -6,13 +6,17 @@
 
   var phantom = {};
 
-  phantom.sendMessage = function(){
+  if (window._phantom) {
+    console.log = function(){
+      phantom.sendMessage('verbose',Array.prototype.slice.apply(arguments).join(', '));
+    };
+  }
+
+  phantom.sendMessage = function() {
     var args = [].slice.call( arguments );
     var payload = JSON.stringify( args );
     if (window._phantom) {
       alert( payload );
-    } else {
-      console.log(payload);
     }
   };
 
@@ -23,10 +27,6 @@
     this.results_ = {};
     this.buffer = '';
   }
-
-  PhantomReporter.prototype.log = function(str) {
-    phantom.sendMessage('verbose',str);
-  };
 
   PhantomReporter.prototype.reportRunnerStarting = function(runner) {
     this.started = true;
@@ -85,7 +85,7 @@
     var specIds = runner.specs().map(function(a){return a.id;});
     var summary = this.resultsForSpecs(specIds);
     phantom.sendMessage('jasmine.reportRunnerResults',summary);
-    phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary_(runner));
+    phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
     phantom.sendMessage('jasmine.done.PhantomReporter');
   };
 
@@ -196,8 +196,7 @@
     };
   };
 
-  function getNestedSuiteName(suite)
-  {
+  function getNestedSuiteName(suite) {
     var names = [];
     while (suite) {
       names.unshift(suite.description);
@@ -206,8 +205,7 @@
     return names.join(' ');
   }
 
-  function getTopLevelSuiteId(suite)
-  {
+  function getTopLevelSuiteId(suite) {
     var id;
     while (suite) {
       id = suite.id;
@@ -216,52 +214,47 @@
     return id;
   }
 
-  PhantomReporter.prototype.generateJUnitSummary_ = function(runner) {
+  PhantomReporter.prototype.generateJUnitSummary = function(runner) {
     var consolidatedSuites = {},
-        suites = runner.suites().map(
-            function(suite)
-            {
-              var failures = 0,
-                  data = {
-                    name: getNestedSuiteName(suite),
-                    time: suite.duration / 1000,
-                    timestamp: suite.timestamp,
-                    tests: suite.specs().length,
-                    errors: 0, // TODO: These exist in the JUnit XML but not sure how they map to jasmine things
-                    testcases: suite.specs().map(
-                        function(spec)
-                        {
-                          var failureMessages = [];
-                          if (spec.results().failedCount) {
-                            failures ++;
-                            spec.results().items_.forEach(
-                                function(expectation)
-                                {
-                                  if (!expectation.passed()) {
-                                    failureMessages.push(expectation.message);
-                                  }
-                                }
-                            );
-                          }
-                          return {
-                            assertions: spec.results().items_.length,
-                            className: getNestedSuiteName(spec.suite),
-                            name: spec.description,
-                            time: spec.duration / 1000,
-                            failureMessages: failureMessages
-                          };
-                        }
-                    )
-                  };
-              data.failures = failures;
-              if (suite.parentSuite) {
-                consolidatedSuites[getTopLevelSuiteId(suite)].push(data);
-              } else {
-                consolidatedSuites[suite.id] = [data];
-              }
-              return data;
+        suites = runner.suites().map(function(suite) {
+          var failures = 0;
+
+          var testcases = suite.specs().map(function(spec) {
+            var failureMessages = [];
+            if (spec.results().failedCount) {
+              failures++;
+              spec.results().items_.forEach(function(expectation) {
+                if (!expectation.passed()) {
+                  failureMessages.push(expectation.message);
+                }
+              });
             }
-        );
+            return {
+              assertions: spec.results().items_.length,
+              className: getNestedSuiteName(spec.suite),
+              name: spec.description,
+              time: spec.duration / 1000,
+              failureMessages: failureMessages
+            };
+          });
+
+          var data = {
+              name: getNestedSuiteName(suite),
+              time: suite.duration / 1000,
+              timestamp: suite.timestamp,
+              tests: suite.specs().length,
+              errors: 0, // TODO: These exist in the JUnit XML but not sure how they map to jasmine things
+              testcases: testcases,
+              failures: failures
+            };
+
+          if (suite.parentSuite) {
+            consolidatedSuites[getTopLevelSuiteId(suite)].push(data);
+          } else {
+            consolidatedSuites[suite.id] = [data];
+          }
+          return data;
+        });
 
     return {
       suites: suites,

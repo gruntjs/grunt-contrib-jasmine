@@ -12,11 +12,11 @@ Run your tests on your local filesystem or via a server task like [grunt-contrib
 
 ## AMD Support
 
-Includes a SpecRunner template customized for use with AMD modules and requirejs.
+Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) module
 
 ## Customize your SpecRunner with your own template
 
-Supply your own underscore template to automatically build your SpecRunner custom to your use.
+Supply your templates that will be used to automatically build the SpecRunner.
 
 ## Example application usage
 

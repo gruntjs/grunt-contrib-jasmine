@@ -25,8 +25,20 @@ Type: `String|Array`
 Type: `String`
 Default: `_SpecRunner.html`
 
-This is the auto-generated specfile that phantomjs will use to run your tests. This is automatically deleted upon normal
-runs
+This is the auto-generated specfile that phantomjs will use to run your tests.
+This is automatically deleted upon normal runs
+
+## options.junit.path
+Type: `String`
+Default: undefined
+
+Path to output JUnit xml
+
+## options.junit.consolidate
+Type: `Boolean`
+Default: `false`
+
+Consolidate the JUnit XML so that there is one file per top level suite.
 
 ## options.host
 Type: `String`
@@ -49,26 +61,20 @@ host : 'http://127.0.0.1:<%= connect.port %>/'
 Not defining a host will mean your specs will be run from the local filesystem.
 
 ## options.template
-Type: `String`
-Default: `default`
-Options: `default`, `requirejs`, `yourcustomtemplate.tmpl`
+Type: `String` `Object`
+Default: undefined
 
-Specify a custom template to use when generating your Spec Runner. Templates are parsed as underscore templates and provided
+Specify a custom template used to generate your Spec Runner. Templates are parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
+
+You can specify an object with a `process` method that will be called as a template function.
+See the [Template API Documentation](needs-wiki-link) for more details.
 
 ## options.templateOptions
 Type: `Object`
 Default: `{}`
 
 These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
-
-## options.junit
-Type: `Object`
-Default: `{}`
-
-Set `options.junit.path` to generate JUnit compatible XML from the task (for use in a CI system such as Jenkins).
-
-Set `options.junit.consolidate` to consolidate the generated XML files so that there is one file per top level suite.
 
 # Flags
 
@@ -85,29 +91,3 @@ watch: {
   }
 }
 ```
-
-# Template Options
-
-## Default template
-
-No specific options are expected or used.
-
-## RequireJS template
-
-### templateOptions.requirejs
-Type: `String`
-
-The path to requirejs if you need to specify an alternate version.
-
-### templateOptions.loaderPlugin
-Type: `String`
-
-The loader plugin to prefix all loaded `src` files. This is useful for processing
-your specs through the likes of CoffeeScript or TypeScript plugins. Keep in mind
-you will need to specify the path to the plugin in the require config.
-
-### templateOptions.requireConfig
-Type: `Object`
-
-This object is `JSON.stringify()`-ed into the template and passed into `require.config()`
-

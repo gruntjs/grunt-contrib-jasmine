@@ -3,7 +3,6 @@
 var grunt = require('grunt');
 
 // Majority of test benefit comes from running the task itself.
-// This is kept around for future use.
 
 function runTemplate(src,context) {
   var source = grunt.file.read(src);
@@ -36,64 +35,6 @@ exports.jasmine = {
 
     var actual = runTemplate('./tasks/jasmine/templates/DefaultRunner.tmpl', context);
     var expected = grunt.file.read('./test/expected/defaultTemplate.html');
-
-    test.equal(normalize(actual),normalize(expected), 'default test runner template');
-
-    test.done();
-  },
-  basicRequireJsTemplate: function(test) {
-    test.expect(1);
-
-    var context = {
-      css  : ['css/a.css'],
-      scripts : {
-        jasmine   : ['J1.js','J2.js'],
-        helpers   : ['H1.js','H2.js'],
-        specs     : ['SPEC1.js','SPEC2.js'],
-        src       : ['foo/bar/SRC1.js','foo/bar/SRC2.js'],
-        vendor    : ['V1.js','V2.js'],
-        reporters : ['R1.js'],
-        start     : ['START.js']
-      },
-      options : {
-      }
-    };
-
-    var actual = runTemplate('./tasks/jasmine/templates/RequireJSRunner.tmpl', context);
-    var expected = grunt.file.read('./test/expected/basicRequireJSTemplate.html');
-
-    test.equal(normalize(actual),normalize(expected), 'default test runner template');
-
-    test.done();
-  },
-  requireJsTemplate: function(test) {
-    test.expect(1);
-
-    var context = {
-      css  : ['css/a.css'],
-      scripts : {
-        jasmine   : ['J1.js','J2.js'],
-        helpers   : ['H1.js','H2.js'],
-        specs     : ['SPEC1.js','SPEC2.js'],
-        src       : ['foo/bar/SRC1.js','foo/bar/SRC2.js'],
-        vendor    : ['V1.js','V2.js'],
-        reporters : ['R1.js'],
-        start     : ['START.js']
-      },
-      options : {
-        requirejs : 'path/to/require.js',
-        loaderPlugin : 'cs',
-        requireConfig : {
-          baseUrl : 'foo/bar/',
-          paths : {
-            cs : 'plugins/cs'
-          }
-        }
-      }
-    };
-
-    var actual = runTemplate('./tasks/jasmine/templates/RequireJSRunner.tmpl', context);
-    var expected = grunt.file.read('./test/expected/requireJSTemplate.html');
 
     test.equal(normalize(actual),normalize(expected), 'default test runner template');
 
