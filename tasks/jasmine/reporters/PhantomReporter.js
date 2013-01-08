@@ -90,12 +90,14 @@
   };
 
   PhantomReporter.prototype.reportSuiteResults = function(suite) {
-    suite.timestamp = new Date();
-    suite.duration = suite.timestamp.getTime() - suite.specs()[0].startTime;
-    phantom.sendMessage('jasmine.reportSuiteResults',{
-      description : suite.description,
-      results : suite.results()
-    });
+    if (suite.specs().length) {
+      suite.timestamp = new Date();
+      suite.duration = suite.timestamp.getTime() - suite.specs()[0].startTime;
+      phantom.sendMessage('jasmine.reportSuiteResults',{
+        description : suite.description,
+        results : suite.results()
+      });
+    }
   };
 
   function stringify(obj) {
