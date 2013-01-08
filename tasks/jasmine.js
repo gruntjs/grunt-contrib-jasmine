@@ -214,7 +214,7 @@ module.exports = function(grunt) {
           grunt.util._(junitData.consolidatedSuites).each(
               function(suites)
               {
-                grunt.file.copy(runners.junit, path.join(options.junit.path, suites[0].name.replace(/[^\w]/g, '') + '-TEST.xml'), {
+                grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml'), {
                   process: function(src) {
                     return grunt.util._.template(
                         src,
@@ -230,7 +230,7 @@ module.exports = function(grunt) {
           junitData.suites.forEach(
             function(suiteData)
             {
-              grunt.file.copy(runners.junit, path.join(options.junit.path, suiteData.name.replace(/[^\w]/g, '') + '-TEST.xml'), {
+              grunt.file.copy(runners.junit, path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml'), {
                 process: function(src) {
                   return grunt.util._.template(
                     src,
