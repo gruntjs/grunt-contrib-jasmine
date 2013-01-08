@@ -211,7 +211,7 @@
         var failures = 0,
           data = {
             name: getNestedSuiteName(suite),
-            time: suite.duration,
+            time: suite.duration / 1000,
             timestamp: suite.timestamp,
             tests: suite.specs().length,
             errors: 0, // TODO: These exist in the JUnit XML but not sure how they map to jasmine things
@@ -233,7 +233,7 @@
                 return {
                   className: getNestedSuiteName(spec.suite),
                   name: spec.description,
-                  time: spec.duration,
+                  time: spec.duration / 1000,
                   failureMessage: failureMessages.join(' ')
                 };
               }
