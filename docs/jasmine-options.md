@@ -62,6 +62,14 @@ Default: `{}`
 
 These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
 
+## options.junit
+Type: `Object`
+Default: `{}`
+
+Set `options.junit.path` to generate JUnit compatible XML from the task (for use in a CI system such as Jenkins).
+
+Set `options.junit.consolidate` to consolidate the generated XML files so that there is one file per top level suite.
+
 # Flags
 
 Name: `build`
