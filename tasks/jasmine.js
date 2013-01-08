@@ -208,16 +208,41 @@ module.exports = function(grunt) {
 
     phantomjs.on('jasmine.reportJUnitResults',function(junitData){
       if (options.junit && options.junit.path) {
-        grunt.file.copy(runners.junit, path.join(options.junit.path,'out-TEST.xml'), {
-          process : function(src) {
-            return grunt.util._.template(
-              src,
+
+        if (options.junit.consolidate) {
+
+          grunt.util._(junitData.consolidatedSuites).each(
+              function(suites)
               {
-                testsuites: junitData
+                grunt.file.copy(runners.junit, path.join(options.junit.path, suites[0].name.replace(/[^\w]/g, '') + '-TEST.xml'), {
+                  process: function(src) {
+                    return grunt.util._.template(
+                        src,
+                        {
+                          testsuites: suites
+                        }
+                    );
+                  }
+                })
               }
-            );
-          }
-        })
+          );
+        } else {
+          junitData.suites.forEach(
+            function(suiteData)
+            {
+              grunt.file.copy(runners.junit, path.join(options.junit.path, suiteData.name.replace(/[^\w]/g, '') + '-TEST.xml'), {
+                process: function(src) {
+                  return grunt.util._.template(
+                    src,
+                    {
+                      testsuites: [suiteData]
+                    }
+                  );
+                }
+              })
+            }
+          );
+        }
       }
     });
 
