@@ -42,16 +42,17 @@
                         function(expectation)
                         {
                           if (!expectation.passed()) {
-                            failureMessages.push((failureMessages.length + 1) + ': ' + expectation.message);
+                            failureMessages.push(expectation.message);
                           }
                         }
                       );
                     }
                     return {
+                      assertions: spec.results().items_.length,
                       className: getNestedSuiteName(spec.suite),
                       name: spec.description,
                       time: spec.duration / 1000,
-                      failureMessage: failureMessages.join(' ')
+                      failureMessages: failureMessages
                     };
                   }
                 )
