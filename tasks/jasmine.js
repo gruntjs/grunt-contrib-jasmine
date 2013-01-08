@@ -223,7 +223,7 @@ module.exports = function(grunt) {
                         }
                     );
                   }
-                })
+                });
               }
           );
         } else {
@@ -239,7 +239,7 @@ module.exports = function(grunt) {
                     }
                   );
                 }
-              })
+              });
             }
           );
         }
