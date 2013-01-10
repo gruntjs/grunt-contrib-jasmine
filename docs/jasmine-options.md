@@ -68,7 +68,7 @@ Specify a custom template used to generate your Spec Runner. Templates are parse
 the expanded list of files needed to build a specrunner.
 
 You can specify an object with a `process` method that will be called as a template function.
-See the [Template API Documentation](needs-wiki-link) for more details.
+See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for more details.
 
 ## options.templateOptions
 Type: `Object`

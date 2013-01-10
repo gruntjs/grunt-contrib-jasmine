@@ -39,6 +39,24 @@ grunt.initConfig({
 }
 ```
 
-## Sample RequireJS usage
+## Sample RequireJS/NPM Template usage
 
-Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs)
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    yourTask: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        template: require('grunt-template-jasmine-requirejs')
+      }
+    }
+  }
+}
+```
+
+NPM Templates are just node modules, so you can write and treat them as such.
+
+Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) documentation
+for more information on the RequireJS template.

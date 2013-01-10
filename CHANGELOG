@@ -1,6 +1,8 @@
-v0.3.0:
+v0.3.0rc5:
   date: 2013-01-08
   changes:
+    - Updating to work with grunt v0.4.0rc5.
+    - Switching to this.filesSrc api.
     - Added JUnit xml output (via Kelvin Luck @vitch)
     - Passing console.log from browser to verbose grunt logging
     - Support for templates as separate node modules

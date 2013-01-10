@@ -114,7 +114,7 @@ Specify a custom template used to generate your Spec Runner. Templates are parse
 the expanded list of files needed to build a specrunner.
 
 You can specify an object with a `process` method that will be called as a template function.
-See the [Template API Documentation](needs-wiki-link) for more details.
+See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for more details.
 
 #### options.templateOptions
 Type: `Object`
@@ -179,14 +179,32 @@ grunt.initConfig({
 }
 ```
 
-#### Sample RequireJS usage
+#### Sample RequireJS/NPM Template usage
 
-Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs)
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    yourTask: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        template: require('grunt-template-jasmine-requirejs')
+      }
+    }
+  }
+}
+```
+
+NPM Templates are just node modules, so you can write and treat them as such.
+
+Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) documentation
+for more information on the RequireJS template.
 
 
 ## Release History
 
- * 2013-01-07   v0.3.0   Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
+ * 2013-01-07   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to this.filesSrc api. Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
  * 2012-12-02   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
  * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
  * 2012-11-06   v0.1.1   Fixed race condition in requirejs template
@@ -196,4 +214,4 @@ Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/g
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jan 08 2013 11:28:08.*
+*This file was generated on Wed Jan 09 2013 21:19:35.*

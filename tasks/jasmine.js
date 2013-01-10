@@ -46,14 +46,20 @@ module.exports = function(grunt) {
       junit: {}
     });
 
+    if (options.template === 'requirejs') {
+      grunt.log.warn(
+        'The requirejs template is no longer included in grunt-contrib-jasmine core.\n' +
+        'Please see the https://github.com/gruntjs/grunt-contrib-jasmine README for details'
+      );
+    }
+
     if (grunt.option('debug')) {
       grunt.log.debug(options);
     }
 
     setup(options);
 
-    var files = this.file.src;
-    jasmine.buildSpecrunner(files,options);
+    jasmine.buildSpecrunner(this.filesSrc,options);
 
     // If we're just building (e.g. for web), skip phantom.
     if (this.flags.build) return;
