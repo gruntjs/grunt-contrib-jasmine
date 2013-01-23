@@ -204,6 +204,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2013-01-21   v0.3.0rc7   Updated dependencies for grunt v0.4.0rc6/rc7
  * 2013-01-07   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to this.filesSrc api. Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
  * 2012-12-02   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
  * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
@@ -214,4 +215,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Wed Jan 09 2013 21:19:35.*
+*This file was generated on Tue Jan 22 2013 17:01:08.*
