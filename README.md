@@ -11,7 +11,7 @@ npm install grunt-contrib-jasmine --save-dev
 ```
 
 [grunt]: http://gruntjs.com/
-[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
+[Getting Started]: http://gruntjs.com/getting-started
 
 
 ## Jasmine task
@@ -215,4 +215,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jan 22 2013 17:01:08.*
+*This file was generated on Tue Feb 05 2013 10:18:33.*
