@@ -17,7 +17,7 @@ module.exports = function(grunt) {
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
 
   // local lib
-  var jasmine = require('./lib/jasmine').init(grunt);
+  var jasmine = require('./lib/jasmine').init(grunt, phantomjs);
 
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 

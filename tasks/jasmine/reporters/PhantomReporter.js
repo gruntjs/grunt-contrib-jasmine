@@ -1,24 +1,26 @@
 /*global window:false, alert:false, jasmine:false, Node:false, */
 /*jshint curly:false*/
 
-(function(){
-  'use strict';
+'use strict';
 
-  var phantom = {};
+var phantom = {};
 
-  if (window._phantom) {
-    console.log = function(){
-      phantom.sendMessage('verbose',Array.prototype.slice.apply(arguments).join(', '));
-    };
-  }
-
-  phantom.sendMessage = function() {
-    var args = [].slice.call( arguments );
-    var payload = JSON.stringify( args );
-    if (window._phantom) {
-      alert( payload );
-    }
+if (window._phantom) {
+  console.log = function(){
+    phantom.sendMessage('verbose',Array.prototype.slice.apply(arguments).join(', '));
   };
+}
+
+phantom.sendMessage = function() {
+  var args = [].slice.call( arguments );
+  var payload = JSON.stringify( args );
+  if (window._phantom) {
+    // alerts are the communication bridge to grunt
+    alert( payload );
+  }
+};
+
+(function(){
 
   function PhantomReporter() {
     this.started = false;

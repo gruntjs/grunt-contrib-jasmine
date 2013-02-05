@@ -1,7 +1,7 @@
 
 'use strict';
 
-exports.init = function(grunt) {
+exports.init = function(grunt, phantomjs) {
   // node api
   var fs = require('fs'),
       path = require('path');
@@ -70,7 +70,12 @@ exports.init = function(grunt) {
       specrunner = path.join(baseDir,options.outfile);
 
     if (options.template.process) {
-      source = options.template.process(grunt, exports, context);
+      var task = {
+        writeTempFile : exports.writeTempFile,
+        copyTempFile : exports.copyTempFile,
+        phantomjs : phantomjs
+      };
+      source = options.template.process(grunt, task, context);
       grunt.file.write(specrunner, source);
     } else {
       grunt.file.copy(options.template, specrunner, {
