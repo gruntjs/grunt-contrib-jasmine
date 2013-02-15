@@ -1,5 +1,3 @@
-
-
 ## Basic Use
 
 Sample configuration to run Pivotal Labs' example Jasmine application.

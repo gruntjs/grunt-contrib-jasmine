@@ -1,7 +1,4 @@
-# Overview
-
-grunt-contrib-jasmine automatically builds and maintains your spec runner and runs your tests headlessly through
-phantomjs
+Automatically builds and maintains your spec runner and runs your tests headlessly through phantomjs.
 
 Substantial credit goes to [Camille Reynders](http://creynders.be/) (@creynders) for the first decent implementation
 of jasmine through grunt which served as motivation for all the future work.
