@@ -152,14 +152,14 @@ Sample configuration to run Pivotal Labs' example Jasmine application.
 grunt.initConfig({
   jasmine: {
     pivotal: {
-      src: 'src/**/*.js'
+      src: 'src/**/*.js',
       options: {
         specs: 'spec/*Spec.js',
         helpers: 'spec/*Helper.js'
       }
     }
   }
-}
+});
 ```
 
 #### Supplying a custom template
@@ -179,7 +179,7 @@ grunt.initConfig({
       }
     }
   }
-}
+});
 ```
 
 #### Sample RequireJS/NPM Template usage
@@ -196,7 +196,7 @@ grunt.initConfig({
       }
     }
   }
-}
+});
 ```
 
 NPM Templates are just node modules, so you can write and treat them as such.
@@ -221,4 +221,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Wed Feb 20 2013 12:35:56.*
+*This file was generated on Fri Feb 22 2013 10:06:21.*
