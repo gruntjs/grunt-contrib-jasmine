@@ -172,10 +172,8 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.reportRunnerResults',function(){
       grunt.verbose.writeln('Runner finished');
       var dur = (new Date()).getTime() - thisRun.start_time;
-      var failed = thisRun.executed_specs - thisRun.passed_specs;
-      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec, " : " specs, ");
-      var fail_str = failed + (failed === 1 ? " failure in " : " failures in ");
-      grunt.log.writeln(spec_str + fail_str + (dur/1000) + "s.");
+      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
+      grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
     });
 
     phantomjs.on('jasmine.testDone',function(totalAssertions, passedAssertions, failedAssertions, skippedAssertions){
