@@ -150,7 +150,6 @@ phantom.sendMessage = function() {
       passed      : _results.passed(),
       msg         : _results.failedCount > 0 ? "failed" : "passed"
     };
-
     this.results_[spec.id] = results;
 
     // Quick hack to alleviate cyclical object breaking JSONification.
@@ -163,8 +162,11 @@ phantom.sendMessage = function() {
       }
     });
 
-    phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.resultsForSpec(spec.id));
+    phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getFullName(spec));
+  };
 
+  PhantomReporter.prototype.getFullName = function(spec) {
+    return getNestedSuiteName(spec.suite, ':: ') +  ':: ' + spec.description;
   };
 
   PhantomReporter.prototype.resultsForSpecs = function(specIds){
@@ -198,13 +200,13 @@ phantom.sendMessage = function() {
     };
   };
 
-  function getNestedSuiteName(suite) {
+  function getNestedSuiteName(suite, sep) {
     var names = [];
     while (suite) {
       names.unshift(suite.description);
       suite = suite.parentSuite;
     }
-    return names.join(' ');
+    return names.join(sep ? sep : ' ');
   }
 
   function getTopLevelSuiteId(suite) {

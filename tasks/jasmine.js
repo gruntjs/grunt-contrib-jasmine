@@ -27,7 +27,8 @@ module.exports = function(grunt) {
     passed   : 0,
     total    : 0,
     skipped  : 0,
-    duration : 0
+    duration : 0,
+    log      : ''
   };
 
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
@@ -74,6 +75,12 @@ module.exports = function(grunt) {
     });
 
   });
+
+  function logWrite(text, isInline) {
+    text += (isInline ? '' : '\n');
+    status.log += text;
+    grunt.verbose.write(text);
+  }
 
   function phantomRunner(options,cb){
     var file = options.outfile;
@@ -151,17 +158,30 @@ module.exports = function(grunt) {
       //grunt.verbose.writeln(suite.description + ": " + suite.results.passedCount + " of " + suite.results.totalCount + " passed.");
     });
 
-    phantomjs.on('jasmine.reportSpecResults',function(specId, result,summary) {
+    phantomjs.on('jasmine.reportSpecResults',function(specId, result, fullName) {
       if (result.passed) thisRun.passed_specs++;
 
-      grunt.verbose.writeln(summary.passed ? result.msg.green : result.msg.red);
+      if (!result.passed) {
+        if (grunt.option('verbose'))
+          grunt.verbose.writeln(result.description + ': ' + result.msg.red);
+        else {
+          logWrite(fullName + ': ' + result.msg.red);
+          grunt.log.write('x'.red);
+        }
+      } else {
+        grunt.verbose.writeln(result.description + ': ' + result.msg.green);
+        if (!grunt.option('verbose'))
+          grunt.log.write('.');
+      }
+
       for (var i = 0; i < result.messages.length; i++) {
         var item = result.messages[i];
 
         if (item.type === 'log') {
           grunt.verbose.writeln(item.toString());
         } else if (item.type === 'expect' && !item.passed_) {
-          grunt.log.writeln(summary.description + ':' + result.msg.red);
+          var specIndex = ' ('+(i+1)+')';
+          logWrite('  ' + item.message.red+specIndex.red);
           phantomjs.emit('onError', item.message, item.trace);
         }
       }
@@ -170,12 +190,14 @@ module.exports = function(grunt) {
     });
 
     phantomjs.on('jasmine.reportRunnerResults',function(){
-      grunt.verbose.writeln('Runner finished');
       var dur = (new Date()).getTime() - thisRun.start_time;
-      var failed = thisRun.executed_specs - thisRun.passed_specs;
-      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec, " : " specs, ");
-      var fail_str = failed + (failed === 1 ? " failure in " : " failures in ");
-      grunt.log.writeln(spec_str + fail_str + (dur/1000) + "s.");
+      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
+      if (!grunt.option('verbose')) {
+        grunt.log.writeln('');
+        grunt.log.write(status.log);
+      }
+      grunt.verbose.writeln('Runner finished');
+      grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
     });
 
     phantomjs.on('jasmine.testDone',function(totalAssertions, passedAssertions, failedAssertions, skippedAssertions){

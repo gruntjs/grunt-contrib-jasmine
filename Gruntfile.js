@@ -20,8 +20,14 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['test/fixtures/pivotal/**/*.js'],
-      tasks: 'jasmine:pivotal:build'
+      pivotal: {
+        files: ['test/fixtures/pivotal/**/*.js'],
+        tasks: 'jasmine:pivotal:build'
+      },
+      jasmine: {
+        files: ['test/fixtures/pivotal/**/*.js', 'tasks/**/*.js'],
+        tasks: 'jasmine:pivotal'
+      }
     },
     connect: {
       test: {
@@ -58,11 +64,12 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('tasks');
 
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
 
-  grunt.registerTask('watch-test', ['connect', 'watch']);
+  grunt.registerTask('watch-test', ['connect', 'watch:pivotal']);
 
   grunt.registerTask('test', ['jshint', 'jasmine:pivotal', 'jasmine:customTemplate', 'nodeunit']);
   grunt.registerTask('default', ['test', 'build-contrib']);
