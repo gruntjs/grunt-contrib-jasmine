@@ -207,6 +207,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2013-02-23   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
  * 2013-02-16   v0.3.2   Ensure Gruntfile.js is included on npm.
  * 2013-02-14   v0.3.1   First official release for Grunt 0.4.0.
  * 2013-01-21   v0.3.1rc7   Exposed phantom and sendMessage to templates
@@ -221,4 +222,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Fri Feb 22 2013 10:06:21.*
+*This file was generated on Sun Feb 24 2013 08:04:44.*

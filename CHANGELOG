@@ -1,3 +1,7 @@
+v0.3.3:
+  date: 2013-02-24
+  changes:
+    - Added better console output (via Gabor Kiss @Neverl)
 v0.3.2:
   date: 2013-02-17
   changes:
