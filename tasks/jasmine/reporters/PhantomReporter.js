@@ -105,7 +105,7 @@ phantom.sendMessage = function() {
   function stringify(obj) {
     if (typeof obj !== 'object') return obj;
 
-    var cache = [], keyMap = [], tempArray, index;
+    var cache = [], keyMap = [], index;
 
     var string = JSON.stringify(obj, function(key, value) {
       // Let json stringify falsy values
@@ -121,9 +121,6 @@ phantom.sendMessage = function() {
       if (typeof value === 'function') return '[ Function ]';
 
       if (typeof value === 'object' && value !== null) {
-
-        // Check to see if we have a pseudo array that can be converted
-        if (value.length && (tempArray = Array.prototype.slice.call(value)).length === value.length) value = tempArray;
 
         if (index = cache.indexOf(value) !== -1) {
           // If we have it in cache, report the circle with the key we first found it in
