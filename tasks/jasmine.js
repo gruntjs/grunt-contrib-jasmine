@@ -35,6 +35,7 @@ module.exports = function(grunt) {
 
     // Merge task-specific options with these defaults.
     var options = this.options({
+      version : '1.3.1',
       timeout : 10000,
       specs   : [],
       helpers : [],
