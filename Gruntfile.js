@@ -19,22 +19,6 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
-    watch: {
-      pivotal: {
-        files: ['test/fixtures/pivotal/**/*.js'],
-        tasks: 'jasmine:pivotal:build'
-      },
-      jasmine: {
-        files: ['test/fixtures/pivotal/**/*.js', 'tasks/**/*.js'],
-        tasks: 'jasmine:pivotal'
-      }
-    },
-    connect: {
-      test: {
-        port: 8000,
-        base: '.'
-      }
-    },
     jasmine: {
       options: {
         specs: 'test/fixtures/pivotal/spec/*Spec.js',
@@ -45,6 +29,12 @@ module.exports = function(grunt) {
       },
       pivotal: {
         src: 'test/fixtures/pivotal/src/**/*.js'
+      },
+      legacyVersion: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          version: '1.2.0'
+        }
       },
       customTemplate: {
         src: 'test/fixtures/pivotal/src/**/*.js',
@@ -69,8 +59,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
 
-  grunt.registerTask('watch-test', ['connect', 'watch:pivotal']);
-
-  grunt.registerTask('test', ['jshint', 'jasmine:pivotal', 'jasmine:customTemplate', 'nodeunit']);
+  grunt.registerTask('test', ['jshint', 'jasmine', 'nodeunit']);
   grunt.registerTask('default', ['test', 'build-contrib']);
 };

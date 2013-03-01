@@ -42,6 +42,12 @@ Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com
 
 Supply your templates that will be used to automatically build the SpecRunner.
 
+#### Third party templates
+
+- [RequireJS](https://github.com/jsoverson/grunt-template-jasmine-requirejs)
+- [Code coverage output with Istanbul](https://github.com/maenu/grunt-template-jasmine-istanbul)
+- [StealJS](https://github.com/jaredstehler/grunt-template-jasmine-steal)
+
 #### Example application usage
 
 - [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
@@ -222,4 +228,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sun Feb 24 2013 08:04:44.*
+*This file was generated on Fri Mar 08 2013 17:16:32.*

@@ -31,9 +31,9 @@ exports.init = function(grunt, phantomjs) {
   exports.buildSpecrunner = function (src, options){
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine.css', 'jasmine.css');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine.js', 'jasmine.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-1.3.0/jasmine-html.js', 'jasmine-html.js');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.css', 'jasmine.css');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.js', 'jasmine.js');
+    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine-html.js', 'jasmine-html.js');
     exports.copyTempFile(__dirname + '/../jasmine/jasmine-helper.js', 'jasmine-helper.js');
 
     var reporters = [
