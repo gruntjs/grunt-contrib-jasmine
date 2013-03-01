@@ -188,9 +188,8 @@ grunt.initConfig({
 });
 ```
 
-#### Supplying a custom specrunner
+#### Sample Custom Specrunner usage
 
-Supplying a custom template to the above example
 
 ```js
 // Example configuration
@@ -198,7 +197,10 @@ grunt.initConfig({
   jasmine: {
     yourTask: {
       options: {
-        specrunner: 'CustomSpecrunner.html'
+        specrunner: 'CustomSpecrunner.html',
+        junit: {
+            path: 'testresults/'
+        }
       }
     }
   }
