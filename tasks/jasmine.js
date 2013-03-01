@@ -40,6 +40,7 @@ module.exports = function(grunt) {
       helpers : [],
       vendor  : [],
       outfile : '_SpecRunner.html',
+      specrunner : '',
       host    : '',
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
@@ -60,7 +61,11 @@ module.exports = function(grunt) {
 
     setup(options);
 
-    jasmine.buildSpecrunner(this.filesSrc,options);
+    if (this.specrunner) {
+        options.outfile = this.specrunner;
+    } else {
+        jasmine.buildSpecrunner(this.filesSrc,options);
+    }
 
     // If we're just building (e.g. for web), skip phantom.
     if (this.flags.build) return;
