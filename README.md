@@ -83,7 +83,7 @@ This is automatically deleted upon normal runs
 Type: `String`
 Default: ``
 
-Specifies a specific specrunner to use. This is handy if you have another script that generates your spec.
+Specifies a custom specrunner to use. This is handy if you have another script that generates your spec.
 
 #### options.junit.path
 Type: `String`
