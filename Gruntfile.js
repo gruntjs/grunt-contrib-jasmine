@@ -71,6 +71,17 @@ module.exports = function(grunt) {
 
   grunt.registerTask('watch-test', ['connect', 'watch:pivotal']);
 
-  grunt.registerTask('test', ['jshint', 'jasmine:pivotal', 'jasmine:customTemplate', 'nodeunit']);
+  grunt.registerTask('test', ['jshint', 'jasmine:pivotal', 'jasmine:customTemplate', 'nodeunit', 'testReceiveCoverageDataFromPhantomjs']);
   grunt.registerTask('default', ['test', 'build-contrib']);
+
+  grunt.registerTask('testReceiveCoverageDataFromPhantomjs', function() {
+    grunt.task.run('jasmine:pivotal');
+    grunt.task.run('expectReceiveCoverageDataInGlobal');
+  });
+
+  grunt.registerTask('expectReceiveCoverageDataInGlobal', function() {
+    if (typeof global.__coverage__ === 'undefined')
+      grunt.warn('No coverage data received from phantomjs.');
+  });
+
 };
