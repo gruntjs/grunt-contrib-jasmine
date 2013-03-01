@@ -79,6 +79,12 @@ Default: `_SpecRunner.html`
 This is the auto-generated specfile that phantomjs will use to run your tests.
 This is automatically deleted upon normal runs
 
+#### options.specrunner
+Type: `String`
+Default: ``
+
+Specifies a specific specrunner to use. This is handy if you have another script that generates your spec.
+
 #### options.junit.path
 Type: `String`
 Default: undefined
@@ -176,6 +182,23 @@ grunt.initConfig({
         specs: 'spec/*Spec.js',
         helpers: 'spec/*Helper.js'
         template: 'custom.tmpl'
+      }
+    }
+  }
+});
+```
+
+#### Supplying a custom specrunner
+
+Supplying a custom template to the above example
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    yourTask: {
+      options: {
+        specrunner: 'CustomSpecrunner.html'
       }
     }
   }
