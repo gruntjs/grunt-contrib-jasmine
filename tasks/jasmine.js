@@ -225,6 +225,10 @@ module.exports = function(grunt) {
       }
     });
 
+    phantomjs.on('jasmine.reportIstanbulResults',function(coverage){
+      global.__coverage__ = coverage;
+    });
+    
     phantomjs.on('jasmine.done',function(elapsed){
       phantomjs.halt();
       status.duration = elapsed;

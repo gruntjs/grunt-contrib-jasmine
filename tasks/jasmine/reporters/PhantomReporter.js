@@ -88,6 +88,7 @@ phantom.sendMessage = function() {
     var summary = this.resultsForSpecs(specIds);
     phantom.sendMessage('jasmine.reportRunnerResults',summary);
     phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
+    phantom.sendMessage('jasmine.reportIstanbulResults', (typeof window.__coverage__ === 'undefined') ? {} : window.__coverage__);
     phantom.sendMessage('jasmine.done.PhantomReporter');
   };
 
