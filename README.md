@@ -213,6 +213,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2013-03-07   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
  * 2013-02-23   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
  * 2013-02-16   v0.3.2   Ensure Gruntfile.js is included on npm.
  * 2013-02-14   v0.3.1   First official release for Grunt 0.4.0.
@@ -228,4 +229,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Fri Mar 08 2013 17:16:32.*
+*This file was generated on Sun Mar 10 2013 21:41:54.*

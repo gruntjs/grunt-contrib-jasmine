@@ -54,7 +54,6 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('tasks');
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');

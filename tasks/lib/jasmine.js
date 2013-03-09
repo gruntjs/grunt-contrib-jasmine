@@ -95,7 +95,7 @@ exports.init = function(grunt, phantomjs) {
     var base = path.resolve(baseDir);
     var files = [];
     list.forEach(function(listItem){
-      if (listItem) files = files.concat(grunt.file.expand({filter: 'isFile'},listItem));
+      if (listItem) files = files.concat(grunt.file.expand({nonull: true},listItem));
     });
     files = grunt.util._(files).map(function(file){
       return path.resolve(file).replace(base,'.').replace(/\\/g,'/');

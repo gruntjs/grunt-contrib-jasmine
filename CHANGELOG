@@ -1,3 +1,10 @@
+v0.4.0:
+  date: 2013-03-08
+  changes:
+    - bumped grunt-lib-phantomjs to 0.2.0/1.8
+    - allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http)
+    - merged #30
+    - merged #34
 v0.3.3:
   date: 2013-02-24
   changes:
