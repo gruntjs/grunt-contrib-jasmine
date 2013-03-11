@@ -69,11 +69,15 @@ module.exports = function(grunt) {
 
     var done = this.async();
     phantomRunner(options, function(err,status) {
+      var success = !err && status.failed === 0;
+
       if (err) grunt.log.error(err);
       if (status.failed === 0) grunt.log.ok('0 failures');
       else grunt.log.error(status.failed + ' failures');
+
+      options.keepRunner = options.keepRunner || !success;
       teardown(options);
-      done(!err && status.failed === 0);
+      done(success);
     });
 
   });
