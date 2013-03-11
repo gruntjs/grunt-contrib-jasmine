@@ -44,6 +44,8 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/jasmine.css'
     ];
 
+    jasmineCss = jasmineCss.concat(exports.getRelativeFileList(options.styles));
+
     var jasmineCore = [
       tempDir + '/jasmine.js',
       tempDir + '/jasmine-html.js'
@@ -98,7 +100,7 @@ exports.init = function(grunt, phantomjs) {
       if (listItem) files = files.concat(grunt.file.expand({nonull: true},listItem));
     });
     files = grunt.util._(files).map(function(file){
-      return path.resolve(file).replace(base,'.').replace(/\\/g,'/');
+      return (/^https?:/).test(file) ? file : path.resolve(file).replace(base,'.').replace(/\\/g,'/');
     });
     return files;
   };

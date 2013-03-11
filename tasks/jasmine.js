@@ -37,6 +37,7 @@ module.exports = function(grunt) {
     var options = this.options({
       version : '1.3.1',
       timeout : 10000,
+      styles  : [],
       specs   : [],
       helpers : [],
       vendor  : [],

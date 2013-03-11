@@ -60,30 +60,35 @@ Supply your templates that will be used to automatically build the SpecRunner.
 #### src
 Type: `String|Array`
 
-*Minimatch* - This defines your source files. These are the files that you are testing.
+*Minimatch* - Your source files. These are the files that you are testing.
 
 #### options.specs
 Type: `String|Array`
 
-*Minimatch* - These are your Jasmine specs.
+*Minimatch* - Your Jasmine specs.
 
 #### options.vendor
 Type: `String|Array`
 
-*Minimatch* - These are third party libraries, generally loaded before anything else happens in your tests. You'll likely add things
-like jQuery and Backbone here.
+*Minimatch* - Third party libraries, generally loaded before anything else happens in your tests. Libraries
+like jQuery and Backbone.
 
 #### options.helpers
 Type: `String|Array`
 
-*Minimatch* - These are non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
+*Minimatch* - Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
+
+#### options.styles
+Type: `String|Array`
+
+*Minimatch* - CSS files that get loaded after the jasmine.css
 
 #### options.outfile
 Type: `String`
 Default: `_SpecRunner.html`
 
-This is the auto-generated specfile that phantomjs will use to run your tests.
-This is automatically deleted upon normal runs
+The auto-generated specfile that phantomjs will use to run your tests.
+Automatically deleted upon normal runs
 
 #### options.junit.path
 Type: `String`
@@ -101,7 +106,7 @@ Consolidate the JUnit XML so that there is one file per top level suite.
 Type: `String`
 Default: ''
 
-This is the host you want phantomjs to connect against to run your tests.
+The host you want phantomjs to connect against to run your tests.
 
 e.g. if using an ad hoc server from within grunt
 
@@ -121,7 +126,7 @@ Not defining a host will mean your specs will be run from the local filesystem.
 Type: `String` `Object`
 Default: undefined
 
-Specify a custom template used to generate your Spec Runner. Templates are parsed as underscore templates and provided
+Custom template used to generate your Spec Runner. Parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
 
 You can specify an object with a `process` method that will be called as a template function.
@@ -131,13 +136,13 @@ See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-ja
 Type: `Object`
 Default: `{}`
 
-These options will be passed to your template as an 'options' hash so that you can provide settings to your template.
+Options that will be passed to your template via an 'options' hash. Used to pass settings to the template.
 
 ### Flags
 
 Name: `build`
 
-Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troublshooting templates,
+Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troubleshooting templates,
 running in a browser, or as part of a watch chain e.g.
 
 ```js
@@ -229,4 +234,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sun Mar 10 2013 21:41:54.*
+*This file was generated on Sun Mar 10 2013 22:14:38.*
