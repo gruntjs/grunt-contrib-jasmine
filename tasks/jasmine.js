@@ -126,7 +126,7 @@ module.exports = function(grunt) {
     phantomjs.on('write', grunt.log.write.bind(grunt.log));
     phantomjs.on('writeln', grunt.log.writeln.bind(grunt.log));
     phantomjs.on('error.onError',function(string, trace){
-      if (trace) {
+      if (trace && trace.length) {
         grunt.log.error(string.red + ' at ');
         trace.forEach(function(line) {
           var file = line.file.replace(/^file:/,'');
