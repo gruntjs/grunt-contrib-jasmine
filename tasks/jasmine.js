@@ -88,6 +88,11 @@ module.exports = function(grunt) {
     var file = options.outfile;
 
     if (options.host) {
+      // Ensure our host URL ends with a forward slash so the outfile doesn't get jammed into the host
+      if (options.host.lastIndexOf('/') !== (options.host.length - 1)) {
+        options.host = options.host + '/';
+      }
+
       file = options.host + options.outfile;
     }
 
