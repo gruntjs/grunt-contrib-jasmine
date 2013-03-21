@@ -116,6 +116,8 @@ module.exports = function(grunt) {
   function setup(options) {
     var thisRun = {};
 
+    // allow as many test suites to be run, as we want
+    phantomjs.setMaxListeners(0);
     phantomjs.on('fail.timeout',function(){
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to an unfinished async spec.', 90);
