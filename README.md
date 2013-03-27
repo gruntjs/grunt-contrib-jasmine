@@ -185,7 +185,7 @@ grunt.initConfig({
       src: 'src/**/*.js',
       options: {
         specs: 'spec/*Spec.js',
-        helpers: 'spec/*Helper.js'
+        helpers: 'spec/*Helper.js',
         template: 'custom.tmpl'
       }
     }
