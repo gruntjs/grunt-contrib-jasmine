@@ -231,7 +231,7 @@ phantom.sendMessage = function() {
                 if (!expectation.passed()) {
                   failureMessages.push(expectation.message);
                 }
-              };
+              }
             }
             return {
               assertions: spec.results().items_.length,
