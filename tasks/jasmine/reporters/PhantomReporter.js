@@ -82,9 +82,17 @@ phantom.sendMessage = function() {
     return this.results_[specId];
   };
 
+  function map(values, f) {
+    var result = [];
+    for (var ii = 0; ii < values.length; ii++) {
+      result.push(f(values[ii]));
+    }
+    return result;
+  }
+
   PhantomReporter.prototype.reportRunnerResults = function(runner) {
     this.finished = true;
-    var specIds = runner.specs().map(function(a){return a.id;});
+    var specIds = map(runner.specs(), function(a){return a.id;});
     var summary = this.resultsForSpecs(specIds);
     phantom.sendMessage('jasmine.reportRunnerResults',summary);
     phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
@@ -218,10 +226,10 @@ phantom.sendMessage = function() {
 
   PhantomReporter.prototype.generateJUnitSummary = function(runner) {
     var consolidatedSuites = {},
-        suites = runner.suites().map(function(suite) {
+        suites = map(runner.suites(), function(suite) {
           var failures = 0;
 
-          var testcases = suite.specs().map(function(spec) {
+          var testcases = map(suite.specs(), function(spec) {
             var failureMessages = [];
             if (spec.results().failedCount) {
               failures++;
