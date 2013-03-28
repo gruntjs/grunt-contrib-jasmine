@@ -150,14 +150,15 @@ phantom.sendMessage = function() {
     this.results_[spec.id] = results;
 
     // Quick hack to alleviate cyclical object breaking JSONification.
-    results.messages.forEach(function(item){
+    for (var ii = 0; ii < results.messages.length; ii++) {
+      var item = results.messages[ii];
       if (item.expected) {
         item.expected = stringify(item.expected);
       }
       if (item.actual) {
         item.actual = stringify(item.actual);
       }
-    });
+    }
 
     phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getFullName(spec));
   };
@@ -224,11 +225,13 @@ phantom.sendMessage = function() {
             var failureMessages = [];
             if (spec.results().failedCount) {
               failures++;
-              spec.results().items_.forEach(function(expectation) {
+              var resultsItems = spec.results().items_;
+              for (var ii = 0; ii < resultsItems; ii++) {
+                var expectation = resultsItems[ii];
                 if (!expectation.passed()) {
                   failureMessages.push(expectation.message);
                 }
-              });
+              };
             }
             return {
               assertions: spec.results().items_.length,
