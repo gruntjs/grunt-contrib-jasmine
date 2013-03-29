@@ -21,15 +21,7 @@ module.exports = function(grunt) {
 
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
-  var status = {
-    specs    : 0,
-    failed   : 0,
-    passed   : 0,
-    total    : 0,
-    skipped  : 0,
-    duration : 0,
-    log      : ''
-  };
+  var status = {};
 
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
 
@@ -115,6 +107,16 @@ module.exports = function(grunt) {
 
   function setup(options) {
     var thisRun = {};
+
+    status = {
+      specs    : 0,
+      failed   : 0,
+      passed   : 0,
+      total    : 0,
+      skipped  : 0,
+      duration : 0,
+      log      : ''
+    };
 
     phantomjs.on('fail.timeout',function(){
       grunt.log.writeln();
