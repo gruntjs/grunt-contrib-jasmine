@@ -138,6 +138,12 @@ Default: `{}`
 
 Options that will be passed to your template via an 'options' hash. Used to pass settings to the template.
 
+#### options.keepAlive
+Type: `Boolean`
+Default: `false`
+
+If set to true jasmine async task stay alive even after a test failed.
+
 ### Flags
 
 Name: `build`
