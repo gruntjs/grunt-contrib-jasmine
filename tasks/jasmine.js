@@ -46,7 +46,8 @@ module.exports = function(grunt) {
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
       phantomjs : {},
-      junit: {}
+      junit: {},
+      keepAlive: false
     });
 
     if (options.template === 'requirejs') {
@@ -73,7 +74,7 @@ module.exports = function(grunt) {
       if (status.failed === 0) grunt.log.ok('0 failures');
       else grunt.log.error(status.failed + ' failures');
       teardown(options);
-      done(!err && status.failed === 0);
+      done(!err && (status.failed === 0 || options.keepAlive));
     });
 
   });
