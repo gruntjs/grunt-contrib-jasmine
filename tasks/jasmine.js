@@ -80,6 +80,7 @@ module.exports = function(grunt) {
     var file = options.outfile;
 
     if (options.host) {
+      if (!(/\/$/).test(options.host)) options.host = options.host + '/';
       file = options.host + options.outfile;
     }
 
