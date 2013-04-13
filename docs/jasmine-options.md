@@ -45,6 +45,12 @@ Default: `_SpecRunner.html`
 The auto-generated specfile that phantomjs will use to run your tests.
 Automatically deleted upon normal runs
 
+## options.keepRunner
+Type: `Boolean`
+Default: `false`
+
+Prevents the auto-generated specfile used to run your tests from being automatically deleted.
+
 ## options.junit.path
 Type: `String`
 Default: undefined
