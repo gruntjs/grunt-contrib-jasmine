@@ -103,11 +103,8 @@ module.exports = function(grunt) {
     if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
     if (!options.keepRunner) jasmine.cleanTemp();
 
-    // Have to explicitly unregister nested wildcards. Need to file a bug for EventEmitter2
-    phantomjs.removeAllListeners('*');
-    phantomjs.removeAllListeners('jasmine.*');
-    phantomjs.removeAllListeners('error.*');
-    phantomjs.removeAllListeners('jasmine.done.*');
+    phantomjs.removeAllListeners();
+    phantomjs.listenersAny().length = 0;
   }
 
   function setup(options) {
