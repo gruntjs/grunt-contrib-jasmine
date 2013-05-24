@@ -233,6 +233,12 @@ NPM Templates are just node modules, so you can write and treat them as such.
 Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) documentation
 for more information on the RequireJS template.
 
+#### Polyfilling PhantomJS
+
+In some cases, you might need to polyfill features that are missing in PhantomJS. For example, `Function.prototype.bind` 
+is missing in PhantomJS version 1.9.0. ([Read more on this issue](https://groups.google.com/forum/#!msg/phantomjs/r0hPOmnCUpc/uxusqsl2LNoJ).)
+
+Simply include your polyfills either as an additional source file, or as a helper.
 
 ## Release History
 
