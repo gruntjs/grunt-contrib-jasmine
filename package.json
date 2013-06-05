@@ -28,7 +28,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "~0.3.0",
+    "grunt-lib-phantomjs": "git://github.com/HBehrens/grunt-lib-phantomjs.git#791ae961b2d4c8d59a55dd9be50d15ee8b949081",
     "rimraf": "~2.0.3"
   },
   "devDependencies": {
