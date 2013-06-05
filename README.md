@@ -83,12 +83,30 @@ Type: `String|Array`
 
 *Minimatch* - CSS files that get loaded after the jasmine.css
 
+#### options.version
+Type: `String`
+Default: '1.3.1'
+
+This is the jasmine-version which will be used. currently available versions are:
+
+* 1.0.0
+* 1.1.0
+* 1.2.0
+* 1.3.0
+* 1.3.1
+
 #### options.outfile
 Type: `String`
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
 Automatically deleted upon normal runs
+
+#### options.keepRunner
+Type: `Boolean`
+Default: `false`
+
+Prevents the auto-generated specfile used to run your tests from being automatically deleted.
 
 #### options.junit.path
 Type: `String`
@@ -185,7 +203,7 @@ grunt.initConfig({
       src: 'src/**/*.js',
       options: {
         specs: 'spec/*Spec.js',
-        helpers: 'spec/*Helper.js'
+        helpers: 'spec/*Helper.js',
         template: 'custom.tmpl'
       }
     }
@@ -218,6 +236,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2013-04-02   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
  * 2013-03-07   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
  * 2013-02-23   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
  * 2013-02-16   v0.3.2   Ensure Gruntfile.js is included on npm.
@@ -234,4 +253,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sun Mar 10 2013 22:14:38.*
+*This file was generated on Fri Apr 12 2013 19:45:58.*

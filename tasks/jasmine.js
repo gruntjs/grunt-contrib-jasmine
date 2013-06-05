@@ -21,15 +21,7 @@ module.exports = function(grunt) {
 
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
-  var status = {
-    specs    : 0,
-    failed   : 0,
-    passed   : 0,
-    total    : 0,
-    skipped  : 0,
-    duration : 0,
-    log      : ''
-  };
+  var status = {};
 
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
 
@@ -69,11 +61,15 @@ module.exports = function(grunt) {
 
     var done = this.async();
     phantomRunner(options, function(err,status) {
+      var success = !err && status.failed === 0;
+
       if (err) grunt.log.error(err);
       if (status.failed === 0) grunt.log.ok('0 failures');
       else grunt.log.error(status.failed + ' failures');
+
+      options.keepRunner = options.keepRunner || !success;
       teardown(options);
-      done(!err && status.failed === 0);
+      done(success);
     });
 
   });
@@ -88,6 +84,7 @@ module.exports = function(grunt) {
     var file = options.outfile;
 
     if (options.host) {
+      if (!(/\/$/).test(options.host)) options.host = options.host + '/';
       file = options.host + options.outfile;
     }
 
@@ -103,8 +100,8 @@ module.exports = function(grunt) {
   }
 
   function teardown(options) {
-    if (fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
-    jasmine.cleanTemp();
+    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
+    if (!options.keepRunner) jasmine.cleanTemp();
 
     // Have to explicitly unregister nested wildcards. Need to file a bug for EventEmitter2
     phantomjs.removeAllListeners('*');
@@ -115,6 +112,16 @@ module.exports = function(grunt) {
 
   function setup(options) {
     var thisRun = {};
+
+    status = {
+      specs    : 0,
+      failed   : 0,
+      passed   : 0,
+      total    : 0,
+      skipped  : 0,
+      duration : 0,
+      log      : ''
+    };
 
     phantomjs.on('fail.timeout',function(){
       grunt.log.writeln();

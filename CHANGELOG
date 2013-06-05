@@ -1,3 +1,9 @@
+v0.4.2:
+  date: 2013-04-03
+  changes:
+    - bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes #45)
+    - merged #38, #51
+    - addressed #40, #43, #48, #45
 v0.4.0:
   date: 2013-03-08
   changes:

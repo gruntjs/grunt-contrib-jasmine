@@ -26,12 +26,30 @@ Type: `String|Array`
 
 *Minimatch* - CSS files that get loaded after the jasmine.css
 
+## options.version
+Type: `String`
+Default: '1.3.1'
+
+This is the jasmine-version which will be used. currently available versions are:
+
+* 1.0.0
+* 1.1.0
+* 1.2.0
+* 1.3.0
+* 1.3.1
+
 ## options.outfile
 Type: `String`
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
 Automatically deleted upon normal runs
+
+## options.keepRunner
+Type: `Boolean`
+Default: `false`
+
+Prevents the auto-generated specfile used to run your tests from being automatically deleted.
 
 ## options.junit.path
 Type: `String`
