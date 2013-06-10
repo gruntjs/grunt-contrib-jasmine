@@ -41,6 +41,12 @@ module.exports = function(grunt) {
       junit: {}
     });
 
+    if (!options.basePath) {
+      var outputDeepness = new Array(options.outfile.split(path.sep).length);
+      options.basePath = (outputDeepness.length > 1) ? outputDeepness.join('..'+path.sep).slice(0,-1)
+                                                     : '.';
+    }
+
     if (options.template === 'requirejs') {
       grunt.log.warn(
         'The requirejs template is no longer included in grunt-contrib-jasmine core.\n' +

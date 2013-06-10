@@ -45,6 +45,12 @@ module.exports = function(grunt) {
             consolidate: true
           }
         }
+      },
+      deepOutfile: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          outfile: 'tmp/spec.html'
+        }
       }
     },
     nodeunit: {
