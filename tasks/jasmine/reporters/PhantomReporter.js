@@ -114,6 +114,11 @@ phantom.sendMessage = function() {
       // If we're a node
       if (value instanceof Node) return '[ Node ]';
 
+      // jasmine-given has expectations on Specs. We intercept to return a
+      // String to avoid stringifying the entire Jasmine environment, which
+      // results in exponential string growth
+      if (value instanceof jasmine.Spec) return '[ Spec: ' + value.description + ' ]';
+
       // If we're a window (logic stolen from jQuery)
       if (value.window && value.window === value.window.window) return '[ Window ]';
 
