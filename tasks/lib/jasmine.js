@@ -44,7 +44,12 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/jasmine.css'
     ];
 
-    jasmineCss = jasmineCss.concat(exports.getRelativeFileList(options.styles));
+    var source = '',
+      outfile = options.outfile,
+      specrunner = path.join(baseDir,outfile),
+      outdir = path.dirname(outfile);
+
+    jasmineCss = jasmineCss.concat(options.styles);
 
     var jasmineCore = [
       tempDir + '/jasmine.js',
@@ -55,21 +60,18 @@ exports.init = function(grunt, phantomjs) {
 
     var context = {
       temp : tempDir,
-      css  : jasmineCss,
+      css  : exports.getRelativeFileList(outdir, jasmineCss),
       scripts : {
-        jasmine   : exports.getRelativeFileList(jasmineCore),
-        helpers   : exports.getRelativeFileList(options.helpers),
-        specs     : exports.getRelativeFileList(options.specs),
-        src       : exports.getRelativeFileList(src),
-        vendor    : exports.getRelativeFileList(options.vendor),
-        reporters : exports.getRelativeFileList(reporters),
-        start     : exports.getRelativeFileList(jasmineHelper)
+        jasmine   : exports.getRelativeFileList(outdir, jasmineCore),
+        helpers   : exports.getRelativeFileList(outdir, options.helpers),
+        specs     : exports.getRelativeFileList(outdir, options.specs),
+        src       : exports.getRelativeFileList(outdir, src),
+        vendor    : exports.getRelativeFileList(outdir, options.vendor),
+        reporters : exports.getRelativeFileList(outdir, reporters),
+        start     : exports.getRelativeFileList(outdir, jasmineHelper)
       },
       options : options.templateOptions || {}
     };
-
-    var source = '',
-      specrunner = path.join(baseDir,options.outfile);
 
     if (options.template.process) {
       var task = {
@@ -93,14 +95,16 @@ exports.init = function(grunt, phantomjs) {
 
   exports.getRelativeFileList = function (/* args... */) {
 
-    var list = Array.prototype.slice.call(arguments);
+    var list = Array.prototype.slice.call(arguments),
+        outdir = list.shift();
     var base = path.resolve(baseDir);
     var files = [];
     list.forEach(function(listItem){
       if (listItem) files = files.concat(grunt.file.expand({nonull: true},listItem));
     });
+
     files = grunt.util._(files).map(function(file){
-      return (/^https?:/).test(file) ? file : path.resolve(file).replace(base,'.').replace(/\\/g,'/');
+      return (/^https?:/).test(file) ? file : path.relative(outdir, file).replace(/\\/g, '/');
     });
     return files;
   };
