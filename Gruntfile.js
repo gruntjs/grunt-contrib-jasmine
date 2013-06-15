@@ -62,6 +62,13 @@ module.exports = function(grunt) {
           vendor: 'http://code.jquery.com/jquery-1.10.1.min.js'
         }
       },
+// @todo: automate fail case here
+//      syntaxError: {
+//        src: 'test/fixtures/syntaxError/src/**/*.js',
+//        options: {
+//          specs: 'test/fixtures/syntaxError/spec/**/*.js'
+//        }
+//      },
       customTemplate: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {

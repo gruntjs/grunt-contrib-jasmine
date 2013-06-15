@@ -140,7 +140,8 @@ module.exports = function(grunt) {
           grunt.log.error(message.red);
         });
       } else {
-        grunt.log.error(string.red);
+        grunt.log.error("Error caught from phantom. More info can be found by opening the Spec Runner in a browser.");
+        grunt.warn(string);
       }
     });
 
