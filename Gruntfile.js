@@ -36,6 +36,12 @@ module.exports = function(grunt) {
           version: '1.2.0'
         }
       },
+      deepOutfile: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          outfile: 'tmp/spec.html'
+        }
+      },
       customTemplate: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
