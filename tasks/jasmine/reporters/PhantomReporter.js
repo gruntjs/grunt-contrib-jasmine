@@ -82,9 +82,17 @@ phantom.sendMessage = function() {
     return this.results_[specId];
   };
 
+  function map(values, f) {
+    var result = [];
+    for (var ii = 0; ii < values.length; ii++) {
+      result.push(f(values[ii]));
+    }
+    return result;
+  }
+
   PhantomReporter.prototype.reportRunnerResults = function(runner) {
     this.finished = true;
-    var specIds = runner.specs().map(function(a){return a.id;});
+    var specIds = map(runner.specs(), function(a){return a.id;});
     var summary = this.resultsForSpecs(specIds);
     phantom.sendMessage('jasmine.reportRunnerResults',summary);
     phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
@@ -150,14 +158,15 @@ phantom.sendMessage = function() {
     this.results_[spec.id] = results;
 
     // Quick hack to alleviate cyclical object breaking JSONification.
-    results.messages.forEach(function(item){
+    for (var ii = 0; ii < results.messages.length; ii++) {
+      var item = results.messages[ii];
       if (item.expected) {
         item.expected = stringify(item.expected);
       }
       if (item.actual) {
         item.actual = stringify(item.actual);
       }
-    });
+    }
 
     phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getFullName(spec));
   };
@@ -217,18 +226,20 @@ phantom.sendMessage = function() {
 
   PhantomReporter.prototype.generateJUnitSummary = function(runner) {
     var consolidatedSuites = {},
-        suites = runner.suites().map(function(suite) {
+        suites = map(runner.suites(), function(suite) {
           var failures = 0;
 
-          var testcases = suite.specs().map(function(spec) {
+          var testcases = map(suite.specs(), function(spec) {
             var failureMessages = [];
             if (spec.results().failedCount) {
               failures++;
-              spec.results().items_.forEach(function(expectation) {
+              var resultsItems = spec.results().items_;
+              for (var ii = 0; ii < resultsItems; ii++) {
+                var expectation = resultsItems[ii];
                 if (!expectation.passed()) {
                   failureMessages.push(expectation.message);
                 }
-              });
+              }
             }
             return {
               assertions: spec.results().items_.length,
