@@ -35,6 +35,7 @@ exports.init = function(grunt, phantomjs) {
     exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.js', 'jasmine.js');
     exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine-html.js', 'jasmine-html.js');
     exports.copyTempFile(__dirname + '/../jasmine/jasmine-helper.js', 'jasmine-helper.js');
+    exports.copyTempFile(__dirname + '/../helpers/phantom-polyfill.js', 'phantom-polyfill.js');
 
     var reporters = [
       tempDir + '/reporter.js'
@@ -51,6 +52,10 @@ exports.init = function(grunt, phantomjs) {
 
     jasmineCss = jasmineCss.concat(options.styles);
 
+    var polyfills = [
+      tempDir + '/phantom-polyfill.js'
+    ];
+
     var jasmineCore = [
       tempDir + '/jasmine.js',
       tempDir + '/jasmine-html.js'
@@ -62,6 +67,7 @@ exports.init = function(grunt, phantomjs) {
       temp : tempDir,
       css  : exports.getRelativeFileList(outdir, jasmineCss),
       scripts : {
+        polyfills : exports.getRelativeFileList(outdir, polyfills),
         jasmine   : exports.getRelativeFileList(outdir, jasmineCore),
         helpers   : exports.getRelativeFileList(outdir, options.helpers),
         specs     : exports.getRelativeFileList(outdir, options.specs),

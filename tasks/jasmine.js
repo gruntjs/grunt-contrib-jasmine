@@ -198,11 +198,14 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.reportRunnerResults',function(){
       var dur = (new Date()).getTime() - thisRun.start_time;
       var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
+      grunt.verbose.writeln('Runner finished');
+      if (thisRun.executed_specs === 0) {
+        grunt.warn('No specs executed, is there a configuration error?');
+      }
       if (!grunt.option('verbose')) {
         grunt.log.writeln('');
         grunt.log.write(status.log);
       }
-      grunt.verbose.writeln('Runner finished');
       grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
     });
 

@@ -236,21 +236,21 @@ for more information on the RequireJS template.
 
 ## Release History
 
- * 2013-04-02   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
- * 2013-03-07   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
- * 2013-02-23   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
- * 2013-02-16   v0.3.2   Ensure Gruntfile.js is included on npm.
- * 2013-02-14   v0.3.1   First official release for Grunt 0.4.0.
- * 2013-01-21   v0.3.1rc7   Exposed phantom and sendMessage to templates
- * 2013-01-21   v0.3.0rc7   Updated dependencies for grunt v0.4.0rc6/rc7
- * 2013-01-07   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to this.filesSrc api. Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
- * 2012-12-02   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
- * 2012-11-23   v0.1.2   Updated for new grunt/grunt-contrib apis
- * 2012-11-06   v0.1.1   Fixed race condition in requirejs template
- * 2012-11-06   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
+ * 2013-04-03   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
+ * 2013-03-08   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
+ * 2013-02-24   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
+ * 2013-02-17   v0.3.2   Ensure Gruntfile.js is included on npm.
+ * 2013-02-15   v0.3.1   First official release for Grunt 0.4.0.
+ * 2013-01-22   v0.3.1rc7   Exposed phantom and sendMessage to templates
+ * 2013-01-22   v0.3.0rc7   Updated dependencies for grunt v0.4.0rc6/rc7
+ * 2013-01-08   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to this.filesSrc api. Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
+ * 2012-12-03   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
+ * 2012-11-24   v0.1.2   Updated for new grunt/grunt-contrib apis
+ * 2012-11-07   v0.1.1   Fixed race condition in requirejs template
+ * 2012-11-07   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
 
 ---
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Fri Apr 12 2013 19:45:58.*
+*This file was generated on Sat Jun 15 2013 09:12:10.*

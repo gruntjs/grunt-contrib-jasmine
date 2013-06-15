@@ -22,6 +22,7 @@ exports.jasmine = {
     var context = {
       css  : ['css/a.css'],
       scripts : {
+        polyfills : ['p1.js'],
         jasmine   : ['J1.js','J2.js'],
         helpers   : ['H1.js','H2.js'],
         specs     : ['SPEC1.js','SPEC2.js'],

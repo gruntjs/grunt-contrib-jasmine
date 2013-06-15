@@ -20,20 +20,31 @@ module.exports = function(grunt) {
       }
     },
     jasmine: {
-      options: {
-        specs: 'test/fixtures/pivotal/spec/*Spec.js',
-        helpers: 'test/fixtures/pivotal/spec/*Helper.js',
-        junit: {
-          path: 'junit'
-        }
-      },
       pivotal: {
-        src: 'test/fixtures/pivotal/src/**/*.js'
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          junit: {
+            path: 'junit'
+          }
+        },
+      },
+      phantom_polyfills: {
+        src: 'test/fixtures/phantom-polyfills/src/**/*.js',
+        options : {
+          specs : 'test/fixtures/phantom-polyfills/spec/**/*.js',
+        }
       },
       legacyVersion: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
-          version: '1.2.0'
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          version: '1.2.0',
+          junit: {
+            path: 'junit'
+          }
         }
       },
       deepOutfile: {
@@ -45,6 +56,8 @@ module.exports = function(grunt) {
       customTemplate: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
           template: 'test/fixtures/customTemplate/custom.tmpl',
           junit: {
             path: 'junit/customTemplate',
