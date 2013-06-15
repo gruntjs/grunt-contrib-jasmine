@@ -3,5 +3,7 @@
 .jshintrc
 .jshintignore
 .gitattributes
+.idea
+.grunt
 test
 docs
