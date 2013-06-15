@@ -34,23 +34,19 @@ of jasmine through grunt which served as motivation for all the future work.
 
 Run your tests on your local filesystem or via a server task like [grunt-contrib-connect][].
 
-#### AMD Support
-
-Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) module
-
-#### Customize your SpecRunner with your own template
+#### Customize your SpecRunner with templates
 
 Supply your templates that will be used to automatically build the SpecRunner.
 
-#### Third party templates
+##### AMD Support
+
+Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) module
+
+##### Third party templates
 
 - [RequireJS](https://github.com/jsoverson/grunt-template-jasmine-requirejs)
 - [Code coverage output with Istanbul](https://github.com/maenu/grunt-template-jasmine-istanbul)
 - [StealJS](https://github.com/jaredstehler/grunt-template-jasmine-steal)
-
-#### Example application usage
-
-- [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
 
@@ -172,6 +168,11 @@ watch: {
 }
 ```
 
+#### Example application usage
+
+- [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
+
+
 #### Basic Use
 
 Sample configuration to run Pivotal Labs' example Jasmine application.
@@ -253,4 +254,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Jun 15 2013 09:12:10.*
+*This file was generated on Sat Jun 15 2013 11:00:01.*

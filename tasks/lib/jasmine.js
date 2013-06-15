@@ -65,14 +65,14 @@ exports.init = function(grunt, phantomjs) {
 
     var context = {
       temp : tempDir,
-      css  : exports.getRelativeFileList(outdir, jasmineCss),
+      css  : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
       scripts : {
         polyfills : exports.getRelativeFileList(outdir, polyfills),
         jasmine   : exports.getRelativeFileList(outdir, jasmineCore),
-        helpers   : exports.getRelativeFileList(outdir, options.helpers),
+        helpers   : exports.getRelativeFileList(outdir, options.helpers, { nonull : true }),
         specs     : exports.getRelativeFileList(outdir, options.specs),
-        src       : exports.getRelativeFileList(outdir, src),
-        vendor    : exports.getRelativeFileList(outdir, options.vendor),
+        src       : exports.getRelativeFileList(outdir, src, { nonull : true }),
+        vendor    : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
         reporters : exports.getRelativeFileList(outdir, reporters),
         start     : exports.getRelativeFileList(outdir, jasmineHelper)
       },
@@ -99,14 +99,12 @@ exports.init = function(grunt, phantomjs) {
     return source;
   };
 
-  exports.getRelativeFileList = function (/* args... */) {
-
-    var list = Array.prototype.slice.call(arguments),
-        outdir = list.shift();
-    var base = path.resolve(baseDir);
+  exports.getRelativeFileList = function (outdir, patterns, options) {
     var files = [];
-    list.forEach(function(listItem){
-      if (listItem) files = files.concat(grunt.file.expand({nonull: true},listItem));
+    patterns = patterns instanceof Array ? patterns : [ patterns ];
+    options = options || {};
+    patterns.forEach(function(listItem){
+      if (listItem) files = files.concat(grunt.file.expand(options, listItem));
     });
 
     files = grunt.util._(files).map(function(file){

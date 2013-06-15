@@ -1,3 +1,8 @@
+## Example application usage
+
+- [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
+
+
 ## Basic Use
 
 Sample configuration to run Pivotal Labs' example Jasmine application.

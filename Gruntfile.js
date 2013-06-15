@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           junit: {
             path: 'junit'
           }
-        },
+        }
       },
       phantom_polyfills: {
         src: 'test/fixtures/phantom-polyfills/src/**/*.js',
@@ -50,7 +50,16 @@ module.exports = function(grunt) {
       deepOutfile: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
           outfile: 'tmp/spec.html'
+        }
+      },
+      externalVendor: {
+        src: 'test/fixtures/externalVendor/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/externalVendor/spec/**/*.js',
+          vendor: 'http://code.jquery.com/jquery-1.10.1.min.js'
         }
       },
       customTemplate: {
