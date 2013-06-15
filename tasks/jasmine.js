@@ -68,8 +68,9 @@ module.exports = function(grunt) {
       else grunt.log.error(status.failed + ' failures');
 
       options.keepRunner = options.keepRunner || !success;
-      teardown(options);
-      done(success);
+      teardown(options, function(){
+        done(success);
+      });
     });
 
   });
@@ -99,12 +100,12 @@ module.exports = function(grunt) {
     });
   }
 
-  function teardown(options) {
-    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
-    if (!options.keepRunner) jasmine.cleanTemp();
-
+  function teardown(options, cb) {
     phantomjs.removeAllListeners();
     phantomjs.listenersAny().length = 0;
+
+    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
+    if (!options.keepRunner) jasmine.cleanTemp(cb);
   }
 
   function setup(options) {

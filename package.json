@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "grunt-lib-phantomjs": "~0.3.0",
-    "rimraf": "~2.0.3"
+    "rimraf": "~2.1.4"
   },
   "devDependencies": {
     "grunt-contrib-internal": "~0.4.0",

@@ -24,8 +24,11 @@ exports.init = function(grunt, phantomjs) {
     grunt.file.copy(src, file);
   };
 
-  exports.cleanTemp = function() {
-    rimraf.sync(tempDir);
+  exports.cleanTemp = function(cb) {
+    rimraf(tempDir, function(){
+      // if this fails, then ./.grunt isn't empty and that's ok.
+      fs.rmdir('.grunt', cb);
+    });
   };
 
   exports.buildSpecrunner = function (src, options){
