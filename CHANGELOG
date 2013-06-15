@@ -1,3 +1,11 @@
+v0.5.0:
+  date: 2013-06-15
+  changes:
+    - updated rimraf
+    - made teardown async,
+    - added Function.prototype.bind polyfill
+    - breaking : (templates) changed input options for getRelativeFileList
+    - breaking : (usage) failing task on phantom error (SyntaxError, TypeError, et al)
 v0.4.2:
   date: 2013-04-03
   changes:

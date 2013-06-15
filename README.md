@@ -80,7 +80,7 @@ Type: `String|Array`
 *Minimatch* - CSS files that get loaded after the jasmine.css
 
 #### options.version
-Type: `String`
+Type: `String`  
 Default: '1.3.1'
 
 This is the jasmine-version which will be used. currently available versions are:
@@ -92,32 +92,32 @@ This is the jasmine-version which will be used. currently available versions are
 * 1.3.1
 
 #### options.outfile
-Type: `String`
+Type: `String`  
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
 Automatically deleted upon normal runs
 
 #### options.keepRunner
-Type: `Boolean`
-Default: `false`
+Type: `Boolean`  
+Default: `false`  
 
 Prevents the auto-generated specfile used to run your tests from being automatically deleted.
 
 #### options.junit.path
-Type: `String`
+Type: `String`  
 Default: undefined
 
 Path to output JUnit xml
 
 #### options.junit.consolidate
-Type: `Boolean`
+Type: `Boolean`  
 Default: `false`
 
 Consolidate the JUnit XML so that there is one file per top level suite.
 
 #### options.host
-Type: `String`
+Type: `String`  
 Default: ''
 
 The host you want phantomjs to connect against to run your tests.
@@ -137,7 +137,7 @@ host : 'http://127.0.0.1:<%= connect.port %>/'
 Not defining a host will mean your specs will be run from the local filesystem.
 
 #### options.template
-Type: `String` `Object`
+Type: `String` `Object`  
 Default: undefined
 
 Custom template used to generate your Spec Runner. Parsed as underscore templates and provided
@@ -147,7 +147,7 @@ You can specify an object with a `process` method that will be called as a templ
 See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for more details.
 
 #### options.templateOptions
-Type: `Object`
+Type: `Object`  
 Default: `{}`
 
 Options that will be passed to your template via an 'options' hash. Used to pass settings to the template.
@@ -237,6 +237,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2013-06-15   v0.5.0   updated rimraf made teardown async, added Function.prototype.bind polyfill [object Object] [object Object]
  * 2013-04-03   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
  * 2013-03-08   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
  * 2013-02-24   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
@@ -254,4 +255,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Jun 15 2013 11:00:01.*
+*This file was generated on Sat Jun 15 2013 12:25:20.*
