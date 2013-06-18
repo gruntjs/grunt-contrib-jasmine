@@ -67,7 +67,6 @@ module.exports = function(grunt) {
       if (status.failed === 0) grunt.log.ok('0 failures');
       else grunt.log.error(status.failed + ' failures');
 
-      options.keepRunner = options.keepRunner || !success;
       teardown(options, function(){
         done(success);
       });
@@ -105,7 +104,11 @@ module.exports = function(grunt) {
     phantomjs.listenersAny().length = 0;
 
     if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
-    if (!options.keepRunner) jasmine.cleanTemp(cb);
+    if (!options.keepRunner) {
+      jasmine.cleanTemp(cb);
+    } else {
+      cb();
+    }
   }
 
   function setup(options) {
