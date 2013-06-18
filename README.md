@@ -237,7 +237,8 @@ for more information on the RequireJS template.
 
 ## Release History
 
- * 2013-06-15   v0.5.0   updated rimraf made teardown async, added Function.prototype.bind polyfill [object Object] [object Object]
+ * 2013-06-18   v0.5.1   Merged /69 grunt async not called when tests fail OR keepRunner is true
+ * 2013-06-15   v0.5.0   updated rimraf made teardown async, added Function.prototype.bind polyfill breaking (templates) changed input options for getRelativeFileList breaking (usage) failing task on phantom error (SyntaxError, TypeError, et al)
  * 2013-04-03   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
  * 2013-03-08   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
  * 2013-02-24   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
@@ -255,4 +256,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Jun 15 2013 12:25:20.*
+*This file was generated on Tue Jun 18 2013 10:24:45.*
