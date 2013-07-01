@@ -120,7 +120,7 @@ phantom.sendMessage = function() {
       if (!value) return value;
 
       // If we're a node
-      if (value instanceof Node) return '[ Node ]';
+      if (typeof(Node) !== 'undefined' && value instanceof Node) return '[ Node ]';
 
       // jasmine-given has expectations on Specs. We intercept to return a
       // String to avoid stringifying the entire Jasmine environment, which
