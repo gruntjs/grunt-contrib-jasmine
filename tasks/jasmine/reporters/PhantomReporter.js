@@ -239,7 +239,7 @@ phantom.sendMessage = function() {
             if (spec.results().failedCount) {
               failures++;
               var resultsItems = spec.results().items_;
-              for (var ii = 0; ii < resultsItems; ii++) {
+              for (var ii = 0; ii < resultsItems.length; ii++) {
                 var expectation = resultsItems[ii];
                 if (!expectation.passed()) {
                   failureMessages.push(expectation.message);
