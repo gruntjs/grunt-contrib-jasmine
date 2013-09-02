@@ -236,10 +236,14 @@ phantom.sendMessage = function() {
 
           var testcases = map(suite.specs(), function(spec) {
             var failureMessages = [];
-            if (spec.results().failedCount) {
+            var specResults = spec.results();
+            var resultsItems = specResults.items_;
+            var resultsItemCount = resultsItems.length;
+
+            if (specResults.failedCount) {
               failures++;
-              var resultsItems = spec.results().items_;
-              for (var ii = 0; ii < resultsItems; ii++) {
+
+              for (var ii = 0; ii < resultsItemCount; ii++) {
                 var expectation = resultsItems[ii];
                 if (!expectation.passed()) {
                   failureMessages.push(expectation.message);
@@ -247,7 +251,7 @@ phantom.sendMessage = function() {
               }
             }
             return {
-              assertions: spec.results().items_.length,
+              assertions: resultsItemCount,
               className: getNestedSuiteName(spec.suite),
               name: spec.description,
               time: spec.duration / 1000,
