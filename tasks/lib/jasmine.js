@@ -32,6 +32,23 @@ exports.init = function(grunt, phantomjs) {
   };
 
   exports.buildSpecrunner = function (src, options){
+    var source = '',
+      outfile = options.outfile,
+      specrunner = path.join(baseDir,outfile),
+      outdir = path.dirname(outfile),
+      gruntfilter = grunt.option("filter"),
+      filteredSpecs = exports.getRelativeFileList(outdir, options.specs);
+
+    // Let's filter through the spec files here,
+    // there's no need to go on if no specs matches
+    if(gruntfilter) {
+      filteredSpecs = specFilter(gruntfilter, filteredSpecs);
+
+      if(filteredSpecs.length === 0) {
+        grunt.log.warn("the --filter flag did not match any spec within " + grunt.task.current.target);
+        return null;
+      }
+    }
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
     exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.css', 'jasmine.css');
@@ -47,11 +64,6 @@ exports.init = function(grunt, phantomjs) {
     var jasmineCss = [
       tempDir + '/jasmine.css'
     ];
-
-    var source = '',
-      outfile = options.outfile,
-      specrunner = path.join(baseDir,outfile),
-      outdir = path.dirname(outfile);
 
     jasmineCss = jasmineCss.concat(options.styles);
 
@@ -73,7 +85,7 @@ exports.init = function(grunt, phantomjs) {
         polyfills : exports.getRelativeFileList(outdir, polyfills),
         jasmine   : exports.getRelativeFileList(outdir, jasmineCore),
         helpers   : exports.getRelativeFileList(outdir, options.helpers, { nonull : true }),
-        specs     : exports.getRelativeFileList(outdir, options.specs),
+        specs     : filteredSpecs,
         src       : exports.getRelativeFileList(outdir, src, { nonull : true }),
         vendor    : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
         reporters : exports.getRelativeFileList(outdir, reporters),
@@ -115,6 +127,45 @@ exports.init = function(grunt, phantomjs) {
     });
     return files;
   };
+
+  // Allows for a spec file to be specified via the command line
+  function specFilter(pattern, files) {
+    var specPattern,
+      patternArray,
+      filteredArray = [],
+      scriptSpecs = [],
+      matchPath = function(path) {
+        return !!path.match(specPattern);
+      };
+
+    if(pattern) {
+      // For '*' to work as a wildcard.
+      pattern = pattern.split("*").join("[\\S]*").replace(/\./g, "\\.");
+      // This allows for comma separated strings to which we can match the spec files.
+      patternArray = pattern.split(",");
+
+      while(patternArray.length > 0) {
+        pattern = (patternArray.splice(0, 1)[0]);
+
+        if(pattern.length > 0) {
+          if(pattern.indexOf('/') === -1) {
+            specPattern = new RegExp("("+pattern+"[^/]*)(?!/)$", "ig");
+          } else if(pattern.indexOf('/') === 0) {
+            specPattern = new RegExp("("+pattern+"[^/]*)(?=/)", "ig");
+          } else {
+            throw new TypeError("--filter flag seems to be in the wrong format.");
+          }
+
+          // push is usually faster than concat.
+          [].push.apply(scriptSpecs, files.filter(matchPath));
+        }
+      }
+
+      filteredArray = grunt.util._.uniq(scriptSpecs);
+    }
+
+    return filteredArray;
+  }
 
   return exports;
 };
