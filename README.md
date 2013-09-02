@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.5.1 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -168,6 +168,24 @@ watch: {
 }
 ```
 
+### Filtering specs
+
+**filename**
+`grunt jasmine --filter=foo` will run spec files that have `foo` in their file name.
+
+**folder**
+`grunt jasmine --filter=/foo` will run spec files within folders that have `foo*` in their name.
+
+**wildcard**
+`grunt jasmine --filter=/*-bar` will run anything that is located in a folder `*-bar`
+
+**comma separated filters**
+`grunt jasmine --filter=foo,bar` will run spec files that have `foo` or `bar` in their file name.
+
+**flags with space**
+`grunt jasmine --filter="foo bar"` will run spec files that have `foo bar` in their file name.
+`grunt jasmine --filter="/foo bar"` will run spec files within folders that have `foo bar*` in their name.
+
 #### Example application usage
 
 - [Pivotal Labs' sample application](https://github.com/jsoverson/grunt-contrib-jasmine-example)
@@ -256,4 +274,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Aug 12 2013 10:17:43.*
+*This file was generated on Mon Sep 02 2013 11:01:49.*

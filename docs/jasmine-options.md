@@ -114,3 +114,21 @@ watch: {
   }
 }
 ```
+
+# Filtering specs
+
+**filename**
+`grunt jasmine --filter=foo` will run spec files that have `foo` in their file name.
+
+**folder**
+`grunt jasmine --filter=/foo` will run spec files within folders that have `foo*` in their name.
+
+**wildcard**
+`grunt jasmine --filter=/*-bar` will run anything that is located in a folder `*-bar`
+
+**comma separated filters**
+`grunt jasmine --filter=foo,bar` will run spec files that have `foo` or `bar` in their file name.
+
+**flags with space**
+`grunt jasmine --filter="foo bar"` will run spec files that have `foo bar` in their file name.
+`grunt jasmine --filter="/foo bar"` will run spec files within folders that have `foo bar*` in their name.
