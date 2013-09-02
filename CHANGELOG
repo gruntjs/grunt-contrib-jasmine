@@ -1,3 +1,9 @@
+v0.5.2:
+  date: 2013-08-02
+  changes:
+    - Fixed breakage with iframes /44
+    - Added filter flag / 70
+    - Fixed junit failure output /77
 v0.5.1:
   date: 2013-06-18
   changes:
