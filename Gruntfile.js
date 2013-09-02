@@ -9,7 +9,22 @@
 'use strict';
 
 module.exports = function(grunt) {
+	
   grunt.initConfig({
+
+    connect: {
+      return500: {
+        options: {
+          port: 9000,
+            middleware: function(connect, options) {
+              return [function(req, res, next){
+                res.statusCode = 500;
+                res.end();
+              }];
+            }
+          }
+        }
+    },
     jshint: {
       all: [
         'Gruntfile.js',
@@ -80,8 +95,16 @@ module.exports = function(grunt) {
             consolidate: true
           }
         }
+      },
+      selfTest: {
+        options: {
+          specs:["test/selfTest/*.js"],
+          "--web-security": "no"
+        }
       }
     },
+
+
     nodeunit: {
       tasks: ['test/*_test.js']
     }
@@ -92,7 +115,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('test', ['jshint', 'jasmine', 'nodeunit']);
-  grunt.registerTask('default', ['test', 'build-contrib']);
+  grunt.registerTask('test', ['connect:return500', 'jasmine', 'nodeunit']);
+  grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
 };
