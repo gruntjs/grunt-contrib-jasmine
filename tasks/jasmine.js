@@ -37,7 +37,6 @@ module.exports = function(grunt) {
       host    : '',
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
-      phantomjs : {},
       junit: {}
     });
 
