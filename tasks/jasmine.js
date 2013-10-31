@@ -37,7 +37,8 @@ module.exports = function(grunt) {
       host    : '',
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
-      junit: {}
+      junit: {},
+      ignoreEmpty: grunt.option('force') === true
     });
 
     if (options.template === 'requirejs') {
@@ -209,9 +210,10 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.reportRunnerResults',function(){
       var dur = (new Date()).getTime() - thisRun.start_time;
       var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
+      var nospec_log = (options.ignoreEmpty) ? grunt.log.error : grunt.warn; //log.error will print the message but not fail the task, warn will do both.
       grunt.verbose.writeln('Runner finished');
       if (thisRun.executed_specs === 0) {
-        grunt.warn('No specs executed, is there a configuration error?');
+        nospec_log.call(null, 'No specs executed, is there a configuration error?');
       }
       if (!grunt.option('verbose')) {
         grunt.log.writeln('');
