@@ -51,10 +51,12 @@ exports.init = function(grunt, phantomjs) {
     }
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.css', 'jasmine.css');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.js', 'jasmine.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine-html.js', 'jasmine-html.js');
-    exports.copyTempFile(__dirname + '/../jasmine/jasmine-helper.js', 'jasmine-helper.js');
+
+    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js'].forEach(function(name){
+        var path = __dirname + '/../../vendor/jasmine-' + options.version + '/' + name;
+        if (fs.existsSync(path)) exports.copyTempFile(path, name);
+    });
+
     exports.copyTempFile(__dirname + '/../helpers/phantom-polyfill.js', 'phantom-polyfill.js');
 
     var reporters = [
@@ -76,8 +78,6 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/jasmine-html.js'
     ];
 
-    var jasmineHelper = tempDir + '/jasmine-helper.js';
-
     var context = {
       temp : tempDir,
       css  : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
@@ -89,7 +89,7 @@ exports.init = function(grunt, phantomjs) {
         src       : exports.getRelativeFileList(outdir, src, { nonull : true }),
         vendor    : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
         reporters : exports.getRelativeFileList(outdir, reporters),
-        start     : exports.getRelativeFileList(outdir, jasmineHelper)
+        boot     : exports.getRelativeFileList(outdir, tempDir + '/boot.js')
       },
       options : options.templateOptions || {}
     };

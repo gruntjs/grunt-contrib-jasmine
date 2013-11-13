@@ -121,12 +121,7 @@ module.exports = function(grunt) {
     var thisRun = {};
 
     status = {
-      specs    : 0,
       failed   : 0,
-      passed   : 0,
-      total    : 0,
-      skipped  : 0,
-      duration : 0,
       log      : ''
     };
 
@@ -159,51 +154,46 @@ module.exports = function(grunt) {
       grunt.event.emit.apply(grunt.event, args);
     });
 
-    phantomjs.on('jasmine.reportRunnerStarting',function(suites) {
+    phantomjs.on('jasmine.reportRunnerStarting',function() {
       grunt.verbose.writeln('Starting...');
       thisRun.start_time = (new Date()).getTime();
       thisRun.executed_specs = 0;
       thisRun.passed_specs = 0;
     });
 
-    phantomjs.on('jasmine.reportSpecStarting',function(spec) {
+    phantomjs.on('jasmine.reportSpecStarting',function(specMetadata) {
       thisRun.executed_specs++;
-      grunt.verbose.write(spec.suite.description + ':' + spec.description + '...');
+      grunt.verbose.write(specMetadata.fullName + '...');
     });
 
-    phantomjs.on('jasmine.reportSuiteResults',function(suite){
-      //grunt.verbose.writeln(suite.description + ": " + suite.results.passedCount + " of " + suite.results.totalCount + " passed.");
-    });
+    phantomjs.on('jasmine.reportSpecResults',function(specMetadata) {
+    if (specMetadata.status === "passed") thisRun.passed_specs++;
 
-    phantomjs.on('jasmine.reportSpecResults',function(specId, result, fullName) {
-      if (result.passed) thisRun.passed_specs++;
-
-      if (!result.passed) {
+      if (specMetadata.status === "passed") {
+        grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.green);
+        if (!grunt.option('verbose'))
+          grunt.log.write('.'.green);
+      } else if (specMetadata.status === "failed") {
         if (grunt.option('verbose'))
-          grunt.verbose.writeln(result.description + ': ' + result.msg.red);
+          grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.red);
         else {
-          logWrite(fullName + ': ' + result.msg.red);
+          logWrite(specMetadata.fullName + ': ' + specMetadata.status.red);
           grunt.log.write('x'.red);
         }
       } else {
-        grunt.verbose.writeln(result.description + ': ' + result.msg.green);
+        grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.yellow);
         if (!grunt.option('verbose'))
-          grunt.log.write('.');
+          grunt.log.write('P'.yellow);
       }
 
-      for (var i = 0; i < result.messages.length; i++) {
-        var item = result.messages[i];
+      for (var i = 0; i < specMetadata.failedExpectations.length; i++) {
+        var item = specMetadata.failedExpectations[i];
 
-        if (item.type === 'log') {
-          grunt.verbose.writeln(item.toString());
-        } else if (item.type === 'expect' && !item.passed_) {
-          var specIndex = ' ('+(i+1)+')';
-          logWrite('  ' + item.message.red+specIndex.red);
-          phantomjs.emit('onError', item.message, item.trace);
-        }
+        var specIndex = ' ('+(i+1)+')';
+        logWrite('  ' + item.message.red+specIndex.red);
+        phantomjs.emit('onError', item.message, item.stack);
       }
-      phantomjs.emit( 'jasmine.testDone', result.totalCount, result.passedCount, result.failedCount, result.skipped );
-
+      phantomjs.emit('jasmine.testDone', specMetadata.failedExpectations.length);
     });
 
     phantomjs.on('jasmine.reportRunnerResults',function(){
@@ -220,12 +210,8 @@ module.exports = function(grunt) {
       grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
     });
 
-    phantomjs.on('jasmine.testDone',function(totalAssertions, passedAssertions, failedAssertions, skippedAssertions){
-      status.specs++;
-      status.failed  += failedAssertions;
-      status.passed  += passedAssertions;
-      status.total   += totalAssertions;
-      status.skipped += skippedAssertions;
+    phantomjs.on('jasmine.testDone',function(failedAssertions) {
+      status.failed += failedAssertions;
     });
 
     phantomjs.on('jasmine.reportJUnitResults',function(junitData){
@@ -247,7 +233,6 @@ module.exports = function(grunt) {
 
     phantomjs.on('jasmine.done',function(elapsed){
       phantomjs.halt();
-      status.duration = elapsed;
     });
 
     phantomjs.on('jasmine.done.PhantomReporter',function(){

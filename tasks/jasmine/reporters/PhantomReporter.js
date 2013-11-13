@@ -30,27 +30,19 @@ phantom.sendMessage = function() {
     this.buffer = '';
   }
 
-  PhantomReporter.prototype.reportRunnerStarting = function(runner) {
+  PhantomReporter.prototype.jasmineStarted = function() {
     this.started = true;
-
-    var suites = runner.topLevelSuites();
-    for (var i = 0; i < suites.length; i++) {
-      var suite = suites[i];
-      this.suites_.push(this.summarize_(suite));
-    }
-    phantom.sendMessage('jasmine.reportRunnerStarting', this.suites_);
+    phantom.sendMessage('jasmine.reportRunnerStarting');
   };
 
-  PhantomReporter.prototype.reportSpecStarting = function(spec) {
-    spec.startTime = (new Date()).getTime();
-    var message = {
-      suite : {
-        description : spec.suite.description
-      },
-      description : spec.description
-    };
-    phantom.sendMessage('jasmine.reportSpecStarting', message);
+  PhantomReporter.prototype.specStarted = function(specMetadata) {
+    specMetadata.startTime = (new Date()).getTime();
+    phantom.sendMessage('jasmine.reportSpecStarting', specMetadata);
   };
+
+  PhantomReporter.prototype.suiteStarted = function(suiteMetadata) {
+    suiteMetadata.startTime = (new Date()).getTime();
+  }
 
   PhantomReporter.prototype.suites = function() {
     return this.suites_;
@@ -90,24 +82,15 @@ phantom.sendMessage = function() {
     return result;
   }
 
-  PhantomReporter.prototype.reportRunnerResults = function(runner) {
+  PhantomReporter.prototype.jasmineDone = function() {
     this.finished = true;
-    var specIds = map(runner.specs(), function(a){return a.id;});
-    var summary = this.resultsForSpecs(specIds);
-    phantom.sendMessage('jasmine.reportRunnerResults',summary);
-    phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
+    phantom.sendMessage('jasmine.reportRunnerResults');
+    //phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
     phantom.sendMessage('jasmine.done.PhantomReporter');
   };
 
-  PhantomReporter.prototype.reportSuiteResults = function(suite) {
-    if (suite.specs().length) {
-      suite.timestamp = new Date();
-      suite.duration = suite.timestamp.getTime() - suite.specs()[0].startTime;
-      phantom.sendMessage('jasmine.reportSuiteResults',{
-        description : suite.description,
-        results : suite.results()
-      });
-    }
+  PhantomReporter.prototype.suiteDone = function(suiteMetadata) {
+    suiteMetadata.duration = (new Date()).getTime() - suiteMetadata.startTime;
   };
 
   function stringify(obj) {
@@ -147,24 +130,13 @@ phantom.sendMessage = function() {
     return string;
   }
 
-  PhantomReporter.prototype.reportSpecResults = function(spec) {
-    spec.duration = (new Date()).getTime() - spec.startTime;
-    var _results = spec.results();
-    var results = {
-      description : _results.description,
-      messages    : _results.getItems(),
-      failedCount : _results.failedCount,
-      totalCount  : _results.totalCount,
-      passedCount : _results.passedCount,
-      skipped     : _results.skipped,
-      passed      : _results.passed(),
-      msg         : _results.failedCount > 0 ? "failed" : "passed"
-    };
-    this.results_[spec.id] = results;
+  PhantomReporter.prototype.specDone = function(specMetadata) {
+    specMetadata.duration = (new Date()).getTime() - specMetadata.startTime;
+    this.results_[specMetadata.id] = specMetadata;
 
     // Quick hack to alleviate cyclical object breaking JSONification.
-    for (var ii = 0; ii < results.messages.length; ii++) {
-      var item = results.messages[ii];
+    for (var ii = 0; ii < specMetadata.failedExpectations.length; ii++) {
+      var item = specMetadata.failedExpectations[ii];
       if (item.expected) {
         item.expected = stringify(item.expected);
       }
@@ -173,7 +145,7 @@ phantom.sendMessage = function() {
       }
     }
 
-    phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getFullName(spec));
+    phantom.sendMessage( 'jasmine.reportSpecResults', specMetadata);
   };
 
   PhantomReporter.prototype.getFullName = function(spec) {
