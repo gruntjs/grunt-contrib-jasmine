@@ -29,7 +29,7 @@ exports.jasmine = {
         src       : ['SRC1.js','SRC2.js'],
         vendor    : ['V1.js','V2.js'],
         reporters : ['R1.js'],
-        start     : ['START.js']
+        boot      : ['BOOT.js']
       },
       options : {}
     };

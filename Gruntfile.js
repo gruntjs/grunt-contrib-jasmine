@@ -51,17 +51,6 @@ module.exports = function(grunt) {
           specs : 'test/fixtures/phantom-polyfills/spec/**/*.js',
         }
       },
-      legacyVersion: {
-        src: 'test/fixtures/pivotal/src/**/*.js',
-        options: {
-          specs: 'test/fixtures/pivotal/spec/*Spec.js',
-          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
-          version: '1.2.0',
-          junit: {
-            path: 'junit'
-          }
-        }
-      },
       deepOutfile: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {

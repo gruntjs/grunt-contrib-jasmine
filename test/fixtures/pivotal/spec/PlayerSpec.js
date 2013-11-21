@@ -43,52 +43,16 @@ describe("Player", function() {
     player.makeFavorite();
 
     expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-
   });
 
   //demonstrates use of expected exceptions
   describe("#resume", function() {
     it("should throw an exception if song is already playing", function() {
       player.play(song);
+
       expect(function() {
         player.resume();
-      }).toThrow("song is already playing");
-
+      }).toThrowError("song is already playing");
     });
   });
-});
-
-xdescribe("Failed level 1", function() {
-    it("should not pass", function() {
-      expect(true).toBe(false);
-      
-    });
-
-    describe('Level 2', function() {
-        it('should pass', function() {
-          expect(true).toBe(true);
-        });
-
-         describe('Level 3', function() {
-          it('should not pass', function() {
-            expect(true).toBe(true);
-            expect(true).toBe(true);
-            expect(true).toBe(false);
-            expect(true).toBe(true);
-          });
-
-          describe('Level 4', function() {
-            it('should pass', function() {
-              expect(true).toBe(true);
-            });
-            it('should not pass', function() {
-              expect(true).toBe(asdf);
-            });
-          })
-
-          it('should pass', function() {
-            expect(true).toBe(true);
-          });
-        })
-    });
 });

@@ -13,20 +13,16 @@ describe("Task", function() {
 	A failing onLoadFinished caused this grunt taks to hang.
 	Now, after removing the event handler, this following test should work as expected
 	*/
-	it("can handle fail on iframe", function(){
+	it("can handle fail on iframe", function(done){
 		var waitedLongEnough;
-        runs(function(){
-            iframe = document.createElement("iframe");
-            iframe.src = "http://localhost:9000";
-            document.body.appendChild(iframe);
+    iframe = document.createElement("iframe");
+    iframe.src = "http://localhost:9000";
+    document.body.appendChild(iframe);
 
-			setTimeout(function(){waitedLongEnough=true;}, 50);
-        });
-        waitsFor(function(){
-            return waitedLongEnough;
-        });
-        runs(function(){
-			expect(true).toBeTruthy("without change in grunt-lib-phantomjs, jasmine would never reach this line");
-        });
+    setTimeout(function(){
+      waitedLongEnough = true;
+      expect(true).toBeTruthy("testing iframes");
+      done();
+    }, 50);
 	});
 });
