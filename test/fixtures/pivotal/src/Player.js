@@ -10,6 +10,7 @@ Player.prototype.pause = function() {
 };
 
 Player.prototype.resume = function() {
+  console.log('in resume');
   if (this.isPlaying) {
     throw new Error("song is already playing");
   }

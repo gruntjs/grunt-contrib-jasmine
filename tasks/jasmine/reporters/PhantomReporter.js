@@ -7,7 +7,7 @@ var phantom = {};
 
 if (window._phantom) {
   console.log = function(){
-    phantom.sendMessage('verbose',Array.prototype.slice.apply(arguments).join(', '));
+    phantom.sendMessage('verbose', Array.prototype.slice.apply(arguments).join(', '));
   };
 }
 

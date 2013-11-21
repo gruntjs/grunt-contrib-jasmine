@@ -131,7 +131,9 @@ module.exports = function(grunt) {
     });
 
     phantomjs.on('console',console.log.bind(console));
-    phantomjs.on('verbose',grunt.verbose.writeln.bind(grunt.verbose));
+    phantomjs.on('verbose',function(msg) {
+      grunt.verbose.writeln('\nlog: '.yellow + msg);
+    });
     phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
     phantomjs.on('write', grunt.log.write.bind(grunt.log));
     phantomjs.on('writeln', grunt.log.writeln.bind(grunt.log));
