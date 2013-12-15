@@ -47,5 +47,10 @@
     "phantomjs",
     "headless",
     "tests"
+  ],
+  "files": [
+    "tasks",
+    "LICENSE-MIT",
+    "junit"
   ]
 }
