@@ -90,6 +90,7 @@ This is the jasmine-version which will be used. currently available versions are
 * 1.2.0
 * 1.3.0
 * 1.3.1
+* 2.0.0
 
 #### options.outfile
 Type: `String`  
