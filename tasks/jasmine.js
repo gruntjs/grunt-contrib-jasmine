@@ -11,11 +11,11 @@ module.exports = function(grunt) {
 
   // node api
   var fs   = require('fs'),
-    path = require('path');
+    path = require('path'),
+    chalk = require('chalk');
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
-  var chalk = require('chalk');
 
   // local lib
   var jasmine = require('./lib/jasmine').init(grunt, phantomjs);
@@ -23,6 +23,17 @@ module.exports = function(grunt) {
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
   var status = {};
+
+
+  var checkmark = '✓';
+  var errormark = '✖';
+
+  //With node.js on Windows: use symbols available in terminal default fonts
+  //https://github.com/visionmedia/mocha/pull/641
+  if (process && process.platform === 'win32') {
+    checkmark = '\u221A';
+    errormark = '\u00D7';
+  }
 
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
 
@@ -77,12 +88,6 @@ module.exports = function(grunt) {
 
   });
 
-  function logWrite(text, isInline) {
-    text += (isInline ? '' : '\n');
-    status.log += text;
-    grunt.verbose.write(text);
-  }
-
   function phantomRunner(options,cb){
     var file = options.outfile;
 
@@ -92,6 +97,7 @@ module.exports = function(grunt) {
     }
 
     grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via phantom');
+    grunt.log.writeln('');
 
     phantomjs.spawn(file, {
       failCode : 90,
@@ -167,39 +173,56 @@ module.exports = function(grunt) {
       thisRun.passed_specs = 0;
     });
 
-    phantomjs.on('jasmine.reportSpecStarting',function(spec) {
+    var indent = function(times) {
+      var val = '';
+        for (var i = 0; i < times; i++) {
+          val += '  ';
+        }
+      return val;
+    };
+
+    var currentSuiteList = [];
+
+    phantomjs.on('jasmine.reportSpecStarting',function(description, suiteList) {
       thisRun.executed_specs++;
-      grunt.verbose.write(spec.suite.description + ':' + spec.description + '...');
+
+      var suiteListDifferent = false;
+      for (var i = 0; i < suiteList.length; i++) {
+        if (suiteListDifferent || currentSuiteList[i] !== suiteList[i]) {
+          suiteListDifferent = true;
+          grunt.log.writeln(indent(i + 1) + chalk.bold(suiteList[i]));
+        }
+      }
+
+      currentSuiteList = suiteList;
+
+      grunt.log.write(indent(currentSuiteList.length + 1) + '- ' + chalk.grey(description));
     });
 
-    phantomjs.on('jasmine.reportSuiteResults',function(suite){
-      //grunt.verbose.writeln(suite.description + ": " + suite.results.passedCount + " of " + suite.results.totalCount + " passed.");
-    });
-
-    phantomjs.on('jasmine.reportSpecResults',function(specId, result, fullName) {
+    phantomjs.on('jasmine.reportSpecResults',function(specId, result, suiteList) {
       if (result.passed) thisRun.passed_specs++;
 
-      if (!result.passed) {
-        if (grunt.option('verbose'))
-          grunt.verbose.writeln(result.description + ': ' + chalk.red(result.msg));
-        else {
-          logWrite(fullName + ': ' + chalk.red(result.msg));
-          grunt.log.write(chalk.red('x'));
-        }
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+
+      grunt.log.write(indent(currentSuiteList.length + 1));
+
+      if (result.passed) {
+        grunt.log.write(chalk.green.bold(checkmark));
       } else {
-        grunt.verbose.writeln(result.description + ': ' + chalk.green(result.msg));
-        if (!grunt.option('verbose'))
-          grunt.log.write('.');
+        grunt.log.write(chalk.red('X'));
       }
+
+      grunt.log.writeln(' ' + chalk.grey(result.description));
 
       for (var i = 0; i < result.messages.length; i++) {
         var item = result.messages[i];
 
         if (item.type === 'log') {
-          grunt.verbose.writeln(item.toString());
+          grunt.log.writeln(indent(currentSuiteList.length + 3) + item.toString());
         } else if (item.type === 'expect' && !item.passed_) {
-          var specIndex = ' ('+(i+1)+')';
-          logWrite('  ' + chalk.red(item.message + specIndex));
+          var specIndex = ' (' + (i + 1) + ')';
+          grunt.log.writeln(indent(currentSuiteList.length + 3) + chalk.red(item.message + specIndex));
           phantomjs.emit('onError', item.message, item.trace);
         }
       }

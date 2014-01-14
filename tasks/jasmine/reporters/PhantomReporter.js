@@ -43,13 +43,7 @@ phantom.sendMessage = function() {
 
   PhantomReporter.prototype.reportSpecStarting = function(spec) {
     spec.startTime = (new Date()).getTime();
-    var message = {
-      suite : {
-        description : spec.suite.description
-      },
-      description : spec.description
-    };
-    phantom.sendMessage('jasmine.reportSpecStarting', message);
+    phantom.sendMessage('jasmine.reportSpecStarting', spec.description, this.getSuiteNames(spec));
   };
 
   PhantomReporter.prototype.suites = function() {
@@ -173,11 +167,17 @@ phantom.sendMessage = function() {
       }
     }
 
-    phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getFullName(spec));
+    phantom.sendMessage( 'jasmine.reportSpecResults', spec.id, results, this.getSuiteNames(spec));
   };
 
-  PhantomReporter.prototype.getFullName = function(spec) {
-    return getNestedSuiteName(spec.suite, ':: ') +  ':: ' + spec.description;
+  PhantomReporter.prototype.getSuiteNames = function(spec) {
+    var suiteNames = [];
+    var suite = spec.suite;
+    while (suite) {
+      suiteNames.unshift(suite.description);
+      suite = suite.parentSuite;
+    }
+    return suiteNames;
   };
 
   PhantomReporter.prototype.resultsForSpecs = function(specIds){
