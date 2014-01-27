@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
+  var chalk = require('chalk');
 
   // local lib
   var jasmine = require('./lib/jasmine').init(grunt, phantomjs);
@@ -142,11 +143,11 @@ module.exports = function(grunt) {
     phantomjs.on('writeln', grunt.log.writeln.bind(grunt.log));
     phantomjs.on('error.onError',function(string, trace){
       if (trace && trace.length) {
-        grunt.log.error(string.red + ' at ');
+        grunt.log.error(chalk.red(string) + ' at ');
         trace.forEach(function(line) {
           var file = line.file.replace(/^file:/,'');
           var message = grunt.util._('%s:%d %s').sprintf(path.relative('.',file), line.line, line.function);
-          grunt.log.error(message.red);
+          grunt.log.error(chalk.red(message));
         });
       } else {
         grunt.log.error("Error caught from phantom. More info can be found by opening the Spec Runner in a browser.");
@@ -180,13 +181,13 @@ module.exports = function(grunt) {
 
       if (!result.passed) {
         if (grunt.option('verbose'))
-          grunt.verbose.writeln(result.description + ': ' + result.msg.red);
+          grunt.verbose.writeln(result.description + ': ' + chalk.red(result.msg));
         else {
-          logWrite(fullName + ': ' + result.msg.red);
-          grunt.log.write('x'.red);
+          logWrite(fullName + ': ' + chalk.red(result.msg));
+          grunt.log.write(chalk.red('x'));
         }
       } else {
-        grunt.verbose.writeln(result.description + ': ' + result.msg.green);
+        grunt.verbose.writeln(result.description + ': ' + chalk.green(result.msg));
         if (!grunt.option('verbose'))
           grunt.log.write('.');
       }
@@ -198,7 +199,7 @@ module.exports = function(grunt) {
           grunt.verbose.writeln(item.toString());
         } else if (item.type === 'expect' && !item.passed_) {
           var specIndex = ' ('+(i+1)+')';
-          logWrite('  ' + item.message.red+specIndex.red);
+          logWrite('  ' + chalk.red(item.message + specIndex));
           phantomjs.emit('onError', item.message, item.trace);
         }
       }
