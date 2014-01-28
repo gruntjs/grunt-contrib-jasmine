@@ -10,9 +10,9 @@
 module.exports = function(grunt) {
 
   // node api
-  var fs   = require('fs'),
-    path = require('path'),
-    chalk = require('chalk');
+  var fs = require('fs');
+  var path = require('path');
+  var chalk = require('chalk');
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
@@ -39,16 +39,16 @@ module.exports = function(grunt) {
 
     // Merge task-specific options with these defaults.
     var options = this.options({
-      version : '1.3.1',
-      timeout : 10000,
-      styles  : [],
-      specs   : [],
-      helpers : [],
-      vendor  : [],
-      outfile : '_SpecRunner.html',
-      host    : '',
-      template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
-      templateOptions : {},
+      version: '1.3.1',
+      timeout: 10000,
+      styles: [],
+      specs: [],
+      helpers: [],
+      vendor: [],
+      outfile: '_SpecRunner.html',
+      host: '',
+      template: __dirname + '/jasmine/templates/DefaultRunner.tmpl',
+      templateOptions: {},
       junit: {}
     });
 
@@ -66,44 +66,53 @@ module.exports = function(grunt) {
     setup(options);
 
     // The filter returned no spec, let's skip phantom.
-    if(!jasmine.buildSpecrunner(this.filesSrc, options)) {
+    if (!jasmine.buildSpecrunner(this.filesSrc, options)) {
       return removePhantomListeners();
     }
 
     // If we're just building (e.g. for web), skip phantom.
-    if (this.flags.build) return;
+    if (this.flags.build) {
+      return;
+    }
 
     var done = this.async();
-    phantomRunner(options, function(err,status) {
+    phantomRunner(options, function(err, status) {
       var success = !err && status.failed === 0;
 
-      if (err) grunt.log.error(err);
-      if (status.failed === 0) grunt.log.ok('0 failures');
-      else grunt.log.error(status.failed + ' failures');
+      if (err) {
+        grunt.log.error(err);
+      }
+      if (status.failed === 0) {
+        grunt.log.ok('0 failures');
+      } else {
+        grunt.log.error(status.failed + ' failures');
+      }
 
-      teardown(options, function(){
+      teardown(options, function() {
         done(success);
       });
     });
 
   });
 
-  function phantomRunner(options,cb){
+  function phantomRunner(options, cb) {
     var file = options.outfile;
 
     if (options.host) {
-      if (!(/\/$/).test(options.host)) options.host = options.host + '/';
+      if (!(/\/$/).test(options.host)) {
+        options.host += '/';
+      }
       file = options.host + options.outfile;
     }
 
-    grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via phantom');
+    grunt.verbose.subhead('Testing jasmine specs via PhantomJS').or.writeln('Testing jasmine specs via PhantomJS');
     grunt.log.writeln('');
 
     phantomjs.spawn(file, {
-      failCode : 90,
-      options  : options,
-      done     : function(err){
-        cb(err,status);
+      failCode: 90,
+      options: options,
+      done: function(err) {
+        cb(err, status);
       }
     });
   }
@@ -111,7 +120,9 @@ module.exports = function(grunt) {
   function teardown(options, cb) {
     removePhantomListeners();
 
-    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
+    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) {
+      fs.unlink(options.outfile);
+    }
     if (!options.keepRunner) {
       jasmine.cleanTemp(cb);
     } else {
@@ -128,35 +139,35 @@ module.exports = function(grunt) {
     var thisRun = {};
 
     status = {
-      specs    : 0,
-      failed   : 0,
-      passed   : 0,
-      total    : 0,
-      skipped  : 0,
-      duration : 0,
-      log      : ''
+      specs: 0,
+      failed: 0,
+      passed: 0,
+      total: 0,
+      skipped: 0,
+      duration: 0,
+      log: ''
     };
 
-    phantomjs.on('fail.timeout',function(){
+    phantomjs.on('fail.timeout', function() {
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to an unfinished async spec.', 90);
     });
 
-    phantomjs.on('console',console.log.bind(console));
-    phantomjs.on('verbose',grunt.verbose.writeln.bind(grunt.verbose));
+    phantomjs.on('console', console.log.bind(console));
+    phantomjs.on('verbose', grunt.verbose.writeln.bind(grunt.verbose));
     phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
     phantomjs.on('write', grunt.log.write.bind(grunt.log));
     phantomjs.on('writeln', grunt.log.writeln.bind(grunt.log));
-    phantomjs.on('error.onError',function(string, trace){
+    phantomjs.on('error.onError', function(string, trace) {
       if (trace && trace.length) {
         grunt.log.error(chalk.red(string) + ' at ');
         trace.forEach(function(line) {
-          var file = line.file.replace(/^file:/,'');
-          var message = grunt.util._('%s:%d %s').sprintf(path.relative('.',file), line.line, line.function);
+          var file = line.file.replace(/^file:/, '');
+          var message = grunt.util._('%s:%d %s').sprintf(path.relative('.', file), line.line, line.function);
           grunt.log.error(chalk.red(message));
         });
       } else {
-        grunt.log.error("Error caught from phantom. More info can be found by opening the Spec Runner in a browser.");
+        grunt.log.error('Error caught from PhantomJS. More info can be found by opening the Spec Runner in a browser.');
         grunt.warn(string);
       }
     });
@@ -166,7 +177,7 @@ module.exports = function(grunt) {
       grunt.event.emit.apply(grunt.event, args);
     });
 
-    phantomjs.on('jasmine.reportRunnerStarting',function(suites) {
+    phantomjs.on('jasmine.reportRunnerStarting', function(suites) {
       grunt.verbose.writeln('Starting...');
       thisRun.start_time = (new Date()).getTime();
       thisRun.executed_specs = 0;
@@ -174,20 +185,18 @@ module.exports = function(grunt) {
     });
 
     var indent = function(times) {
-      var val = '';
-        for (var i = 0; i < times; i++) {
-          val += '  ';
-        }
-      return val;
+      return new Array(times + 1).join('  ');
     };
 
     var currentSuiteList = [];
 
-    phantomjs.on('jasmine.reportSpecStarting',function(description, suiteList) {
+    phantomjs.on('jasmine.reportSpecStarting', function(description, suiteList) {
+      var i;
+      var suiteListDifferent = false;
+
       thisRun.executed_specs++;
 
-      var suiteListDifferent = false;
-      for (var i = 0; i < suiteList.length; i++) {
+      for (i = 0; i < suiteList.length; i++) {
         if (suiteListDifferent || currentSuiteList[i] !== suiteList[i]) {
           suiteListDifferent = true;
           grunt.log.writeln(indent(i + 1) + chalk.bold(suiteList[i]));
@@ -199,8 +208,12 @@ module.exports = function(grunt) {
       grunt.log.write(indent(currentSuiteList.length + 1) + '- ' + chalk.grey(description));
     });
 
-    phantomjs.on('jasmine.reportSpecResults',function(specId, result, suiteList) {
-      if (result.passed) thisRun.passed_specs++;
+    phantomjs.on('jasmine.reportSpecResults', function(specId, result, suiteList) {
+      var i;
+
+      if (result.passed) {
+        thisRun.passed_specs++;
+      }
 
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
@@ -215,7 +228,7 @@ module.exports = function(grunt) {
 
       grunt.log.writeln(' ' + chalk.grey(result.description));
 
-      for (var i = 0; i < result.messages.length; i++) {
+      for (i = 0; i < result.messages.length; i++) {
         var item = result.messages[i];
 
         if (item.type === 'log') {
@@ -226,42 +239,41 @@ module.exports = function(grunt) {
           phantomjs.emit('onError', item.message, item.trace);
         }
       }
-      phantomjs.emit( 'jasmine.testDone', result.totalCount, result.passedCount, result.failedCount, result.skipped );
-
+      phantomjs.emit('jasmine.testDone', result.totalCount, result.passedCount, result.failedCount, result.skipped);
     });
 
-    phantomjs.on('jasmine.reportRunnerResults',function(){
+    phantomjs.on('jasmine.reportRunnerResults', function() {
       var dur = (new Date()).getTime() - thisRun.start_time;
-      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
+      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? ' spec ' : ' specs ');
       grunt.verbose.writeln('Runner finished');
       if (thisRun.executed_specs === 0) {
         grunt.warn('No specs executed, is there a configuration error?');
       }
       if (!grunt.option('verbose')) {
-        grunt.log.writeln('');
+        grunt.log.writeln();
         grunt.log.write(status.log);
       }
-      grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
+      grunt.log.writeln(spec_str + 'in ' + (dur / 1000) + 's.');
     });
 
-    phantomjs.on('jasmine.testDone',function(totalAssertions, passedAssertions, failedAssertions, skippedAssertions){
+    phantomjs.on('jasmine.testDone', function(totalAssertions, passedAssertions, failedAssertions, skippedAssertions) {
       status.specs++;
-      status.failed  += failedAssertions;
-      status.passed  += passedAssertions;
-      status.total   += totalAssertions;
+      status.failed += failedAssertions;
+      status.passed += passedAssertions;
+      status.total += totalAssertions;
       status.skipped += skippedAssertions;
     });
 
-    phantomjs.on('jasmine.reportJUnitResults',function(junitData){
+    phantomjs.on('jasmine.reportJUnitResults', function(junitData) {
       if (options.junit && options.junit.path) {
         var template = grunt.file.read(junitTemplate);
         if (options.junit.consolidate) {
-          grunt.util._(junitData.consolidatedSuites).each(function(suites){
+          grunt.util._(junitData.consolidatedSuites).each(function(suites) {
             var xmlFile = path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml');
-            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: suites}));
+            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: suites }));
           });
         } else {
-          junitData.suites.forEach(function(suiteData){
+          junitData.suites.forEach(function(suiteData) {
             var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
             grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: [suiteData] }));
           });
@@ -269,19 +281,18 @@ module.exports = function(grunt) {
       }
     });
 
-    phantomjs.on('jasmine.done',function(elapsed){
+    phantomjs.on('jasmine.done', function(elapsed) {
       phantomjs.halt();
       status.duration = elapsed;
     });
 
-    phantomjs.on('jasmine.done.PhantomReporter',function(){
+    phantomjs.on('jasmine.done.PhantomReporter', function() {
       phantomjs.emit('jasmine.done');
     });
 
-    phantomjs.on('jasmine.done_fail',function(url){
+    phantomjs.on('jasmine.done_fail', function(url) {
       grunt.log.error();
       grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     });
   }
-
 };
