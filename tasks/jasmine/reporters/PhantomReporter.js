@@ -17,8 +17,6 @@ phantom.sendMessage = function() {
   if (window._phantom) {
     // alerts are the communication bridge to grunt
     alert( payload );
-  } else {
-    console.log(arguments);
   }
 };
 
