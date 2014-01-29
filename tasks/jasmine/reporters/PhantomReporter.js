@@ -45,32 +45,6 @@ phantom.sendMessage = function() {
     phantom.sendMessage('jasmine.suiteStarted', suiteMetadata);
   };
 
-  PhantomReporter.prototype.suites = function() {
-    return this.suites_;
-  };
-
-  PhantomReporter.prototype.summarize_ = function(suiteOrSpec) {
-    var isSuite = suiteOrSpec instanceof jasmine.Suite;
-    var summary = {
-      id: suiteOrSpec.id,
-      name: suiteOrSpec.description,
-      type: isSuite ? 'suite' : 'spec',
-      children: []
-    };
-
-    if (isSuite) {
-      var children = suiteOrSpec.children();
-      for (var i = 0; i < children.length; i++) {
-        summary.children.push(this.summarize_(children[i]));
-      }
-    }
-    return summary;
-  };
-
-  PhantomReporter.prototype.results = function() {
-    return this.results_;
-  };
-
   PhantomReporter.prototype.jasmineDone = function() {
     this.finished = true;
     phantom.sendMessage('jasmine.jasmineDone');
@@ -80,6 +54,24 @@ phantom.sendMessage = function() {
   PhantomReporter.prototype.suiteDone = function(suiteMetadata) {
     suiteMetadata.duration = (new Date()).getTime() - suiteMetadata.startTime;
     phantom.sendMessage('jasmine.suiteDone', suiteMetadata);
+  };
+
+  PhantomReporter.prototype.specDone = function(specMetadata) {
+    specMetadata.duration = (new Date()).getTime() - specMetadata.startTime;
+    this.results_[specMetadata.id] = specMetadata;
+
+    // Quick hack to alleviate cyclical object breaking JSONification.
+    for (var ii = 0; ii < specMetadata.failedExpectations.length; ii++) {
+      var item = specMetadata.failedExpectations[ii];
+      if (item.expected) {
+        item.expected = stringify(item.expected);
+      }
+      if (item.actual) {
+        item.actual = stringify(item.actual);
+      }
+    }
+
+    phantom.sendMessage( 'jasmine.specDone', specMetadata);
   };
 
   function stringify(obj) {
@@ -118,24 +110,6 @@ phantom.sendMessage = function() {
     });
     return string;
   }
-
-  PhantomReporter.prototype.specDone = function(specMetadata) {
-    specMetadata.duration = (new Date()).getTime() - specMetadata.startTime;
-    this.results_[specMetadata.id] = specMetadata;
-
-    // Quick hack to alleviate cyclical object breaking JSONification.
-    for (var ii = 0; ii < specMetadata.failedExpectations.length; ii++) {
-      var item = specMetadata.failedExpectations[ii];
-      if (item.expected) {
-        item.expected = stringify(item.expected);
-      }
-      if (item.actual) {
-        item.actual = stringify(item.actual);
-      }
-    }
-
-    phantom.sendMessage( 'jasmine.specDone', specMetadata);
-  };
 
   jasmine.getEnv().addReporter( new PhantomReporter() );
 }());
