@@ -11,10 +11,12 @@ module.exports = function(grunt) {
 
   // node api
   var fs   = require('fs'),
-    path = require('path');
+      path = require('path');
 
   // npm lib
-  var phantomjs = require('grunt-lib-phantomjs').init(grunt);
+  var phantomjs = require('grunt-lib-phantomjs').init(grunt),
+      chalk = require('chalk'),
+      _ = require('lodash');
 
   // local lib
   var jasmine = require('./lib/jasmine').init(grunt, phantomjs);
@@ -23,29 +25,39 @@ module.exports = function(grunt) {
 
   var status = {};
 
+  var symbols = {
+    check : '✓',
+    error : 'X',
+    splat : '*'
+  };
+
+  //With node.js on Windows: use symbols available in terminal default fonts
+  //https://github.com/visionmedia/mocha/pull/641
+  if (process && process.platform === 'win32') {
+    symbols = {
+      check : '\u221A',
+      error : '\u00D7',
+      splat : '*'
+    };
+  }
+
   grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
 
     // Merge task-specific options with these defaults.
     var options = this.options({
-      version : '2.0.0-rc5',
+      version : '2.0.0',
       timeout : 10000,
-      styles  : [],
-      specs   : [],
+      styles : [],
+      specs : [],
       helpers : [],
-      vendor  : [],
+      vendor : [],
       outfile : '_SpecRunner.html',
-      host    : '',
+      host : '',
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
-      junit: {}
-    });
-
-    if (options.template === 'requirejs') {
-      grunt.log.warn(
-        'The requirejs template is no longer included in grunt-contrib-jasmine core.\n' +
-        'Please see the https://github.com/gruntjs/grunt-contrib-jasmine README for details'
-      );
-    }
+      junit : {},
+      ignoreEmpty: grunt.option('force') === true
+  });
 
     if (grunt.option('debug')) {
       grunt.log.debug(options);
@@ -53,8 +65,8 @@ module.exports = function(grunt) {
 
     setup(options);
 
-    // The filter returned no spec, let's skip phantom.
-    if(!jasmine.buildSpecrunner(this.filesSrc, options)) {
+    // The filter returned no spec files so skip phantom.
+    if (!jasmine.buildSpecrunner(this.filesSrc, options)) {
       return removePhantomListeners();
     }
 
@@ -62,27 +74,26 @@ module.exports = function(grunt) {
     if (this.flags.build) return;
 
     var done = this.async();
-    phantomRunner(options, function(err,status) {
+    phantomRunner(options, function(err, status) {
       var success = !err && status.failed === 0;
 
-      if (err) grunt.log.error(err);
-      if (status.failed === 0) grunt.log.ok('0 failures');
-      else grunt.log.error(status.failed + ' failures');
+      if (err) {
+        grunt.log.error(err);
+      }
+      if (status.failed === 0) {
+        grunt.log.ok('0 failures');
+      } else {
+        grunt.log.error(status.failed + ' failures');
+      }
 
-      teardown(options, function(){
+      teardown(options, function() {
         done(success);
       });
     });
 
   });
 
-  function logWrite(text, isInline) {
-    text += (isInline ? '' : '\n');
-    status.log += text;
-    grunt.verbose.write(text);
-  }
-
-  function phantomRunner(options,cb){
+  function phantomRunner(options, cb){
     var file = options.outfile;
 
     if (options.host) {
@@ -90,12 +101,13 @@ module.exports = function(grunt) {
       file = options.host + options.outfile;
     }
 
-    grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via phantom');
+    grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via PhantomJS');
+    grunt.log.writeln('');
 
     phantomjs.spawn(file, {
       failCode : 90,
-      options  : options,
-      done     : function(err){
+      options : options,
+      done : function(err){
         cb(err,status);
       }
     });
@@ -104,7 +116,10 @@ module.exports = function(grunt) {
   function teardown(options, cb) {
     removePhantomListeners();
 
-    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) fs.unlink(options.outfile);
+    if (!options.keepRunner && fs.statSync(options.outfile).isFile()) {
+      fs.unlink(options.outfile);
+    }
+
     if (!options.keepRunner) {
       jasmine.cleanTemp(cb);
     } else {
@@ -118,35 +133,39 @@ module.exports = function(grunt) {
   }
 
   function setup(options) {
-    var thisRun = {};
+    var indentLevel = 1,
+        tabstop = 2,
+        thisRun = {},
+        suites = {},
+        currentSuite;
 
     status = {
-      failed   : 0,
-      log      : ''
+      failed   : 0
     };
 
-    phantomjs.on('fail.timeout',function(){
+    function indent(times) {
+      return new Array(+times * tabstop).join(' ');
+    }
+
+    phantomjs.on('fail.timeout', function() {
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to an unfinished async spec.', 90);
     });
 
-    phantomjs.on('console',console.log.bind(console));
-    phantomjs.on('verbose',function(msg) {
-      grunt.verbose.writeln('\nlog: '.yellow + msg);
+    phantomjs.on('console', function(msg) {
+      grunt.log.writeln('\n' + chalk.yellow('log: ') + msg);
     });
-    phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
-    phantomjs.on('write', grunt.log.write.bind(grunt.log));
-    phantomjs.on('writeln', grunt.log.writeln.bind(grunt.log));
-    phantomjs.on('error.onError',function(string, trace){
+
+    phantomjs.on('error.onError', function(string, trace){
       if (trace && trace.length) {
-        grunt.log.error(string.red + ' at ');
+        grunt.log.error(chalk.red(string) + ' at ');
         trace.forEach(function(line) {
           var file = line.file.replace(/^file:/,'');
           var message = grunt.util._('%s:%d %s').sprintf(path.relative('.',file), line.line, line.function);
-          grunt.log.error(message.red);
+          grunt.log.error(chalk.red(message));
         });
       } else {
-        grunt.log.error("Error caught from phantom. More info can be found by opening the Spec Runner in a browser.");
+        grunt.log.error("Error caught from PhantomJS. More info can be found by opening the Spec Runner in a browser.");
         grunt.warn(string);
       }
     });
@@ -156,91 +175,131 @@ module.exports = function(grunt) {
       grunt.event.emit.apply(grunt.event, args);
     });
 
-    phantomjs.on('jasmine.reportRunnerStarting',function() {
-      grunt.verbose.writeln('Starting...');
-      thisRun.start_time = (new Date()).getTime();
-      thisRun.executed_specs = 0;
-      thisRun.passed_specs = 0;
+    phantomjs.on('jasmine.jasmineStarted', function() {
+      grunt.verbose.writeln('Jasmine Runner Starting...');
+      thisRun.startTime = (new Date()).getTime();
+      thisRun.executedSpecs = 0;
+      thisRun.passedSpecs = 0;
+      thisRun.failedSpecs = 0;
+      thisRun.skippedSpecs = 0;
     });
 
-    phantomjs.on('jasmine.reportSpecStarting',function(specMetadata) {
-      thisRun.executed_specs++;
-      grunt.verbose.write(specMetadata.fullName + '...');
+    phantomjs.on('jasmine.suiteStarted', function(suiteMetaData) {
+      currentSuite = suiteMetaData.id;
+      suites[currentSuite] = {
+        name : suiteMetaData.fullName,
+        timestamp : new Date(suiteMetaData.startTime),
+        errors : 0,
+        tests : 0,
+        failures : 0,
+        testcases : []
+      };
+      grunt.log.write(indent(indentLevel++));
+      grunt.log.writeln(chalk.bold(suiteMetaData.description));
     });
 
-    phantomjs.on('jasmine.reportSpecResults',function(specMetadata) {
-      if (specMetadata.status === "passed") {
-        thisRun.passed_specs++;
-        grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.green);
-        if (!grunt.option('verbose'))
-          grunt.log.write('.'.green);
-      } else if (specMetadata.status === "failed") {
-        if (grunt.option('verbose'))
-          grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.red);
-        else {
-          logWrite(specMetadata.fullName + ': ' + specMetadata.status.red);
-          grunt.log.write('x'.red);
-        }
+    phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
+      suites[currentSuite].time = suiteMetaData.duration / 1000;
+      indentLevel--;
+    });
+
+    phantomjs.on('jasmine.specStarted', function(specMetaData) {
+      thisRun.executedSpecs++;
+      grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description));
+    });
+
+    phantomjs.on('jasmine.specDone', function(specMetaData) {
+      var specSummary = {
+        assertions : 0,
+        classname : suites[currentSuite].name,
+        name : specMetaData.description,
+        time : specMetaData.duration / 1000,
+        failureMessages : []
+      };
+
+      suites[currentSuite].tests++;
+
+      var color = 'yellow',
+          symbol = 'splat';
+      if (specMetaData.status === "passed") {
+        thisRun.passedSpecs++;
+        color = 'green';
+        symbol = 'check';
+      } else if (specMetaData.status === "failed") {
+        thisRun.failedSpecs++;
+        status.failed++;
+        color = 'red';
+        symbol = 'error';
+        suites[currentSuite].failures++;
+        suites[currentSuite].errors += specMetaData.failedExpectations.length;
+        specSummary.failureMessages = specMetaData.failedExpectations.map(function(error){
+          return error.message;
+        });
       } else {
-        grunt.verbose.writeln(specMetadata.description + ': ' + specMetadata.status.yellow);
-        if (!grunt.option('verbose'))
-          grunt.log.write('P'.yellow);
+        thisRun.skippedSpecs++;
       }
 
-      for (var i = 0; i < specMetadata.failedExpectations.length; i++) {
-        var item = specMetadata.failedExpectations[i];
+      suites[currentSuite].testcases.push(specSummary);
 
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+
+      grunt.log.writeln(
+        indent(indentLevel) +
+        chalk[color].bold(symbols[symbol]) + ' ' +
+        chalk.grey(specMetaData.description)
+      );
+
+      specMetaData.failedExpectations.forEach(function(error, i){
         var specIndex = ' ('+(i+1)+')';
-        logWrite('  ' + item.message.red+specIndex.red);
-        phantomjs.emit('onError', item.message, item.stack);
-      }
-      phantomjs.emit('jasmine.testDone', specMetadata.failedExpectations.length);
+        grunt.log.writeln(indent(indentLevel + 1) + chalk.red(error.message + specIndex));
+        phantomjs.emit('onError', error.message, error.stack);
+      });
+
     });
 
-    phantomjs.on('jasmine.reportRunnerResults',function(){
-      var dur = (new Date()).getTime() - thisRun.start_time;
-      var spec_str = thisRun.executed_specs + (thisRun.executed_specs === 1 ? " spec " : " specs ");
-      grunt.verbose.writeln('Runner finished');
-      if (thisRun.executed_specs === 0) {
-        grunt.warn('No specs executed, is there a configuration error?');
-      }
-      if (!grunt.option('verbose')) {
-        grunt.log.writeln('');
-        grunt.log.write(status.log);
-      }
-      grunt.log.writeln(spec_str + 'in ' + (dur/1000) + "s.");
-    });
+    phantomjs.on('jasmine.jasmineDone', function(){
+      var dur = (new Date()).getTime() - thisRun.startTime;
+      var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? " spec " : " specs ");
 
-    phantomjs.on('jasmine.testDone',function(failedAssertions) {
-      status.failed += failedAssertions;
-    });
+      grunt.verbose.writeln('Jasmine runner finished');
 
-    phantomjs.on('jasmine.reportJUnitResults',function(junitData){
+      if (thisRun.executedSpecs === 0) {
+        // log.error will print the message but not fail the task, warn will do both.
+        var log = (options.ignoreEmpty) ? grunt.log.error : grunt.warn;
+
+        log('No specs executed, is there a configuration error?');
+      }
+
       if (options.junit && options.junit.path) {
-        var template = grunt.file.read(junitTemplate);
-        if (options.junit.consolidate) {
-          grunt.util._(junitData.consolidatedSuites).each(function(suites){
-            var xmlFile = path.join(options.junit.path, 'TEST-' + suites[0].name.replace(/[^\w]/g, '') + '.xml');
-            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: suites}));
-          });
-        } else {
-          junitData.suites.forEach(function(suiteData){
-            var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
-            grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: [suiteData] }));
-          });
-        }
+        writeJunitXml(suites);
       }
+
+      grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + "s.");
     });
 
-    phantomjs.on('jasmine.done',function(elapsed){
+    function writeJunitXml(testsuites){
+      var template = grunt.file.read(junitTemplate);
+      if (options.junit.consolidate) {
+        var xmlFile = path.join(options.junit.path, 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml');
+        grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
+      } else {
+        _.forEach(testsuites, function(suiteData){
+          var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
+          grunt.file.write(xmlFile, _.template(template, { testsuites: [suiteData] }));
+        });
+      }
+    }
+
+    phantomjs.on('jasmine.done', function(elapsed) {
       phantomjs.halt();
     });
 
-    phantomjs.on('jasmine.done.PhantomReporter',function(){
+    phantomjs.on('jasmine.done.PhantomReporter', function() {
       phantomjs.emit('jasmine.done');
     });
 
-    phantomjs.on('jasmine.done_fail',function(url){
+    phantomjs.on('jasmine.done_fail', function(url) {
       grunt.log.error();
       grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     });

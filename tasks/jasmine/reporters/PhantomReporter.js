@@ -7,7 +7,7 @@ var phantom = {};
 
 if (window._phantom) {
   console.log = function(){
-    phantom.sendMessage('verbose', Array.prototype.slice.apply(arguments).join(', '));
+    phantom.sendMessage('console', Array.prototype.slice.apply(arguments).join(', '));
   };
 }
 
@@ -17,6 +17,8 @@ phantom.sendMessage = function() {
   if (window._phantom) {
     // alerts are the communication bridge to grunt
     alert( payload );
+  } else {
+    console.log(arguments);
   }
 };
 
@@ -32,17 +34,18 @@ phantom.sendMessage = function() {
 
   PhantomReporter.prototype.jasmineStarted = function() {
     this.started = true;
-    phantom.sendMessage('jasmine.reportRunnerStarting');
+    phantom.sendMessage('jasmine.jasmineStarted');
   };
 
   PhantomReporter.prototype.specStarted = function(specMetadata) {
     specMetadata.startTime = (new Date()).getTime();
-    phantom.sendMessage('jasmine.reportSpecStarting', specMetadata);
+    phantom.sendMessage('jasmine.specStarted', specMetadata);
   };
 
   PhantomReporter.prototype.suiteStarted = function(suiteMetadata) {
     suiteMetadata.startTime = (new Date()).getTime();
-  }
+    phantom.sendMessage('jasmine.suiteStarted', suiteMetadata);
+  };
 
   PhantomReporter.prototype.suites = function() {
     return this.suites_;
@@ -70,27 +73,15 @@ phantom.sendMessage = function() {
     return this.results_;
   };
 
-  PhantomReporter.prototype.resultsForSpec = function(specId) {
-    return this.results_[specId];
-  };
-
-  function map(values, f) {
-    var result = [];
-    for (var ii = 0; ii < values.length; ii++) {
-      result.push(f(values[ii]));
-    }
-    return result;
-  }
-
   PhantomReporter.prototype.jasmineDone = function() {
     this.finished = true;
-    phantom.sendMessage('jasmine.reportRunnerResults');
-    //phantom.sendMessage('jasmine.reportJUnitResults', this.generateJUnitSummary(runner));
+    phantom.sendMessage('jasmine.jasmineDone');
     phantom.sendMessage('jasmine.done.PhantomReporter');
   };
 
   PhantomReporter.prototype.suiteDone = function(suiteMetadata) {
     suiteMetadata.duration = (new Date()).getTime() - suiteMetadata.startTime;
+    phantom.sendMessage('jasmine.suiteDone', suiteMetadata);
   };
 
   function stringify(obj) {
@@ -145,114 +136,7 @@ phantom.sendMessage = function() {
       }
     }
 
-    phantom.sendMessage( 'jasmine.reportSpecResults', specMetadata);
-  };
-
-  PhantomReporter.prototype.getFullName = function(spec) {
-    return getNestedSuiteName(spec.suite, ':: ') +  ':: ' + spec.description;
-  };
-
-  PhantomReporter.prototype.resultsForSpecs = function(specIds){
-    var results = {};
-    for (var i = 0; i < specIds.length; i++) {
-      var specId = specIds[i];
-      results[specId] = this.summarizeResult_(this.results_[specId]);
-    }
-    return results;
-  };
-
-  PhantomReporter.prototype.summarizeResult_ = function(result){
-    var summaryMessages = [];
-    var messagesLength = result.messages.length;
-    for (var messageIndex = 0; messageIndex < messagesLength; messageIndex++) {
-      var resultMessage = result.messages[messageIndex];
-      summaryMessages.push({
-        text: resultMessage.type === 'log' ? resultMessage.toString() : jasmine.undefined,
-        passed: resultMessage.passed ? resultMessage.passed() : true,
-        type: resultMessage.type,
-        message: resultMessage.message,
-        trace: {
-          stack: resultMessage.passed && !resultMessage.passed() ? resultMessage.trace.stack : jasmine.undefined
-        }
-      });
-    }
-
-    return {
-      result : result.result,
-      messages : summaryMessages
-    };
-  };
-
-  function getNestedSuiteName(suite, sep) {
-    var names = [];
-    while (suite) {
-      names.unshift(suite.description);
-      suite = suite.parentSuite;
-    }
-    return names.join(sep ? sep : ' ');
-  }
-
-  function getTopLevelSuiteId(suite) {
-    var id;
-    while (suite) {
-      id = suite.id;
-      suite = suite.parentSuite;
-    }
-    return id;
-  }
-
-  PhantomReporter.prototype.generateJUnitSummary = function(runner) {
-    var consolidatedSuites = {},
-        suites = map(runner.suites(), function(suite) {
-          var failures = 0;
-
-          var testcases = map(suite.specs(), function(spec) {
-            var failureMessages = [];
-            var specResults = spec.results();
-            var resultsItems = specResults.items_;
-            var resultsItemCount = resultsItems.length;
-
-            if (specResults.failedCount) {
-              failures++;
-
-              for (var ii = 0; ii < resultsItemCount; ii++) {
-                var expectation = resultsItems[ii];
-                if (!expectation.passed()) {
-                  failureMessages.push(expectation.message);
-                }
-              }
-            }
-            return {
-              assertions: resultsItemCount,
-              className: getNestedSuiteName(spec.suite),
-              name: spec.description,
-              time: spec.duration / 1000,
-              failureMessages: failureMessages
-            };
-          });
-
-          var data = {
-              name: getNestedSuiteName(suite),
-              time: suite.duration / 1000,
-              timestamp: suite.timestamp,
-              tests: suite.specs().length,
-              errors: 0, // TODO: These exist in the JUnit XML but not sure how they map to jasmine things
-              testcases: testcases,
-              failures: failures
-            };
-
-          if (suite.parentSuite) {
-            consolidatedSuites[getTopLevelSuiteId(suite)].push(data);
-          } else {
-            consolidatedSuites[suite.id] = [data];
-          }
-          return data;
-        });
-
-    return {
-      suites: suites,
-      consolidatedSuites: consolidatedSuites
-    };
+    phantom.sendMessage( 'jasmine.specDone', specMetadata);
   };
 
   jasmine.getEnv().addReporter( new PhantomReporter() );

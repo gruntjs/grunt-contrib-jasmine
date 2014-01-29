@@ -34,6 +34,12 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
+    watch : {
+      dev : {
+        files : ['tasks/**/*'],
+        tasks : ['jasmine:pivotal:build']
+      }
+    },
     jasmine: {
       pivotal: {
         src: 'test/fixtures/pivotal/src/**/*.js',
@@ -102,6 +108,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');
