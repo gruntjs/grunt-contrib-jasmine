@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.5.1 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.5.2 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -25,18 +25,16 @@ grunt.loadNpmTasks('grunt-contrib-jasmine');
 ## Jasmine task
 _Run this task with the `grunt jasmine` command._
 
-Automatically builds and maintains your spec runner and runs your tests headlessly through phantomjs.
+Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
 
-Substantial credit goes to [Camille Reynders](http://www.creynders.be/) (@creynders) for the first decent implementation
-of jasmine through grunt which served as motivation for all the future work.
-
-#### Run specs locally or on an ad hoc server
+#### Run specs locally or on a remote server
 
 Run your tests on your local filesystem or via a server task like [grunt-contrib-connect][].
 
 #### Customize your SpecRunner with templates
 
-Supply your templates that will be used to automatically build the SpecRunner.
+Use your own SpecRunner templates to customize how `grunt-contrib-jasmine` builds the SpecRunner. See the
+[wiki](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for details and third party templates for examples.
 
 ##### AMD Support
 
@@ -56,47 +54,45 @@ Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com
 #### src
 Type: `String|Array`
 
-*Minimatch* - Your source files. These are the files that you are testing.
+Your source files. These are the files that you are testing.
 
 #### options.specs
 Type: `String|Array`
 
-*Minimatch* - Your Jasmine specs.
+Your Jasmine specs.
 
 #### options.vendor
 Type: `String|Array`
 
-*Minimatch* - Third party libraries, generally loaded before anything else happens in your tests. Libraries
-like jQuery and Backbone.
+Third party libraries like jQuery & generally anything loaded before source, specs, and helpers.
 
 #### options.helpers
 Type: `String|Array`
 
-*Minimatch* - Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
+Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
 
 #### options.styles
 Type: `String|Array`
 
-*Minimatch* - CSS files that get loaded after the jasmine.css
+CSS files that get loaded after the jasmine.css
 
 #### options.version
 Type: `String`  
-Default: '1.3.1'
+Default: '2.0.0'
 
 This is the jasmine-version which will be used. currently available versions are:
 
-* 1.0.0
-* 1.1.0
-* 1.2.0
-* 1.3.0
-* 1.3.1
+* 2.0.0
+
+*Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
 #### options.outfile
 Type: `String`  
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
-Automatically deleted upon normal runs
+Automatically deleted upon normal runs. Use the `:build` flag to generate a SpecRunner manually e.g.
+`grunt jasmine:myTask:build`
 
 #### options.keepRunner
 Type: `Boolean`  
@@ -120,7 +116,7 @@ Consolidate the JUnit XML so that there is one file per top level suite.
 Type: `String`  
 Default: ''
 
-The host you want phantomjs to connect against to run your tests.
+The host you want PhantomJS to connect against to run your tests.
 
 e.g. if using an ad hoc server from within grunt
 
@@ -128,13 +124,7 @@ e.g. if using an ad hoc server from within grunt
 host : 'http://127.0.0.1:8000/'
 ```
 
-Or, using templates
-
-```js
-host : 'http://127.0.0.1:<%= connect.port %>/'
-```
-
-Not defining a host will mean your specs will be run from the local filesystem.
+Without a `host`, your specs will be run from the local filesystem.
 
 #### options.template
 Type: `String` `Object`  
@@ -150,13 +140,13 @@ See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-ja
 Type: `Object`  
 Default: `{}`
 
-Options that will be passed to your template via an 'options' hash. Used to pass settings to the template.
+Options that will be passed to your template. Used to pass settings to the template.
 
 ### Flags
 
 Name: `build`
 
-Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troubleshooting templates,
+Turn on this flag in order to build a SpecRunner html file. This is useful when troubleshooting templates,
 running in a browser, or as part of a watch chain e.g.
 
 ```js
@@ -255,6 +245,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2014-01-29   v0.6.0   Jasmine 2.0.0 support Improved logging support Various merges/bugfixes
  * 2013-08-02   v0.5.2   Fixed breakage with iframes /44 Added filter flag / 70 Fixed junit failure output /77
  * 2013-06-18   v0.5.1   Merged /69 grunt async not called when tests fail OR keepRunner is true
  * 2013-06-15   v0.5.0   updated rimraf made teardown async, added Function.prototype.bind polyfill breaking (templates) changed input options for getRelativeFileList breaking (usage) failing task on phantom error (SyntaxError, TypeError, et al)
@@ -275,4 +266,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Sep 02 2013 11:05:17.*
+*This file was generated on Wed Jan 29 2014 08:51:54.*

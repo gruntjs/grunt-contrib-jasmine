@@ -9,7 +9,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-	
+
   grunt.initConfig({
 
     connect: {
@@ -34,6 +34,12 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
+    watch : {
+      dev : {
+        files : ['tasks/**/*'],
+        tasks : ['jasmine:pivotal:build']
+      }
+    },
     jasmine: {
       pivotal: {
         src: 'test/fixtures/pivotal/src/**/*.js',
@@ -49,17 +55,6 @@ module.exports = function(grunt) {
         src: 'test/fixtures/phantom-polyfills/src/**/*.js',
         options : {
           specs : 'test/fixtures/phantom-polyfills/spec/**/*.js',
-        }
-      },
-      legacyVersion: {
-        src: 'test/fixtures/pivotal/src/**/*.js',
-        options: {
-          specs: 'test/fixtures/pivotal/spec/*Spec.js',
-          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
-          version: '1.2.0',
-          junit: {
-            path: 'junit'
-          }
         }
       },
       deepOutfile: {
@@ -113,6 +108,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');

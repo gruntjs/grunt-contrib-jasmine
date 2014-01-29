@@ -1,15 +1,13 @@
-Automatically builds and maintains your spec runner and runs your tests headlessly through phantomjs.
+Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
 
-Substantial credit goes to [Camille Reynders](http://www.creynders.be/) (@creynders) for the first decent implementation
-of jasmine through grunt which served as motivation for all the future work.
-
-## Run specs locally or on an ad hoc server
+## Run specs locally or on a remote server
 
 Run your tests on your local filesystem or via a server task like [grunt-contrib-connect][].
 
 ## Customize your SpecRunner with templates
 
-Supply your templates that will be used to automatically build the SpecRunner.
+Use your own SpecRunner templates to customize how `grunt-contrib-jasmine` builds the SpecRunner. See the
+[wiki](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for details and third party templates for examples.
 
 ### AMD Support
 

@@ -1,3 +1,9 @@
+v0.6.0:
+  date: 2014-01-29
+  changes:
+    - Jasmine 2.0.0 support
+    - Improved logging support
+    - Various merges/bugfixes
 v0.5.2:
   date: 2013-08-02
   changes:

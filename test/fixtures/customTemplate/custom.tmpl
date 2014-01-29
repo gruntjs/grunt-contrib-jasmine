@@ -9,7 +9,7 @@
   <% }) %>
 
   <% with (scripts) { %>
-  <% [].concat(jasmine, vendor, helpers, src, specs, reporters, start).forEach(function(script){ %>
+  <% [].concat(polyfills, jasmine, boot, vendor, helpers, src, specs, reporters).forEach(function(script){ %>
   <script type="text/javascript" src="<%= script %>"></script>
   <% }) %>
   <% }; %>

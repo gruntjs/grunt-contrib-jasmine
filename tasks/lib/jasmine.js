@@ -7,7 +7,8 @@ exports.init = function(grunt, phantomjs) {
       path = require('path');
 
   // npm
-  var rimraf = require('rimraf');
+  var rimraf = require('rimraf'),
+      _ = require('lodash');
 
   var baseDir = '.',
       tempDir = '.grunt/grunt-contrib-jasmine';
@@ -41,7 +42,7 @@ exports.init = function(grunt, phantomjs) {
 
     // Let's filter through the spec files here,
     // there's no need to go on if no specs matches
-    if(gruntfilter) {
+    if (gruntfilter) {
       filteredSpecs = specFilter(gruntfilter, filteredSpecs);
 
       if(filteredSpecs.length === 0) {
@@ -51,10 +52,12 @@ exports.init = function(grunt, phantomjs) {
     }
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.css', 'jasmine.css');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine.js', 'jasmine.js');
-    exports.copyTempFile(__dirname + '/../../vendor/jasmine-' + options.version + '/jasmine-html.js', 'jasmine-html.js');
-    exports.copyTempFile(__dirname + '/../jasmine/jasmine-helper.js', 'jasmine-helper.js');
+
+    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js'].forEach(function(name){
+        var path = __dirname + '/../../vendor/jasmine-' + options.version + '/' + name;
+        if (fs.existsSync(path)) exports.copyTempFile(path, name);
+    });
+
     exports.copyTempFile(__dirname + '/../helpers/phantom-polyfill.js', 'phantom-polyfill.js');
 
     var reporters = [
@@ -76,20 +79,19 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/jasmine-html.js'
     ];
 
-    var jasmineHelper = tempDir + '/jasmine-helper.js';
-
     var context = {
       temp : tempDir,
-      css  : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
+      outfile: outfile,
+      css : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
       scripts : {
         polyfills : exports.getRelativeFileList(outdir, polyfills),
-        jasmine   : exports.getRelativeFileList(outdir, jasmineCore),
-        helpers   : exports.getRelativeFileList(outdir, options.helpers, { nonull : true }),
-        specs     : filteredSpecs,
-        src       : exports.getRelativeFileList(outdir, src, { nonull : true }),
-        vendor    : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
+        jasmine : exports.getRelativeFileList(outdir, jasmineCore),
+        helpers : exports.getRelativeFileList(outdir, options.helpers, { nonull : true }),
+        specs : filteredSpecs,
+        src : exports.getRelativeFileList(outdir, src, { nonull : true }),
+        vendor : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
         reporters : exports.getRelativeFileList(outdir, reporters),
-        start     : exports.getRelativeFileList(outdir, jasmineHelper)
+        boot : exports.getRelativeFileList(outdir, tempDir + '/boot.js')
       },
       options : options.templateOptions || {}
     };
@@ -105,7 +107,7 @@ exports.init = function(grunt, phantomjs) {
     } else {
       grunt.file.copy(options.template, specrunner, {
         process : function(src) {
-          source = grunt.util._.template(src, context);
+          source = _.template(src, context);
           return source;
         }
       });
@@ -114,7 +116,7 @@ exports.init = function(grunt, phantomjs) {
     return source;
   };
 
-  exports.getRelativeFileList = function (outdir, patterns, options) {
+  exports.getRelativeFileList = function(outdir, patterns, options) {
     var files = [];
     patterns = patterns instanceof Array ? patterns : [ patterns ];
     options = options || {};
@@ -161,7 +163,7 @@ exports.init = function(grunt, phantomjs) {
         }
       }
 
-      filteredArray = grunt.util._.uniq(scriptSpecs);
+      filteredArray = _.uniq(scriptSpecs);
     }
 
     return filteredArray;
