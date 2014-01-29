@@ -80,6 +80,7 @@ exports.init = function(grunt, phantomjs) {
 
     var context = {
       temp : tempDir,
+      outfile: outfile,
       css  : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
       scripts : {
         polyfills : exports.getRelativeFileList(outdir, polyfills),
