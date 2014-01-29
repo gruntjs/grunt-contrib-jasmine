@@ -3,47 +3,45 @@
 ## src
 Type: `String|Array`
 
-*Minimatch* - Your source files. These are the files that you are testing.
+Your source files. These are the files that you are testing.
 
 ## options.specs
 Type: `String|Array`
 
-*Minimatch* - Your Jasmine specs.
+Your Jasmine specs.
 
 ## options.vendor
 Type: `String|Array`
 
-*Minimatch* - Third party libraries, generally loaded before anything else happens in your tests. Libraries
-like jQuery and Backbone.
+Third party libraries like jQuery & generally anything loaded before source, specs, and helpers.
 
 ## options.helpers
 Type: `String|Array`
 
-*Minimatch* - Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
+Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
 
 ## options.styles
 Type: `String|Array`
 
-*Minimatch* - CSS files that get loaded after the jasmine.css
+CSS files that get loaded after the jasmine.css
 
 ## options.version
 Type: `String`  
-Default: '1.3.1'
+Default: '2.0.0'
 
 This is the jasmine-version which will be used. currently available versions are:
 
-* 1.0.0
-* 1.1.0
-* 1.2.0
-* 1.3.0
-* 1.3.1
+* 2.0.0
+
+*Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
 ## options.outfile
 Type: `String`  
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
-Automatically deleted upon normal runs
+Automatically deleted upon normal runs. Use the `:build` flag to generate a SpecRunner manually e.g.
+`grunt jasmine:myTask:build`
 
 ## options.keepRunner
 Type: `Boolean`  
@@ -67,7 +65,7 @@ Consolidate the JUnit XML so that there is one file per top level suite.
 Type: `String`  
 Default: ''
 
-The host you want phantomjs to connect against to run your tests.
+The host you want PhantomJS to connect against to run your tests.
 
 e.g. if using an ad hoc server from within grunt
 
@@ -75,13 +73,7 @@ e.g. if using an ad hoc server from within grunt
 host : 'http://127.0.0.1:8000/'
 ```
 
-Or, using templates
-
-```js
-host : 'http://127.0.0.1:<%= connect.port %>/'
-```
-
-Not defining a host will mean your specs will be run from the local filesystem.
+Without a `host`, your specs will be run from the local filesystem.
 
 ## options.template
 Type: `String` `Object`  
@@ -97,13 +89,13 @@ See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-ja
 Type: `Object`  
 Default: `{}`
 
-Options that will be passed to your template via an 'options' hash. Used to pass settings to the template.
+Options that will be passed to your template. Used to pass settings to the template.
 
 # Flags
 
 Name: `build`
 
-Turn on this flag in order to rebuild the specrunner without deleting it. This is useful when troubleshooting templates,
+Turn on this flag in order to build a SpecRunner html file. This is useful when troubleshooting templates,
 running in a browser, or as part of a watch chain e.g.
 
 ```js
