@@ -41,6 +41,7 @@ module.exports = function(grunt) {
     var options = this.options({
       version : '1.3.1',
       timeout : 10000,
+      run: true,
       styles  : [],
       specs   : [],
       helpers : [],
@@ -66,7 +67,7 @@ module.exports = function(grunt) {
     setup(options);
 
     // The filter returned no spec, let's skip phantom.
-    if(!jasmine.buildSpecrunner(this.filesSrc, options)) {
+    if(!jasmine.buildSpecrunner(this.filesSrc, options) || !options.run) {
       return removePhantomListeners();
     }
 

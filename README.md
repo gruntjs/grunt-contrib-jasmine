@@ -104,6 +104,13 @@ Default: `false`
 
 Prevents the auto-generated specfile used to run your tests from being automatically deleted.
 
+#### options.run
+Type: `Boolean`  
+Default: `true`  
+
+Instructs phantomjs to run the specfile (when set to `false` and used in combination with `options.keepRunner: true` the task simply generates a specfile that can be opened in the browser)
+
+
 #### options.junit.path
 Type: `String`  
 Default: undefined
