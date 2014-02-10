@@ -207,7 +207,10 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.specStarted', function(specMetaData) {
       thisRun.executedSpecs++;
       thisRun.cleanConsole = true;
-      grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description) + '...');
+      // Only log now if we're able to clean up later
+      if (process.stdout.clearLine) {
+        grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description) + '...');
+      }
     });
 
     phantomjs.on('jasmine.specDone', function(specMetaData) {
@@ -243,29 +246,17 @@ module.exports = function(grunt) {
 
       suites[currentSuite].testcases.push(specSummary);
 
-      // If we're writing to a proper terminal, make it fancy.
+      // If we can clear line, do so
       if (process.stdout.clearLine) {
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
-        grunt.log.writeln(
-          indent(indentLevel) +
-            chalk[color].bold(symbols[symbol]) + ' ' +
-            chalk.grey(specMetaData.description)
-        );
-      } else {
-        // If we haven't written out since we've started
-        if (thisRun.cleanConsole) {
-          // then append to the current line.
-          grunt.log.writeln('...' + symbols[symbol]);
-        } else {
-          // Otherwise reprint the current spec and status.
-          grunt.log.writeln(
-            indent(indentLevel) + '...' +
-            chalk.grey(specMetaData.description) + '...' +
-            symbols[symbol]
-          );
-        }
       }
+      
+      grunt.log.writeln(
+        indent(indentLevel) +
+          chalk[color].bold(symbols[symbol]) + ' ' +
+          chalk.grey(specMetaData.description)
+      );
 
       specMetaData.failedExpectations.forEach(function(error, i){
         var specIndex = ' ('+(i+1)+')';
