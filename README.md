@@ -77,7 +77,7 @@ Type: `String|Array`
 CSS files that get loaded after the jasmine.css
 
 #### options.version
-Type: `String`  
+Type: `String`
 Default: '2.0.0'
 
 This is the jasmine-version which will be used. currently available versions are:
@@ -87,7 +87,7 @@ This is the jasmine-version which will be used. currently available versions are
 *Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
 #### options.outfile
-Type: `String`  
+Type: `String`
 Default: `_SpecRunner.html`
 
 The auto-generated specfile that phantomjs will use to run your tests.
@@ -95,25 +95,25 @@ Automatically deleted upon normal runs. Use the `:build` flag to generate a Spec
 `grunt jasmine:myTask:build`
 
 #### options.keepRunner
-Type: `Boolean`  
-Default: `false`  
+Type: `Boolean`
+Default: `false`
 
 Prevents the auto-generated specfile used to run your tests from being automatically deleted.
 
 #### options.junit.path
-Type: `String`  
+Type: `String`
 Default: undefined
 
 Path to output JUnit xml
 
 #### options.junit.consolidate
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Consolidate the JUnit XML so that there is one file per top level suite.
 
 #### options.host
-Type: `String`  
+Type: `String`
 Default: ''
 
 The host you want PhantomJS to connect against to run your tests.
@@ -127,7 +127,7 @@ host : 'http://127.0.0.1:8000/'
 Without a `host`, your specs will be run from the local filesystem.
 
 #### options.template
-Type: `String` `Object`  
+Type: `String` `Object`
 Default: undefined
 
 Custom template used to generate your Spec Runner. Parsed as underscore templates and provided
@@ -137,10 +137,34 @@ You can specify an object with a `process` method that will be called as a templ
 See the [Template API Documentation](https://github.com/gruntjs/grunt-contrib-jasmine/wiki/Jasmine-Templates) for more details.
 
 #### options.templateOptions
-Type: `Object`  
+Type: `Object`
 Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
+
+#### options.istanbul
+Type: `boolean` `Object`
+Default: undefined
+
+Set to `true` or an object with `report` and `directory` properties to turn on code coverage via Istanbul.
+
+#### options.istanbul.report
+Type: `String`
+Default: `text-summary`
+
+The Istanbul report type.  Valid options are `text`, `text-summary`, `html`, `lcov`, `lcovonly`, `cobertura`, or `teamcity`.  The `text` and `text-summary` options will print the coverage report to the console.
+
+#### options.istanbul.directory
+Type: `String`
+Default: `coverage`
+
+The directory where to store the generated Istanbul code coverage report.
+
+#### options.istanbul.instrumenter
+Type: `Object`
+Default: undefined
+
+These options are passed through to the instrumenter from Istanbul.
 
 ### Flags
 

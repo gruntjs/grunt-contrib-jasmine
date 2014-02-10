@@ -40,6 +40,7 @@ module.exports = function(grunt) {
         tasks : ['jasmine:pivotal:build']
       }
     },
+    clean: ['tmp'],
     jasmine: {
       pivotal: {
         src: 'test/fixtures/pivotal/src/**/*.js',
@@ -96,6 +97,17 @@ module.exports = function(grunt) {
           specs:["test/selfTest/*.js"],
           "--web-security": "no"
         }
+      },
+      istanbulTest: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          istanbul: {
+            report:'html',
+            directory:'tmp/istanbul'
+          }
+        }
       }
     },
 
@@ -112,7 +124,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('test', ['connect:return500', 'jasmine', 'nodeunit']);
+  grunt.registerTask('test', ['clean','connect:return500', 'jasmine', 'nodeunit']);
   grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
 };

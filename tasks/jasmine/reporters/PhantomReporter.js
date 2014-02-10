@@ -47,6 +47,9 @@ phantom.sendMessage = function() {
 
   PhantomReporter.prototype.jasmineDone = function() {
     this.finished = true;
+    if (window.__coverage__) {
+        phantom.sendMessage('istanbul.coverage',window.__coverage__);
+    }
     phantom.sendMessage('jasmine.jasmineDone');
     phantom.sendMessage('jasmine.done.PhantomReporter');
   };
