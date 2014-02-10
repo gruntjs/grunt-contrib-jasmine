@@ -25,6 +25,9 @@ module.exports = function(grunt) {
 
   var status = {};
 
+  var coverage;
+  var istanbulLib;
+
   var symbols = {
     check : '✓',
     error : 'X',
@@ -57,7 +60,7 @@ module.exports = function(grunt) {
       templateOptions : {},
       junit : {},
       ignoreEmpty: grunt.option('force') === true
-  });
+    });
 
     if (grunt.option('debug')) {
       grunt.log.debug(options);
@@ -65,8 +68,15 @@ module.exports = function(grunt) {
 
     setup(options);
 
+    var filesSrc = this.filesSrc;
+
+    if (options.istanbul) {
+      istanbulLib = require('grunt-lib-istanbul');
+      filesSrc = istanbulLib.instrument(this.filesSrc, options);
+    }
+
     // The filter returned no spec files so skip phantom.
-    if (!jasmine.buildSpecrunner(this.filesSrc, options)) {
+    if (!jasmine.buildSpecrunner(filesSrc, options)) {
       return removePhantomListeners();
     }
 
@@ -86,7 +96,19 @@ module.exports = function(grunt) {
         grunt.log.error(status.failed + ' failures');
       }
 
+      if (options.istanbul) {
+        if (options.istanbul.report && options.istanbul.report !== 'text' && options.istanbul.report !== 'text-summary') {
+          //if report is something other than text or text-summary, write out the summary so we have something to
+          //show in the console
+          istanbulLib.writeReport(coverage, {istanbul: {report: 'text-summary'}});
+        }
+        istanbulLib.writeReport(coverage, options);
+      }
+
       teardown(options, function() {
+        if (options.istanbul) {
+          istanbulLib.cleanUp();
+        }
         done(success);
       });
     });
@@ -307,6 +329,10 @@ module.exports = function(grunt) {
         });
       }
     }
+
+    phantomjs.on('istanbul.coverage',function(_coverage){
+      coverage = _coverage;
+    });
 
     phantomjs.on('jasmine.done', function(elapsed) {
       phantomjs.halt();

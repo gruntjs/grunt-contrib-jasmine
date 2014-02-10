@@ -1,4 +1,3 @@
-
 'use strict';
 
 exports.init = function(grunt, phantomjs) {

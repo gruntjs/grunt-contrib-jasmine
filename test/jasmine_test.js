@@ -1,6 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
+var fs = require('fs');
 
 // Majority of test benefit comes from running the task itself.
 
@@ -38,6 +39,13 @@ exports.jasmine = {
     var expected = grunt.file.read('./test/expected/defaultTemplate.html');
 
     test.equal(normalize(actual),normalize(expected), 'default test runner template');
+
+    test.done();
+  },
+  istanbulReport: function(test) {
+    test.expect(1);
+
+    test.equal(fs.existsSync('tmp/istanbul/index.html'),true,'should create the istanbul report.');
 
     test.done();
   }
