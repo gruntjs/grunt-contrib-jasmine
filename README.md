@@ -86,6 +86,13 @@ This is the jasmine-version which will be used. currently available versions are
 
 *Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
+
+#### options.silenceSuccess
+Type: `Boolean`  
+Default: `false`
+
+Only output the failure messages after running the tests
+
 #### options.outfile
 Type: `String`  
 Default: `_SpecRunner.html`
