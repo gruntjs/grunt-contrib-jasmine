@@ -336,7 +336,7 @@ module.exports = function(grunt) {
       failedSpecs.forEach(function(failedSpec, index) {
         grunt.log.writeln('');
         grunt.log.writeln(indent(2) + (index + 1) + ') ' + failedSpec.classname + ' ' + failedSpec.name);
-        grunt.log.writeln(indent(4) + chalk.red(failedSpec.failureMessages));
+        grunt.log.writeln(indent(4) + chalk.red(failedSpec.failureMessages.join("\n" + indent(4))));
       });
     }
 
