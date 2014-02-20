@@ -27,6 +27,7 @@ module.exports = function(grunt) {
 
   var symbols = {
     check : '✓',
+    dot   : '.',
     error : 'X',
     splat : '*'
   };
@@ -37,6 +38,7 @@ module.exports = function(grunt) {
     symbols = {
       check : '\u221A',
       error : '\u00D7',
+      dot   : '.',
       splat : '*'
     };
   }
@@ -53,6 +55,7 @@ module.exports = function(grunt) {
       vendor : [],
       outfile : '_SpecRunner.html',
       host : '',
+      silenceSuccess: false,
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
       junit : {},
@@ -137,6 +140,7 @@ module.exports = function(grunt) {
         tabstop = 2,
         thisRun = {},
         suites = {},
+        failedSpecs = [],
         currentSuite;
 
     status = {
@@ -195,8 +199,11 @@ module.exports = function(grunt) {
         failures : 0,
         testcases : []
       };
-      grunt.log.write(indent(indentLevel++));
-      grunt.log.writeln(chalk.bold(suiteMetaData.description));
+      indentLevel++;
+      if (!options.silenceSuccess) {
+        grunt.log.write(indent(indentLevel));
+        grunt.log.writeln(chalk.bold(suiteMetaData.description));
+      }
     });
 
     phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
@@ -207,8 +214,11 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.specStarted', function(specMetaData) {
       thisRun.executedSpecs++;
       thisRun.cleanConsole = true;
-      grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description) + '...');
+      if (!options.silenceSuccess) {
+        grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description) + '...');
+      }
     });
+
 
     phantomjs.on('jasmine.specDone', function(specMetaData) {
       var specSummary = {
@@ -226,7 +236,7 @@ module.exports = function(grunt) {
       if (specMetaData.status === "passed") {
         thisRun.passedSpecs++;
         color = 'green';
-        symbol = 'check';
+        symbol = options.silenceSuccess ? 'dot' : 'check';
       } else if (specMetaData.status === "failed") {
         thisRun.failedSpecs++;
         status.failed++;
@@ -237,6 +247,7 @@ module.exports = function(grunt) {
         specSummary.failureMessages = specMetaData.failedExpectations.map(function(error){
           return error.message;
         });
+        failedSpecs.push(specSummary);
       } else {
         thisRun.skippedSpecs++;
       }
@@ -245,13 +256,17 @@ module.exports = function(grunt) {
 
       // If we're writing to a proper terminal, make it fancy.
       if (process.stdout.clearLine) {
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        grunt.log.writeln(
-          indent(indentLevel) +
-            chalk[color].bold(symbols[symbol]) + ' ' +
-            chalk.grey(specMetaData.description)
-        );
+        if (options.silenceSuccess) {
+          grunt.log.write(chalk[color].bold(symbols[symbol]));
+        } else {
+          process.stdout.clearLine();
+          process.stdout.cursorTo(0);
+          grunt.log.writeln(
+            indent(indentLevel) +
+              chalk[color].bold(symbols[symbol]) + ' ' +
+              chalk.grey(specMetaData.description)
+          );
+        }
       } else {
         // If we haven't written out since we've started
         if (thisRun.cleanConsole) {
@@ -267,11 +282,13 @@ module.exports = function(grunt) {
         }
       }
 
-      specMetaData.failedExpectations.forEach(function(error, i){
-        var specIndex = ' ('+(i+1)+')';
-        grunt.log.writeln(indent(indentLevel + 1) + chalk.red(error.message + specIndex));
-        phantomjs.emit('onError', error.message, error.stack);
-      });
+      if (!options.silenceSuccess) {
+        specMetaData.failedExpectations.forEach(function(error, i){
+          var specIndex = ' ('+(i+1)+')';
+          grunt.log.writeln(indent(indentLevel + 1) + chalk.red(error.message + specIndex));
+          phantomjs.emit('onError', error.message, error.stack);
+        });
+      }
 
     });
 
@@ -292,6 +309,11 @@ module.exports = function(grunt) {
         writeJunitXml(suites);
       }
 
+      if (options.silenceSuccess) {
+        grunt.log.writeln('\n');
+        writeFailures(failedSpecs);
+      }
+
       grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + "s.");
     });
 
@@ -306,6 +328,16 @@ module.exports = function(grunt) {
           grunt.file.write(xmlFile, _.template(template, { testsuites: [suiteData] }));
         });
       }
+    }
+
+    function writeFailures(failedSpecs) {
+      if (_.isEmpty(failedSpecs)) return;
+      grunt.log.writeln('Failures: ');
+      failedSpecs.forEach(function(failedSpec, index) {
+        grunt.log.writeln('');
+        grunt.log.writeln(indent(2) + (index + 1) + ') ' + failedSpec.classname + ' ' + failedSpec.name);
+        grunt.log.writeln(indent(4) + chalk.red(failedSpec.failureMessages.join("\n" + indent(4))));
+      });
     }
 
     phantomjs.on('jasmine.done', function(elapsed) {
