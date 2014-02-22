@@ -30,7 +30,8 @@
     "grunt-lib-phantomjs": "~0.4.0",
     "rimraf": "~2.1.4",
     "chalk": "~0.4.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "es5-shim": "~2.3.0"
   },
   "devDependencies": {
     "grunt-contrib-internal": "~0.4.5",
