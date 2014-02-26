@@ -24,6 +24,8 @@ module.exports = function(grunt) {
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
   var status = {};
+  
+  var summary = [];
 
   var symbols = {
     check : '✓',
@@ -56,7 +58,8 @@ module.exports = function(grunt) {
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
       junit : {},
-      ignoreEmpty: grunt.option('force') === true
+      ignoreEmpty: grunt.option('force') === true,
+      summary: false,
   });
 
     if (grunt.option('debug')) {
@@ -237,6 +240,14 @@ module.exports = function(grunt) {
         specSummary.failureMessages = specMetaData.failedExpectations.map(function(error){
           return error.message;
         });
+        summary.push({
+          name: specMetaData.description,
+          errors: specMetaData.failedExpectations.map(function(error){
+            return {
+              message: error.message
+            };
+          })
+        });
       } else {
         thisRun.skippedSpecs++;
       }
@@ -288,12 +299,27 @@ module.exports = function(grunt) {
         log('No specs executed, is there a configuration error?');
       }
 
+      if(options.summary && summary.length) {
+        grunt.log.writeln();
+        logSummary(summary);
+      }
+
       if (options.junit && options.junit.path) {
         writeJunitXml(suites);
       }
 
       grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + "s.");
     });
+    
+    function logSummary(tests) {
+        grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
+        _.forEach(tests, function(test){
+            grunt.log.writeln(chalk.red(symbols['error']) + ' ' + test.name);
+            _.forEach(test.errors, function(error){
+              grunt.log.writeln('    ' + chalk.red(error.message));
+            });
+        });
+    }
 
     function writeJunitXml(testsuites){
       var template = grunt.file.read(junitTemplate);
