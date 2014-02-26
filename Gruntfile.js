@@ -57,6 +57,14 @@ module.exports = function(grunt) {
           specs : 'test/fixtures/phantom-polyfills/spec/**/*.js',
         }
       },
+      consoleDisplayOptions: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          display: 'short',
+        }
+      },
       deepOutfile: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
