@@ -91,6 +91,13 @@ Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
 
+## options.display
+Type: `String`  
+Default: `full`
+
+  * `full` displays the full specs tree
+  * `short` only displays a success or failure character for each test (useful with large suites)
+
 # Flags
 
 Name: `build`

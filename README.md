@@ -142,6 +142,13 @@ Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
 
+#### options.display
+Type: `String`  
+Default: `full`
+
+  * `full` displays the full specs tree
+  * `short` only displays a success or failure character for each test (useful with large suites)
+
 ### Flags
 
 Name: `build`
@@ -266,4 +273,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Jan 30 2014 12:26:49.*
+*This file was generated on Wed Feb 26 2014 15:21:40.*
