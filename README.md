@@ -142,6 +142,12 @@ Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
 
+#### options.summary
+Type: `Boolean`  
+Default: `false`
+
+Display a list of all failed tests and their failure messages
+
 ### Flags
 
 Name: `build`
@@ -266,4 +272,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Jan 30 2014 12:26:49.*
+*This file was generated on Wed Feb 26 2014 15:19:14.*

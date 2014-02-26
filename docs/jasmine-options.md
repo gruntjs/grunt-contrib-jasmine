@@ -91,6 +91,12 @@ Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
 
+## options.summary
+Type: `Boolean`  
+Default: `false`
+
+Display a list of all failed tests and their failure messages
+
 # Flags
 
 Name: `build`
