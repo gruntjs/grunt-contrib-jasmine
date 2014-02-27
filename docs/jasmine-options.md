@@ -98,6 +98,12 @@ Default: `full`
   * `full` displays the full specs tree
   * `short` only displays a success or failure character for each test (useful with large suites)
 
+## options.summary
+Type: `Boolean`  
+Default: `false`
+
+Display a list of all failed tests and their failure messages
+
 # Flags
 
 Name: `build`

@@ -63,6 +63,7 @@ module.exports = function(grunt) {
           specs: 'test/fixtures/pivotal/spec/*Spec.js',
           helpers: 'test/fixtures/pivotal/spec/*Helper.js',
           display: 'short',
+          summary: true,
         }
       },
       deepOutfile: {
