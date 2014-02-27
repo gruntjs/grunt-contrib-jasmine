@@ -58,7 +58,7 @@ exports.init = function(grunt, phantomjs) {
         if (fs.existsSync(path)) exports.copyTempFile(path, name);
     });
 
-    exports.copyTempFile(__dirname + '/../helpers/phantom-polyfill.js', 'phantom-polyfill.js');
+    exports.copyTempFile(__dirname + '/../../node_modules/es5-shim/es5-shim.js', 'es5-shim.js');
 
     var reporters = [
       tempDir + '/reporter.js'
@@ -71,7 +71,7 @@ exports.init = function(grunt, phantomjs) {
     jasmineCss = jasmineCss.concat(options.styles);
 
     var polyfills = [
-      tempDir + '/phantom-polyfill.js'
+      tempDir + '/es5-shim.js'
     ];
 
     var jasmineCore = [
