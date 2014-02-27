@@ -26,18 +26,32 @@ module.exports = function(grunt) {
   var status = {};
 
   var symbols = {
-    check : '✓',
-    error : 'X',
-    splat : '*'
+    short : {
+      check : '.',
+      error : 'X',
+      splat : '*'
+    },
+    long : {
+      check : '✓',
+      error : 'X',
+      splat : '*'
+    }
   };
 
   //With node.js on Windows: use symbols available in terminal default fonts
   //https://github.com/visionmedia/mocha/pull/641
   if (process && process.platform === 'win32') {
     symbols = {
-      check : '\u221A',
-      error : '\u00D7',
-      splat : '*'
+      short : {
+        check : '.',
+        error : '\u00D7',
+        splat : '*'
+      },
+      long : {
+        check : '\u221A',
+        error : '\u00D7',
+        splat : '*'
+      }
     };
   }
 
@@ -259,24 +273,24 @@ module.exports = function(grunt) {
           process.stdout.cursorTo(0);
           grunt.log.writeln(
             indent(indentLevel) +
-              chalk[color].bold(symbols[symbol]) + ' ' +
+              chalk[color].bold(symbols.long[symbol]) + ' ' +
               chalk.grey(specMetaData.description)
           );
         } else if(options.display === 'short') {
           process.stdout.moveCursor(-1);
-          grunt.log.write(chalk[color].bold(symbols[symbol]));
+          grunt.log.write(chalk[color].bold(symbols.short[symbol]));
         }
       } else {
         // If we haven't written out since we've started
         if (thisRun.cleanConsole) {
           // then append to the current line.
-          grunt.log.writeln('...' + symbols[symbol]);
+          grunt.log.writeln('...' + symbols[options.display][symbol]);
         } else {
           // Otherwise reprint the current spec and status.
           grunt.log.writeln(
             indent(indentLevel) + '...' +
             chalk.grey(specMetaData.description) + '...' +
-            symbols[symbol]
+            symbols[options.display][symbol]
           );
         }
       }
@@ -318,7 +332,7 @@ module.exports = function(grunt) {
     function logSummary(tests) {
         grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
         _.forEach(tests, function(test){
-            grunt.log.writeln(chalk.red(symbols['error']) + ' ' + test.name);
+            grunt.log.writeln(chalk.red(symbols[options.display]['error']) + ' ' + test.name);
             _.forEach(test.errors, function(error){
               grunt.log.writeln('    ' + chalk.red(error.message));
             });
