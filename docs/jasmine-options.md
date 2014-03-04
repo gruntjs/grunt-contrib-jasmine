@@ -3,7 +3,7 @@
 ## src
 Type: `String|Array`
 
-Your source files. These are the files that you are testing.
+Your source files. These are the files that you are testing. If you are using RequireJS your source files will be loaded as dependencies into your spec modules and will not need to be placed here.
 
 ## options.specs
 Type: `String|Array`
