@@ -42,6 +42,30 @@ grunt.initConfig({
 });
 ```
 
+## Supplying template modules and vendors
+
+A complex version for the above example
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        template: require('exports-process.js')
+        vendor: [
+          "vendor/*.js",
+          "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"
+        ]
+      }
+    }
+  }
+});
+```
+
 ## Sample RequireJS/NPM Template usage
 
 ```js
