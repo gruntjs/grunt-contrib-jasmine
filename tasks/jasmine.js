@@ -222,7 +222,7 @@ module.exports = function(grunt) {
     });
 
     phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
-      suites[currentSuite].time = suiteMetaData.duration / 1000;
+      suites[suiteMetaData.id].time = suiteMetaData.duration / 1000;
       indentLevel--;
     });
 
