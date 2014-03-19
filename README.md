@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.6.2 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.6.3 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -233,6 +233,30 @@ grunt.initConfig({
 });
 ```
 
+#### Supplying template modules and vendors
+
+A complex version for the above example
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        template: require('exports-process.js')
+        vendor: [
+          "vendor/*.js",
+          "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"
+        ]
+      }
+    }
+  }
+});
+```
+
 #### Sample RequireJS/NPM Template usage
 
 ```js
@@ -279,4 +303,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Feb 27 2014 14:07:56.*
+*This file was generated on Wed Mar 19 2014 16:21:15.*
