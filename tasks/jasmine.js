@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       error : 'X',
       splat : '*'
     },
-    long : {
+    full : {
       check : '✓',
       error : 'X',
       splat : '*'
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         error : '\u00D7',
         splat : '*'
       },
-      long : {
+      full : {
         check : '\u221A',
         error : '\u00D7',
         splat : '*'
@@ -285,7 +285,7 @@ module.exports = function(grunt) {
           process.stdout.cursorTo(0);
           grunt.log.writeln(
             indent(indentLevel) +
-              chalk[color].bold(symbols.long[symbol]) + ' ' +
+              chalk[color].bold(symbols.full[symbol]) + ' ' +
               chalk.grey(specMetaData.description)
           );
         } else if(options.display === 'short') {
