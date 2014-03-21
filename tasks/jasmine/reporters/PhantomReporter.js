@@ -106,11 +106,11 @@ phantom.sendMessage = function() {
             }
             cache.push(value);
             keyMap.push(key);
+          }
         } catch (e) {
             return "[Object]";
         }
-      }
-      return value;
+        return value;
     });
     return string;
   }
