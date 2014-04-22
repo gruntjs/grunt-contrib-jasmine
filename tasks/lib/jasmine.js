@@ -117,13 +117,10 @@ exports.init = function(grunt, phantomjs) {
   };
 
   exports.getRelativeFileList = function(outdir, patterns, options) {
-    var files = [];
     patterns = patterns instanceof Array ? patterns : [ patterns ];
     options = options || {};
-    patterns.forEach(function(listItem){
-      if (listItem) files = files.concat(grunt.file.expand(options, listItem));
-    });
 
+    var files = grunt.file.expand(options, grunt.util._(patterns).compact());
     files = grunt.util._(files).map(function(file){
       return (/^https?:/).test(file) ? file : path.relative(outdir, file).replace(/\\/g, '/');
     });
