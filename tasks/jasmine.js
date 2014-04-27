@@ -299,14 +299,22 @@ module.exports = function(grunt) {
         // If we haven't written out since we've started
         if (thisRun.cleanConsole) {
           // then append to the current line.
-          grunt.log.writeln('...' + symbols[options.display][symbol]);
+          if(options.display === 'full') {
+            grunt.log.writeln('...' + symbols[options.display][symbol]);
+          } else if(options.display === 'short') {
+            grunt.log.write(symbols[options.display][symbol]);
+          }
         } else {
           // Otherwise reprint the current spec and status.
-          grunt.log.writeln(
-            indent(indentLevel) + '...' +
-            chalk.grey(specMetaData.description) + '...' +
-            symbols[options.display][symbol]
-          );
+          if(options.display === 'full') {    
+            grunt.log.writeln(
+              indent(indentLevel) + '...' +
+              chalk.grey(specMetaData.description) + '...' +
+              symbols.full[symbol]
+            );
+          } else if(options.display === 'short') {
+            grunt.log.write(chalk[color].bold(symbols.short[symbol]));
+          }
         }
       }
 
