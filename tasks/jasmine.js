@@ -223,7 +223,10 @@ module.exports = function(grunt) {
 
     phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
       suites[currentSuite].time = suiteMetaData.duration / 1000;
-      indentLevel--;
+
+      if(indentLevel > 1) {
+        indentLevel--;
+      }
     });
 
     phantomjs.on('jasmine.specStarted', function(specMetaData) {
