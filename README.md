@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.6.3 [![Build Status](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.6.4 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -282,6 +282,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2014-04-28   v0.6.4   Indent level fix. Moved scripts inside the body tag.
  * 2014-01-29   v0.6.0   Jasmine 2.0.0 support Improved logging support Various merges/bugfixes
  * 2013-08-02   v0.5.2   Fixed breakage with iframes /44 Added filter flag / 70 Fixed junit failure output /77
  * 2013-06-18   v0.5.1   Merged /69 grunt async not called when tests fail OR keepRunner is true
@@ -303,4 +304,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Wed Mar 19 2014 16:21:15.*
+*This file was generated on Mon Apr 28 2014 15:48:58.*

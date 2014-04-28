@@ -1,3 +1,8 @@
+v0.6.4:
+  date: 2014-04-28
+  changes:
+    - Indent level fix.
+    - Moved scripts inside the body tag.
 v0.6.0:
   date: 2014-01-29
   changes:
