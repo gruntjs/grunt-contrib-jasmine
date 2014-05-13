@@ -53,7 +53,7 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
 
-    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js'].forEach(function(name){
+    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js', 'start.js'].forEach(function(name){
         var path = __dirname + '/../../vendor/jasmine-' + options.version + '/' + name;
         if (fs.existsSync(path)) exports.copyTempFile(path, name);
     });
@@ -76,7 +76,8 @@ exports.init = function(grunt, phantomjs) {
 
     var jasmineCore = [
       tempDir + '/jasmine.js',
-      tempDir + '/jasmine-html.js'
+      tempDir + '/jasmine-html.js',
+      tempDir + '/boot.js'
     ];
 
     var context = {
@@ -91,7 +92,7 @@ exports.init = function(grunt, phantomjs) {
         src : exports.getRelativeFileList(outdir, src, { nonull : true }),
         vendor : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
         reporters : exports.getRelativeFileList(outdir, reporters),
-        boot : exports.getRelativeFileList(outdir, tempDir + '/boot.js')
+        boot : exports.getRelativeFileList(outdir, tempDir + '/start.js')
       },
       options : options.templateOptions || {}
     };
