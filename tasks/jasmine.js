@@ -360,7 +360,7 @@ module.exports = function(grunt) {
     }
 
     function writeJunitXml(testsuites){
-      var template = grunt.file.read(junitTemplate);
+      var template = grunt.file.read(options.junit.template || junitTemplate);
       if (options.junit.consolidate) {
         var xmlFile = path.join(options.junit.path, 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml');
         grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
