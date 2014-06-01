@@ -31,6 +31,7 @@ exports.jasmine = {
         reporters : ['R1.js'],
         boot      : ['BOOT.js']
       },
+      temp: 'path/to/temp/folder',
       options : {}
     };
 

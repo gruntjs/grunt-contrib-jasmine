@@ -53,7 +53,7 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
 
-    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js'].forEach(function(name){
+    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js', 'jasmine_favicon.png'].forEach(function(name){
         var path = __dirname + '/../../vendor/jasmine-' + options.version + '/' + name;
         if (fs.existsSync(path)) exports.copyTempFile(path, name);
     });
