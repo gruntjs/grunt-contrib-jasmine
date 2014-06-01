@@ -1,3 +1,7 @@
+v0.6.5:
+  date: 2014-05-31
+  changes:
+    - Option to allow specifying a junitTemplate.
 v0.6.4:
   date: 2014-04-28
   changes:

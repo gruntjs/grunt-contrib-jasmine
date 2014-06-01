@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.6.4 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.6.5 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -111,6 +111,12 @@ Type: `Boolean`
 Default: `false`
 
 Consolidate the JUnit XML so that there is one file per top level suite.
+
+#### options.junit.template
+Type: `String`  
+Default: undefined
+
+Specify a custom JUnit template instead of using the default `junitTemplate`.
 
 #### options.host
 Type: `String`  
@@ -282,6 +288,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2014-05-31   v0.6.5   Option to allow specifying a junitTemplate.
  * 2014-04-28   v0.6.4   Indent level fix. Moved scripts inside the body tag.
  * 2014-01-29   v0.6.0   Jasmine 2.0.0 support Improved logging support Various merges/bugfixes
  * 2013-08-02   v0.5.2   Fixed breakage with iframes /44 Added filter flag / 70 Fixed junit failure output /77
@@ -304,4 +311,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Apr 28 2014 15:48:58.*
+*This file was generated on Sat May 31 2014 21:18:20.*

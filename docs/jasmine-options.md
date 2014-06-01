@@ -61,6 +61,12 @@ Default: `false`
 
 Consolidate the JUnit XML so that there is one file per top level suite.
 
+## options.junit.template
+Type: `String`  
+Default: undefined
+
+Specify a custom JUnit template instead of using the default `junitTemplate`.
+
 ## options.host
 Type: `String`  
 Default: ''
