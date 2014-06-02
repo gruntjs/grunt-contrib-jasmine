@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "~0.4.0",
+    "grunt-lib-phantomjs": "^0.6.0",
     "rimraf": "~2.1.4",
     "chalk": "~0.4.0",
     "lodash": "~2.4.1",
