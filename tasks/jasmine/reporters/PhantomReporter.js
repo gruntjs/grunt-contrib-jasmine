@@ -83,30 +83,34 @@ phantom.sendMessage = function() {
       // Let json stringify falsy values
       if (!value) return value;
 
-      // If we're a node
-      if (typeof(Node) !== 'undefined' && value instanceof Node) return '[ Node ]';
+      try {
+          // If we're a node
+          if (typeof(Node) !== 'undefined' && value instanceof Node) return '[ Node ]';
 
-      // jasmine-given has expectations on Specs. We intercept to return a
-      // String to avoid stringifying the entire Jasmine environment, which
-      // results in exponential string growth
-      if (value instanceof jasmine.Spec) return '[ Spec: ' + value.description + ' ]';
+          // jasmine-given has expectations on Specs. We intercept to return a
+          // String to avoid stringifying the entire Jasmine environment, which
+          // results in exponential string growth
+          if (value instanceof jasmine.Spec) return '[ Spec: ' + value.description + ' ]';
 
-      // If we're a window (logic stolen from jQuery)
-      if (value.window && value.window === value.window.window) return '[ Window ]';
+          // If we're a window (logic stolen from jQuery)
+          if (value.window && value.window === value.window.window) return '[ Window ]';
 
-      // Simple function reporting
-      if (typeof value === 'function') return '[ Function ]';
+          // Simple function reporting
+          if (typeof value === 'function') return '[ Function ]';
 
-      if (typeof value === 'object' && value !== null) {
+          if (typeof value === 'object' && value !== null) {
 
-        if (index = cache.indexOf(value) !== -1) {
-          // If we have it in cache, report the circle with the key we first found it in
-          return '[ Circular {' + (keyMap[index] || 'root') + '} ]';
+            if (index = cache.indexOf(value) !== -1) {
+              // If we have it in cache, report the circle with the key we first found it in
+              return '[ Circular {' + (keyMap[index] || 'root') + '} ]';
+            }
+            cache.push(value);
+            keyMap.push(key);
+          }
+        } catch (e) {
+            return "[Object]";
         }
-        cache.push(value);
-        keyMap.push(key);
-      }
-      return value;
+        return value;
     });
     return string;
   }
