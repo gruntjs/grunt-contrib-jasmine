@@ -88,12 +88,6 @@ module.exports = function(grunt) {
 //          specs: 'test/fixtures/syntaxError/spec/**/*.js'
 //        }
 //      },
-      fileExpand: {
-        src: ['test/fixtures/fileExpand/src/**/*.js', '!test/fixtures/fileExpand/src/exclude.js'],
-        options: {
-          specs: ['test/fixtures/fileExpand/spec/**/*.js', '!test/fixtures/fileExpand/spec/exclude.js']
-        }
-      },
       customTemplate: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {
