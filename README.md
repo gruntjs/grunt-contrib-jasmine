@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.6.5 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.7.0-pre [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -312,4 +312,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Jun 07 2014 15:06:26.*
+*This file was generated on Sat Jun 07 2014 15:09:25.*
