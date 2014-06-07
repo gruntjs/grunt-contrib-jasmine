@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.6.5 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.6.5 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -154,6 +154,7 @@ Default: `full`
 
   * `full` displays the full specs tree
   * `short` only displays a success or failure character for each test (useful with large suites)
+  * `none` displays nothing
 
 #### options.summary
 Type: `Boolean`  
@@ -311,4 +312,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat May 31 2014 21:18:20.*
+*This file was generated on Sat Jun 07 2014 15:06:26.*

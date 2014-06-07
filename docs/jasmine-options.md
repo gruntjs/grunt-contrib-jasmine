@@ -103,6 +103,7 @@ Default: `full`
 
   * `full` displays the full specs tree
   * `short` only displays a success or failure character for each test (useful with large suites)
+  * `none` displays nothing
 
 ## options.summary
 Type: `Boolean`  
