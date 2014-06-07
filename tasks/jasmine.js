@@ -24,10 +24,15 @@ module.exports = function(grunt) {
   var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
 
   var status = {};
-  
+
   var summary = [];
 
   var symbols = {
+    none : {
+      check : '',
+      error : '',
+      splat : ''
+    },
     short : {
       check : '.',
       error : 'X',
@@ -44,6 +49,11 @@ module.exports = function(grunt) {
   //https://github.com/visionmedia/mocha/pull/641
   if (process && process.platform === 'win32') {
     symbols = {
+      none : {
+        check : '',
+        error : '',
+        splat : ''
+      },
       short : {
         check : '.',
         error : '\u00D7',
@@ -299,14 +309,18 @@ module.exports = function(grunt) {
         // If we haven't written out since we've started
         if (thisRun.cleanConsole) {
           // then append to the current line.
-          grunt.log.writeln('...' + symbols[options.display][symbol]);
+          if (options.display !== 'none') {
+            grunt.log.writeln('...' + symbols[options.display][symbol]);
+          }
         } else {
           // Otherwise reprint the current spec and status.
-          grunt.log.writeln(
-            indent(indentLevel) + '...' +
-            chalk.grey(specMetaData.description) + '...' +
-            symbols[options.display][symbol]
-          );
+          if (options.display !== 'none') {
+            grunt.log.writeln(
+              indent(indentLevel) + '...' +
+              chalk.grey(specMetaData.description) + '...' +
+              symbols[options.display][symbol]
+            );
+          }
         }
       }
 
@@ -332,7 +346,7 @@ module.exports = function(grunt) {
 
         log('No specs executed, is there a configuration error?');
       }
-      
+
       if(options.display === 'short') {
         grunt.log.writeln();
       }
@@ -348,7 +362,7 @@ module.exports = function(grunt) {
 
       grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + "s.");
     });
-    
+
     function logSummary(tests) {
         grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
         _.forEach(tests, function(test){
