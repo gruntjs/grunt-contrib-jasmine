@@ -1,6 +1,8 @@
 'use strict';
 
-var grunt = require('grunt');
+var grunt = require('grunt'),
+    phantomjs = require('grunt-lib-phantomjs').init(grunt),
+    jasmine = require('../tasks/lib/jasmine.js').init(grunt, phantomjs);
 
 // Majority of test benefit comes from running the task itself.
 
@@ -40,6 +42,13 @@ exports.jasmine = {
 
     test.equal(normalize(actual),normalize(expected), 'default test runner template');
 
+    test.done();
+  },
+
+  fileExpand: function(test) {
+    var patterns = ['test/fixtures/fileExpand/src/*.js', '!test/fixtures/fileExpand/src/exclude.js']
+    var expected = ['test/fixtures/fileExpand/src/include.js'];
+    test.deepEqual(jasmine.getRelativeFileList('', patterns, {}), expected, 'should properly expand file list')
     test.done();
   }
 };
