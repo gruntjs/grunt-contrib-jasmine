@@ -5,7 +5,7 @@
     <% testsuite.testcases.forEach(function(testcase) { %>
       <testcase assertions="<%= testcase.assertions %>" classname="<%- testcase.classname %>" name="<%- testcase.name %>" time="<%= testcase.time %>">
         <% testcase.failureMessages.forEach(function(message) { %>
-          <failure><%= message %></failure>
+          <failure><![CDATA[<%= message %>]]></failure>
         <% }) %>
       </testcase>
     <% }) %>
