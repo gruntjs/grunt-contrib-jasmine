@@ -27,10 +27,11 @@ CSS files that get loaded after the jasmine.css
 
 ## options.version
 Type: `String`  
-Default: '2.0.0'
+Default: '2.0.1'
 
 This is the jasmine-version which will be used. currently available versions are:
 
+* 2.0.1
 * 2.0.0
 
 *Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
