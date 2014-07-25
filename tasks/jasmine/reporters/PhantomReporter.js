@@ -11,16 +11,16 @@ if (window._phantom) {
   };
 }
 
-phantom.sendMessage = function() {
-  var args = [].slice.call( arguments );
-  var payload = JSON.stringify( args );
-  if (window._phantom) {
-    // alerts are the communication bridge to grunt
-    alert( payload );
-  }
-};
 
 (function(){
+  phantom.sendMessage = function() {
+    var args = [].slice.call( arguments );
+    var payload = stringify( args );
+    if (window._phantom) {
+      // alerts are the communication bridge to grunt
+      alert( payload );
+    }
+  };
 
   function PhantomReporter() {
     this.started = false;
