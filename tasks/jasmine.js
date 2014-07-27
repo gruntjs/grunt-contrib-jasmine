@@ -377,7 +377,6 @@ module.exports = function(grunt) {
 
     function logStack(stack, indentLevel) {
       var lines = (stack || '').split('\n');
-      var newArr = [];
       for (var i = 0; i < lines.length && i < 11; i++) {
         grunt.log.writeln((indent(indentLevel) + lines[i]));
       }

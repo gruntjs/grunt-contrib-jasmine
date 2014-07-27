@@ -46,6 +46,7 @@ module.exports = function(grunt) {
         options: {
           specs: 'test/fixtures/pivotal/spec/*Spec.js',
           helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          summary: true,
           junit: {
             path: 'junit'
           }
@@ -131,6 +132,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('test', ['connect:return500', 'jasmine', 'nodeunit']);
-  grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
+  grunt.registerTask('test', ['jshint', 'connect:return500', 'jasmine', 'nodeunit']);
+  grunt.registerTask('default', ['test', 'build-contrib']);
 };

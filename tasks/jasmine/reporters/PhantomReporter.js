@@ -1,4 +1,4 @@
-/*global window:false, alert:false, jasmine:false, Node:false, */
+/*global window:false, alert:false, jasmine:false, Node:false */
 /*jshint curly:false*/
 
 'use strict';
