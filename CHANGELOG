@@ -1,3 +1,10 @@
+v0.7.0:
+  date: 2014-07-26
+  changes:
+    - Merged 153 to add stack trace to summary.
+    - Updated for Jasmine 2.0.1
+    - Merged 133 for minimal output
+    - Merged 139 changing file exclusion logic
 v0.6.5:
   date: 2014-05-31
   changes:

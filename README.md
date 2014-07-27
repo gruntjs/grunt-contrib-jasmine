@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.7.0-pre [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) <a href="https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine"><img src="https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master" alt="Build Status: Windows" height="18" /></a>
+# grunt-contrib-jasmine v0.7.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) <a href="https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine"><img src="https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master" alt="Build Status: Windows" height="18" /></a>
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -290,6 +290,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2014-07-26   v0.7.0   Merged 153 to add stack trace to summary. Updated for Jasmine 2.0.1 Merged 133 for minimal output Merged 139 changing file exclusion logic
  * 2014-05-31   v0.6.5   Option to allow specifying a junitTemplate.
  * 2014-04-28   v0.6.4   Indent level fix. Moved scripts inside the body tag.
  * 2014-01-29   v0.6.0   Jasmine 2.0.0 support Improved logging support Various merges/bugfixes
@@ -313,4 +314,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Jun 07 2014 15:54:17.*
+*This file was generated on Sat Jul 26 2014 19:28:20.*
