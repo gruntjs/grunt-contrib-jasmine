@@ -233,7 +233,7 @@ module.exports = function(grunt) {
 
     phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
       suites[suiteMetaData.id].time = suiteMetaData.duration / 1000;
-      
+
       if(indentLevel > 1) {
         indentLevel--;
       }
@@ -281,7 +281,8 @@ module.exports = function(grunt) {
           name: specMetaData.description,
           errors: specMetaData.failedExpectations.map(function(error){
             return {
-              message: error.message
+              message: error.message,
+              stack: error.stack
             };
           })
         });
@@ -368,9 +369,18 @@ module.exports = function(grunt) {
         _.forEach(tests, function(test){
             grunt.log.writeln(chalk.red(symbols[options.display]['error']) + ' ' + test.suite + ' ' + test.name);
             _.forEach(test.errors, function(error){
-              grunt.log.writeln('    ' + chalk.red(error.message));
+              grunt.log.writeln(indent(2) + chalk.red(error.message));
+              logStack(error.stack, 2);
             });
         });
+    }
+
+    function logStack(stack, indentLevel) {
+      var lines = (stack || '').split('\n');
+      var newArr = [];
+      for (var i = 0; i < lines.length && i < 11; i++) {
+        grunt.log.writeln((indent(indentLevel) + lines[i]));
+      }
     }
 
     function writeJunitXml(testsuites){
