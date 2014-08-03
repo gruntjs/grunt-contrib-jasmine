@@ -72,7 +72,7 @@ exports.init = function(grunt, phantomjs) {
 
     var polyfills = [
       tempDir + '/es5-shim.js'
-    ];
+    ].concat(options.polyfills);
 
     var jasmineCore = [
       tempDir + '/jasmine.js',
