@@ -71,6 +71,11 @@ Type: `String|Array`
 
 Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
 
+#### options.polyfills
+Type: `String|Array`
+
+Third party polyfill libraries like json2 that are loaded at the very top before anything else. es5-shim is loaded automatically with this library.
+
 #### options.styles
 Type: `String|Array`
 
@@ -314,4 +319,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat Aug 02 2014 22:57:46.*
+*This file was generated on Sun Aug 03 2014 19:28:29.*
