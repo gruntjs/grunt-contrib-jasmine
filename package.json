@@ -31,7 +31,8 @@
     "rimraf": "~2.1.4",
     "chalk": "~0.4.0",
     "lodash": "~2.4.1",
-    "es5-shim": "~4.0.1"
+    "es5-shim": "~4.0.1",
+    "jasmine-core": ">=2.0.2"
   },
   "devDependencies": {
     "grunt-contrib-internal": "~0.4.5",
