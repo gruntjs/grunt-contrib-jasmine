@@ -1,3 +1,9 @@
+v0.8.0:
+  date: 2014-07-26
+  changes:
+    - Plugin now uses Jasmine 2.0.4 from npm.
+    - Updates other dependencies.
+    - Added "options.polyfills".
 v0.7.0:
   date: 2014-07-26
   changes:

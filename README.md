@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.7.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) <a href="https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine"><img src="https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master" alt="Build Status: Windows" height="18" /></a>
+# grunt-contrib-jasmine v0.8.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.png?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) <a href="https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine"><img src="https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master" alt="Build Status: Windows" height="18" /></a>
 
 > Run jasmine specs headlessly through PhantomJS.
 
@@ -70,11 +70,6 @@ Third party libraries like jQuery & generally anything loaded before source, spe
 Type: `String|Array`
 
 Non-source, non-spec helper files. In the default runner these are loaded after `vendor` files
-
-#### options.polyfills
-Type: `String|Array`
-
-Third party polyfill libraries like json2 that are loaded at the very top before anything else. es5-shim is loaded automatically with this library.
 
 #### options.styles
 Type: `String|Array`
@@ -153,6 +148,11 @@ Type: `Object`
 Default: `{}`
 
 Options that will be passed to your template. Used to pass settings to the template.
+
+#### options.polyfills
+Type: `String|Array`
+
+Third party polyfill libraries like json2 that are loaded at the very top before anything else. es5-shim is loaded automatically with this library.
 
 #### options.display
 Type: `String`  
@@ -295,6 +295,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2014-07-26   v0.8.0   Plugin now uses Jasmine 2.0.4 from npm. Updates other dependencies. Added "options.polyfills".
  * 2014-07-26   v0.7.0   Merged 153 to add stack trace to summary. Updated for Jasmine 2.0.1 Merged 133 for minimal output Merged 139 changing file exclusion logic
  * 2014-05-31   v0.6.5   Option to allow specifying a junitTemplate.
  * 2014-04-28   v0.6.4   Indent level fix. Moved scripts inside the body tag.
@@ -319,4 +320,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sun Aug 03 2014 19:28:29.*
+*This file was generated on Wed Sep 17 2014 22:12:07.*
