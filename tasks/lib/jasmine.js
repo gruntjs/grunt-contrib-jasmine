@@ -8,7 +8,8 @@ exports.init = function(grunt, phantomjs) {
 
   // npm
   var rimraf = require('rimraf'),
-      _ = require('lodash');
+      _ = require('lodash'),
+      jasmineRequire = require('jasmine-core');
 
   var baseDir = '.',
       tempDir = '.grunt/grunt-contrib-jasmine';
@@ -53,10 +54,17 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
 
-    ['jasmine.css', 'jasmine.js', 'jasmine-html.js', 'boot.js', 'jasmine_favicon.png'].forEach(function(name){
-        var path = __dirname + '/../../vendor/jasmine-' + options.version + '/' + name;
-        if (fs.existsSync(path)) exports.copyTempFile(path, name);
+    [].concat(jasmineRequire.files.cssFiles, jasmineRequire.files.jsFiles).forEach(function(name) {
+        var srcPath = path.join(jasmineRequire.files.path, name);
+        exports.copyTempFile(srcPath, name);
     });
+
+    jasmineRequire.files.bootFiles.forEach(function(name) {
+        var srcPath = path.join(jasmineRequire.files.bootDir, name);
+        exports.copyTempFile(srcPath, name);
+    });
+
+    exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
 
     exports.copyTempFile(__dirname + '/../../node_modules/es5-shim/es5-shim.js', 'es5-shim.js');
 
@@ -64,9 +72,9 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/reporter.js'
     ];
 
-    var jasmineCss = [
-      tempDir + '/jasmine.css'
-    ];
+    var jasmineCss = jasmineRequire.files.cssFiles.map(function(name) {
+      return path.join(tempDir, name);
+    });
 
     jasmineCss = jasmineCss.concat(options.styles);
 
@@ -74,10 +82,9 @@ exports.init = function(grunt, phantomjs) {
       tempDir + '/es5-shim.js'
     ].concat(options.polyfills);
 
-    var jasmineCore = [
-      tempDir + '/jasmine.js',
-      tempDir + '/jasmine-html.js'
-    ];
+    var jasmineCore = jasmineRequire.files.jsFiles.map(function(name) {
+      return path.join(tempDir, name);
+    });
 
     var context = {
       temp : tempDir,
