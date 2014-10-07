@@ -176,6 +176,11 @@ module.exports = function(grunt) {
       return new Array(+times * tabstop).join(' ');
     }
 
+    phantomjs.on('fail.load', function() {
+      grunt.log.writeln();
+      grunt.warn('PhantomJS failed to load your page.', 90);
+    });
+
     phantomjs.on('fail.timeout', function() {
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to an unfinished async spec.', 90);
