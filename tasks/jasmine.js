@@ -100,7 +100,10 @@ module.exports = function(grunt) {
     }
 
     // If we're just building (e.g. for web), skip phantom.
-    if (this.flags.build) return;
+    if (this.flags.build) {
+      removePhantomListeners();
+      return;
+    }
 
     var done = this.async();
     phantomRunner(options, function(err, status) {
