@@ -1,3 +1,8 @@
+v0.8.1:
+  date: 2014-10-20
+  changes:
+    - Nowremoves listeners when using the build flag.
+    - Adds handler for fail.load.
 v0.8.0:
   date: 2014-07-26
   changes:
