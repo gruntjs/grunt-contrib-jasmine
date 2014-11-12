@@ -195,6 +195,9 @@ watch: {
 **wildcard**
 `grunt jasmine --filter=/*-bar` will run anything that is located in a folder `*-bar`
 
+**open-ended**
+`grunt jasmine --filter=foo/bar` will run spec files with `*foo/bar*` in their path.
+
 **comma separated filters**
 `grunt jasmine --filter=foo,bar` will run spec files that have `foo` or `bar` in their file name.
 
