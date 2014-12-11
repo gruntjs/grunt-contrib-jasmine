@@ -364,6 +364,7 @@ module.exports = function(grunt) {
       if(options.summary && summary.length) {
         grunt.log.writeln();
         logSummary(summary);
+        summary = [];
       }
 
       if (options.junit && options.junit.path) {
