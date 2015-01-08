@@ -26,8 +26,6 @@ module.exports = function(grunt) {
 
   var status = {};
 
-  var summary = [];
-
   var symbols = {
     none : {
       check : '',
@@ -223,6 +221,7 @@ module.exports = function(grunt) {
       thisRun.passedSpecs = 0;
       thisRun.failedSpecs = 0;
       thisRun.skippedSpecs = 0;
+      thisRun.summary = [];
     });
 
     phantomjs.on('jasmine.suiteStarted', function(suiteMetaData) {
@@ -286,7 +285,7 @@ module.exports = function(grunt) {
         specSummary.failureMessages = specMetaData.failedExpectations.map(function(error){
           return error.message;
         });
-        summary.push({
+        thisRun.summary.push({
           suite: suites[currentSuite].name,
           name: specMetaData.description,
           errors: specMetaData.failedExpectations.map(function(error){
@@ -362,9 +361,9 @@ module.exports = function(grunt) {
         grunt.log.writeln();
       }
 
-      if(options.summary && summary.length) {
+      if(options.summary && thisRun.summary.length) {
         grunt.log.writeln();
-        logSummary(summary);
+        logSummary(thisRun.summary);
       }
 
       if (options.junit && options.junit.path) {
