@@ -344,6 +344,10 @@ module.exports = function(grunt) {
 
     });
 
+    phantomjs.on('writeFile', function(name, content) {
+      fs.writeFileSync(name, content, {flag:'w'});
+    });
+
     phantomjs.on('jasmine.jasmineDone', function(){
       var dur = (new Date()).getTime() - thisRun.startTime;
       var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? " spec " : " specs ");
