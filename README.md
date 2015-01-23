@@ -168,6 +168,12 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
+#### options.handlers
+Type: `Object`  
+Default: `{}`  
+
+You can attach & listen events on PhantomJS instance used by Jasmine. Pass event names as keys and handling functions as values. It is more handy in situations like you want to sniff the network traffic from PhantomJS whenever a resource is requested and recieved. Here is an example on usage `{onResourceRequested: yourHandler, onResourceReceived: anotherHandler}`
+
 ### Flags
 
 Name: `build`
