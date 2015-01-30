@@ -398,7 +398,7 @@ module.exports = function(grunt) {
         if(options.junit.consolidatedFileName){
             filename = options.junit.consolidatedFileName;
         }
-        var xmlFile = path.join(options.junit.path, 'TEST-' + filename);
+        var xmlFile = path.join(options.junit.path, filename);
         grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
       } else {
         _.forEach(testsuites, function(suiteData){
