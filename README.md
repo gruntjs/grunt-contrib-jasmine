@@ -113,6 +113,12 @@ Default: `false`
 
 Consolidate the JUnit XML so that there is one file per top level suite.
 
+#### options.junit.consolidate
+Type: `Boolean`  
+Default: `false`
+
+Consolidate the JUnit XML so that there is one file per top level suite.
+
 #### options.junit.template
 Type: `String`  
 Default: undefined
