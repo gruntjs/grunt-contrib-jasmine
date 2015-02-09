@@ -159,7 +159,7 @@ exports.init = function(grunt, phantomjs) {
           } else if(pattern.indexOf('/') === 0) {
             specPattern = new RegExp("("+pattern+"[^/]*)(?=/)", "ig");
           } else {
-            throw new TypeError("--filter flag seems to be in the wrong format.");
+            specPattern = new RegExp(pattern, "ig");
           }
 
           // push is usually faster than concat.
