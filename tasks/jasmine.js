@@ -79,6 +79,7 @@ module.exports = function(grunt) {
       polyfills : [],
       outfile : '_SpecRunner.html',
       host : '',
+      delay : 0,
       template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
       templateOptions : {},
       junit : {},
@@ -132,16 +133,32 @@ module.exports = function(grunt) {
       file = options.host + options.outfile;
     }
 
-    grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via PhantomJS');
-    grunt.log.writeln('');
+    var runSpecs = function runSpecs() {
+        grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via PhantomJS');
+        grunt.log.writeln('');
 
-    phantomjs.spawn(file, {
-      failCode : 90,
-      options : options,
-      done : function(err){
-        cb(err,status);
-      }
-    });
+        phantomjs.spawn(file, {
+        failCode : 90,
+        options : options,
+        done : function(err){
+            cb(err,status);
+        }
+        });
+    };
+
+    if (options.delay) {
+        if (typeof options.delay !== 'number' || options.delay < 0) {
+            grunt.fatal('options.delay must be a positive number!');
+        }
+        // wait for specified time before running the specs
+        grunt.log.writeln('Waiting ' + options.delay + ' milliseconds before running jasmine specs...');
+        setTimeout(function() {
+            runSpecs();
+        }, options.delay);
+    } else {
+        runSpecs();
+    }
+
   }
 
   function teardown(options, cb) {
