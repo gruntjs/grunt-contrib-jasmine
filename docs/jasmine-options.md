@@ -57,16 +57,11 @@ Default: undefined
 Path to output JUnit xml
 
 ## options.junit.consolidate
-Type: `Boolean`  
+Type: `Boolean,String` 
 Default: `false`
 
-Consolidate the JUnit XML so that there is one file per top level suite.
-
-## options.junit.consolidatedFileName
-Type: `String`  
-Default: undefined
-
-The consolidated filename of the JUnit XML.
+Consolidate the JUnit XML so that there is one file. If not false the string will be used as 
+the output filename
 
 ## options.junit.template
 Type: `String`  

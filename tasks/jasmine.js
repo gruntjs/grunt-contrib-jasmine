@@ -394,11 +394,7 @@ module.exports = function(grunt) {
     function writeJunitXml(testsuites){
       var template = grunt.file.read(options.junit.template || junitTemplate);
       if (options.junit.consolidate) {
-        var filename = 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml';
-        if(options.junit.consolidatedFileName){
-            filename = options.junit.consolidatedFileName;
-        }
-        var xmlFile = path.join(options.junit.path, filename);
+        var xmlFile = path.join(options.junit.path, options.junit.consolidate);
         grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
       } else {
         _.forEach(testsuites, function(suiteData){
