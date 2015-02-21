@@ -106,7 +106,7 @@ module.exports = function(grunt) {
           template: 'test/fixtures/customTemplate/custom.tmpl',
           junit: {
             path: 'junit/customTemplate',
-            consolidate: true
+            consolidate: 'junit-consolidate.xml'
           }
         }
       },
