@@ -112,7 +112,7 @@ Type: `Boolean,String`
 Default: `false`
 
 Consolidate the JUnit XML so that there is one file. If not false the string will be used as 
-the output filename
+the output filename.
 
 #### options.junit.template
 Type: `String`  
