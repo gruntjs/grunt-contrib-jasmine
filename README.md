@@ -108,11 +108,10 @@ Default: undefined
 Path to output JUnit xml
 
 #### options.junit.consolidate
-Type: `Boolean,String` 
+Type: `Boolean`, `String`
 Default: `false`
 
-Consolidate the JUnit XML so that there is one file. If not false the string will be used as 
-the output filename.
+Consolidate the JUnit XML so that there is one file. If a string it will be used as the output filename.
 
 #### options.junit.template
 Type: `String`  
