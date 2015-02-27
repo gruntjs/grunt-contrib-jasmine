@@ -1,11 +1,11 @@
-# grunt-contrib-jasmine v0.8.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine)
+# grunt-contrib-jasmine v0.8.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through PhantomJS.
 
 
 
 ## Getting Started
-This plugin requires Grunt `~0.4.0`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -259,7 +259,7 @@ grunt.initConfig({
       options: {
         specs: 'spec/*Spec.js',
         helpers: 'spec/*Helper.js',
-        template: require('exports-process.js'),
+        template: require('exports-process.js')
         vendor: [
           "vendor/*.js",
           "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"
@@ -322,4 +322,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Jan 08 2015 16:18:55.*
+*This file was generated on Fri Feb 27 2015 10:07:34.*
