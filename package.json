@@ -22,9 +22,9 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "es5-shim": "^4.0.1",
-    "grunt-lib-phantomjs": "^0.7.0",
+    "grunt-lib-phantomjs": "^0.6.0",
     "jasmine-core": "^2.0.4",
-    "lodash": "^3.1.0",
+    "lodash": "~2.4.1",
     "rimraf": "^2.1.4"
   },
   "devDependencies": {
