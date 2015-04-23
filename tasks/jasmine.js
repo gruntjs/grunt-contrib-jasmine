@@ -22,25 +22,25 @@ module.exports = function(grunt) {
   // local lib
   var jasmine = require('./lib/jasmine').init(grunt, phantomjs);
 
-  var junitTemplate = __dirname + '/jasmine/templates/JUnit.tmpl';
+  var junitTemplate = path.join(__dirname, '/jasmine/templates/JUnit.tmpl');
 
   var status = {};
 
   var symbols = {
-    none : {
-      check : '',
-      error : '',
-      splat : ''
+    none: {
+      check: '',
+      error: '',
+      splat: ''
     },
-    short : {
-      check : '.',
-      error : 'X',
-      splat : '*'
+    short: {
+      check: '.',
+      error: 'X',
+      splat: '*'
     },
-    full : {
-      check : '✓',
-      error : 'X',
-      splat : '*'
+    full: {
+      check: '✓',
+      error: 'X',
+      splat: '*'
     }
   };
 
@@ -48,20 +48,20 @@ module.exports = function(grunt) {
   //https://github.com/visionmedia/mocha/pull/641
   if (process && process.platform === 'win32') {
     symbols = {
-      none : {
-        check : '',
-        error : '',
-        splat : ''
+      none: {
+        check: '',
+        error: '',
+        splat: ''
       },
-      short : {
-        check : '.',
-        error : '\u00D7',
-        splat : '*'
+      short: {
+        check: '.',
+        error: '\u00D7',
+        splat: '*'
       },
-      full : {
-        check : '\u221A',
-        error : '\u00D7',
-        splat : '*'
+      full: {
+        check: '\u221A',
+        error: '\u00D7',
+        splat: '*'
       }
     };
   }
@@ -70,21 +70,21 @@ module.exports = function(grunt) {
 
     // Merge task-specific options with these defaults.
     var options = this.options({
-      version : '2.0.1',
-      timeout : 10000,
-      styles : [],
-      specs : [],
-      helpers : [],
-      vendor : [],
-      polyfills : [],
-      outfile : '_SpecRunner.html',
-      host : '',
-      template : __dirname + '/jasmine/templates/DefaultRunner.tmpl',
-      templateOptions : {},
-      junit : {},
+      version: '2.0.1',
+      timeout: 10000,
+      styles: [],
+      specs: [],
+      helpers: [],
+      vendor: [],
+      polyfills: [],
+      outfile: '_SpecRunner.html',
+      host: '',
+      template: path.join(__dirname, '/jasmine/templates/DefaultRunner.tmpl'),
+      templateOptions: {},
+      junit: {},
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
-      summary: false,
+      summary: false
   });
 
     if (grunt.option('debug')) {
@@ -124,12 +124,12 @@ module.exports = function(grunt) {
 
   });
 
-  function phantomRunner(options, cb){
+  function phantomRunner(options, cb) {
     var file = options.outfile;
 
     if (options.host) {
       if (!(/\/$/).test(options.host)) {
-        options.host = options.host + '/';
+        options.host += '/';
       }
       file = options.host + options.outfile;
     }
@@ -138,10 +138,10 @@ module.exports = function(grunt) {
     grunt.log.writeln('');
 
     phantomjs.spawn(file, {
-      failCode : 90,
-      options : options,
-      done : function(err){
-        cb(err,status);
+      failCode: 90,
+      options: options,
+      done: function(err) {
+        cb(err, status);
       }
     });
   }
@@ -173,7 +173,7 @@ module.exports = function(grunt) {
         currentSuite;
 
     status = {
-      failed   : 0
+      failed: 0
     };
 
     function indent(times) {
@@ -192,21 +192,21 @@ module.exports = function(grunt) {
 
     phantomjs.on('console', function(msg) {
       thisRun.cleanConsole = false;
-      if(options.display === 'full') {
+      if (options.display === 'full') {
         grunt.log.writeln('\n' + chalk.yellow('log: ') + msg);
       }
     });
 
-    phantomjs.on('error.onError', function(string, trace){
+    phantomjs.on('error.onError', function(string, trace) {
       if (trace && trace.length) {
         grunt.log.error(chalk.red(string) + ' at ');
         trace.forEach(function(line) {
-          var file = line.file.replace(/^file:/,'');
-          var message = grunt.util._('%s:%d %s').sprintf(path.relative('.',file), line.line, line.function);
+          var file = line.file.replace(/^file:/, '');
+          var message = grunt.util._('%s:%d %s').sprintf(path.relative('.', file), line.line, line.function);
           grunt.log.error(chalk.red(message));
         });
       } else {
-        grunt.log.error("Error caught from PhantomJS. More info can be found by opening the Spec Runner in a browser.");
+        grunt.log.error('Error caught from PhantomJS. More info can be found by opening the Spec Runner in a browser.');
         grunt.warn(string);
       }
     });
@@ -229,14 +229,14 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.suiteStarted', function(suiteMetaData) {
       currentSuite = suiteMetaData.id;
       suites[currentSuite] = {
-        name : suiteMetaData.fullName,
-        timestamp : new Date(suiteMetaData.startTime),
-        errors : 0,
-        tests : 0,
-        failures : 0,
-        testcases : []
+        name: suiteMetaData.fullName,
+        timestamp: new Date(suiteMetaData.startTime),
+        errors: 0,
+        tests: 0,
+        failures: 0,
+        testcases: []
       };
-      if(options.display === 'full') {
+      if (options.display === 'full') {
         grunt.log.write(indent(indentLevel++));
         grunt.log.writeln(chalk.bold(suiteMetaData.description));
       }
@@ -245,7 +245,7 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.suiteDone', function(suiteMetaData) {
       suites[suiteMetaData.id].time = suiteMetaData.duration / 1000;
 
-      if(indentLevel > 1) {
+      if (indentLevel > 1) {
         indentLevel--;
       }
     });
@@ -253,44 +253,44 @@ module.exports = function(grunt) {
     phantomjs.on('jasmine.specStarted', function(specMetaData) {
       thisRun.executedSpecs++;
       thisRun.cleanConsole = true;
-      if(options.display === 'full') {
+      if (options.display === 'full') {
         grunt.log.write(indent(indentLevel) + '- ' + chalk.grey(specMetaData.description) + '...');
-      } else if(options.display === 'short' ) {
+      } else if (options.display === 'short') {
         grunt.log.write(chalk.grey('.'));
       }
     });
 
     phantomjs.on('jasmine.specDone', function(specMetaData) {
       var specSummary = {
-        assertions : 0,
-        classname : suites[currentSuite].name,
-        name : specMetaData.description,
-        time : specMetaData.duration / 1000,
-        failureMessages : []
+        assertions: 0,
+        classname: suites[currentSuite].name,
+        name: specMetaData.description,
+        time: specMetaData.duration / 1000,
+        failureMessages: []
       };
 
       suites[currentSuite].tests++;
 
       var color = 'yellow',
           symbol = 'splat';
-      if (specMetaData.status === "passed") {
+      if (specMetaData.status === 'passed') {
         thisRun.passedSpecs++;
         color = 'green';
         symbol = 'check';
-      } else if (specMetaData.status === "failed") {
+      } else if (specMetaData.status === 'failed') {
         thisRun.failedSpecs++;
         status.failed++;
         color = 'red';
         symbol = 'error';
         suites[currentSuite].failures++;
         suites[currentSuite].errors += specMetaData.failedExpectations.length;
-        specSummary.failureMessages = specMetaData.failedExpectations.map(function(error){
+        specSummary.failureMessages = specMetaData.failedExpectations.map(function(error) {
           return error.message;
         });
         thisRun.summary.push({
           suite: suites[currentSuite].name,
           name: specMetaData.description,
-          errors: specMetaData.failedExpectations.map(function(error){
+          errors: specMetaData.failedExpectations.map(function(error) {
             return {
               message: error.message,
               stack: error.stack
@@ -305,7 +305,7 @@ module.exports = function(grunt) {
 
       // If we're writing to a proper terminal, make it fancy.
       if (process.stdout.clearLine) {
-        if(options.display === 'full') {
+        if (options.display === 'full') {
           process.stdout.clearLine();
           process.stdout.cursorTo(0);
           grunt.log.writeln(
@@ -313,7 +313,7 @@ module.exports = function(grunt) {
               chalk[color].bold(symbols.full[symbol]) + ' ' +
               chalk.grey(specMetaData.description)
           );
-        } else if(options.display === 'short') {
+        } else if (options.display === 'short') {
           process.stdout.moveCursor(-1);
           grunt.log.write(chalk[color].bold(symbols.short[symbol]));
         }
@@ -336,9 +336,9 @@ module.exports = function(grunt) {
         }
       }
 
-      specMetaData.failedExpectations.forEach(function(error, i){
-        var specIndex = ' ('+(i+1)+')';
-        if(options.display === 'full') {
+      specMetaData.failedExpectations.forEach(function(error, i) {
+        var specIndex = ' (' + (i + 1) + ')';
+        if (options.display === 'full') {
           grunt.log.writeln(indent(indentLevel + 1) + chalk.red(error.message + specIndex));
         }
         phantomjs.emit('onError', error.message, error.stack);
@@ -346,24 +346,24 @@ module.exports = function(grunt) {
 
     });
 
-    phantomjs.on('jasmine.jasmineDone', function(){
+    phantomjs.on('jasmine.jasmineDone', function() {
       var dur = (new Date()).getTime() - thisRun.startTime;
-      var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? " spec " : " specs ");
+      var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? ' spec ' : ' specs ');
 
       grunt.verbose.writeln('Jasmine runner finished');
 
       if (thisRun.executedSpecs === 0) {
         // log.error will print the message but not fail the task, warn will do both.
-        var log = (options.ignoreEmpty) ? grunt.log.error : grunt.warn;
+        var log = options.ignoreEmpty ? grunt.log.error : grunt.warn;
 
         log('No specs executed, is there a configuration error?');
       }
 
-      if(options.display === 'short') {
+      if (options.display === 'short') {
         grunt.log.writeln();
       }
 
-      if(options.summary && thisRun.summary.length) {
+      if (options.summary && thisRun.summary.length) {
         grunt.log.writeln();
         logSummary(thisRun.summary);
       }
@@ -372,14 +372,14 @@ module.exports = function(grunt) {
         writeJunitXml(suites);
       }
 
-      grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + "s.");
+      grunt.log.writeln('\n' + specQuantity + 'in ' + (dur / 1000) + 's.');
     });
 
     function logSummary(tests) {
         grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
-        _.forEach(tests, function(test){
-            grunt.log.writeln(chalk.red(symbols[options.display]['error']) + ' ' + test.suite + ' ' + test.name);
-            _.forEach(test.errors, function(error){
+        _.forEach(tests, function(test) {
+            grunt.log.writeln(chalk.red(symbols.options.display.error) + ' ' + test.suite + ' ' + test.name);
+            _.forEach(test.errors, function(error) {
               grunt.log.writeln(indent(2) + chalk.red(error.message));
               logStack(error.stack, 2);
             });
@@ -389,24 +389,24 @@ module.exports = function(grunt) {
     function logStack(stack, indentLevel) {
       var lines = (stack || '').split('\n');
       for (var i = 0; i < lines.length && i < 11; i++) {
-        grunt.log.writeln((indent(indentLevel) + lines[i]));
+        grunt.log.writeln(indent(indentLevel) + lines[i]);
       }
     }
 
-    function writeJunitXml(testsuites){
+    function writeJunitXml(testsuites) {
       var template = grunt.file.read(options.junit.template || junitTemplate);
       if (options.junit.consolidate) {
         var xmlFile = path.join(options.junit.path, 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml');
         grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
       } else {
-        _.forEach(testsuites, function(suiteData){
+        _.forEach(testsuites, function(suiteData) {
           var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
           grunt.file.write(xmlFile, _.template(template, { testsuites: [suiteData] }));
         });
       }
     }
 
-    phantomjs.on('jasmine.done', function(elapsed) {
+    phantomjs.on('jasmine.done', function() {
       phantomjs.halt();
     });
 

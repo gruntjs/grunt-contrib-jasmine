@@ -1,4 +1,3 @@
-
 'use strict';
 
 exports.init = function(grunt, phantomjs) {
@@ -17,28 +16,28 @@ exports.init = function(grunt, phantomjs) {
   var exports = {};
 
   exports.writeTempFile = function(dest, contents) {
-    var file = path.join(tempDir,dest);
+    var file = path.join(tempDir, dest);
     grunt.file.write(file, contents);
   };
 
   exports.copyTempFile = function(src, dest) {
-    var file = path.join(tempDir,dest);
+    var file = path.join(tempDir, dest);
     grunt.file.copy(src, file);
   };
 
   exports.cleanTemp = function(cb) {
-    rimraf(tempDir, function(){
+    rimraf(tempDir, function() {
       // if this fails, then ./.grunt isn't empty and that's ok.
       fs.rmdir('.grunt', cb);
     });
   };
 
-  exports.buildSpecrunner = function (src, options){
+  exports.buildSpecrunner = function(src, options) {
     var source = '',
       outfile = options.outfile,
-      specrunner = path.join(baseDir,outfile),
+      specrunner = path.join(baseDir, outfile),
       outdir = path.dirname(outfile),
-      gruntfilter = grunt.option("filter"),
+      gruntfilter = grunt.option('filter'),
       filteredSpecs = exports.getRelativeFileList(outdir, options.specs);
 
     // Let's filter through the spec files here,
@@ -46,13 +45,13 @@ exports.init = function(grunt, phantomjs) {
     if (gruntfilter) {
       filteredSpecs = specFilter(gruntfilter, filteredSpecs);
 
-      if(filteredSpecs.length === 0) {
-        grunt.log.warn("the --filter flag did not match any spec within " + grunt.task.current.target);
+      if (filteredSpecs.length === 0) {
+        grunt.log.warn('the --filter flag did not match any spec within ' + grunt.task.current.target);
         return null;
       }
     }
 
-    exports.copyTempFile(__dirname + '/../jasmine/reporters/PhantomReporter.js', 'reporter.js');
+    exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PhantomReporter.js'), 'reporter.js');
 
     [].concat(jasmineRequire.files.cssFiles, jasmineRequire.files.jsFiles).forEach(function(name) {
         var srcPath = path.join(jasmineRequire.files.path, name);
@@ -66,7 +65,7 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
 
-    exports.copyTempFile(__dirname + '/../../node_modules/es5-shim/es5-shim.js', 'es5-shim.js');
+    exports.copyTempFile(path.join(__dirname, '/../../node_modules/es5-shim/es5-shim.js'), 'es5-shim.js');
 
     var reporters = [
       tempDir + '/reporter.js'
@@ -87,33 +86,33 @@ exports.init = function(grunt, phantomjs) {
     });
 
     var context = {
-      temp : tempDir,
+      temp: tempDir,
       outfile: outfile,
-      css : exports.getRelativeFileList(outdir, jasmineCss, { nonull : true }),
-      scripts : {
-        polyfills : exports.getRelativeFileList(outdir, polyfills),
-        jasmine : exports.getRelativeFileList(outdir, jasmineCore),
-        helpers : exports.getRelativeFileList(outdir, options.helpers, { nonull : true }),
-        specs : filteredSpecs,
-        src : exports.getRelativeFileList(outdir, src, { nonull : true }),
-        vendor : exports.getRelativeFileList(outdir, options.vendor, { nonull : true }),
-        reporters : exports.getRelativeFileList(outdir, reporters),
-        boot : exports.getRelativeFileList(outdir, tempDir + '/boot.js')
+      css: exports.getRelativeFileList(outdir, jasmineCss, { nonull: true }),
+      scripts: {
+        polyfills: exports.getRelativeFileList(outdir, polyfills),
+        jasmine: exports.getRelativeFileList(outdir, jasmineCore),
+        helpers: exports.getRelativeFileList(outdir, options.helpers, { nonull: true }),
+        specs: filteredSpecs,
+        src: exports.getRelativeFileList(outdir, src, { nonull: true }),
+        vendor: exports.getRelativeFileList(outdir, options.vendor, { nonull: true }),
+        reporters: exports.getRelativeFileList(outdir, reporters),
+        boot: exports.getRelativeFileList(outdir, tempDir + '/boot.js')
       },
-      options : options.templateOptions || {}
+      options: options.templateOptions || {}
     };
 
     if (options.template.process) {
       var task = {
-        writeTempFile : exports.writeTempFile,
-        copyTempFile : exports.copyTempFile,
-        phantomjs : phantomjs
+        writeTempFile: exports.writeTempFile,
+        copyTempFile: exports.copyTempFile,
+        phantomjs: phantomjs
       };
       source = options.template.process(grunt, task, context);
       grunt.file.write(specrunner, source);
     } else {
       grunt.file.copy(options.template, specrunner, {
-        process : function(src) {
+        process: function(src) {
           source = _.template(src, context);
           return source;
         }
@@ -128,7 +127,7 @@ exports.init = function(grunt, phantomjs) {
     options = options || {};
 
     var files = grunt.file.expand(options, grunt.util._(patterns).compact());
-    files = grunt.util._(files).map(function(file){
+    files = grunt.util._(files).map(function(file) {
       return (/^https?:/).test(file) ? file : path.relative(outdir, file).replace(/\\/g, '/');
     });
     return files;
@@ -144,22 +143,22 @@ exports.init = function(grunt, phantomjs) {
         return !!path.match(specPattern);
       };
 
-    if(pattern) {
+    if (pattern) {
       // For '*' to work as a wildcard.
-      pattern = pattern.split("*").join("[\\S]*").replace(/\./g, "\\.");
+      pattern = pattern.split('*').join('[\\S]*').replace(/\./g, '\\.');
       // This allows for comma separated strings to which we can match the spec files.
-      patternArray = pattern.split(",");
+      patternArray = pattern.split(',');
 
-      while(patternArray.length > 0) {
-        pattern = (patternArray.splice(0, 1)[0]);
+      while (patternArray.length > 0) {
+        pattern = patternArray.splice(0, 1)[0];
 
-        if(pattern.length > 0) {
-          if(pattern.indexOf('/') === -1) {
-            specPattern = new RegExp("("+pattern+"[^/]*)(?!/)$", "ig");
-          } else if(pattern.indexOf('/') === 0) {
-            specPattern = new RegExp("("+pattern+"[^/]*)(?=/)", "ig");
+        if (pattern.length > 0) {
+          if (pattern.indexOf('/') === -1) {
+            specPattern = new RegExp('(' + pattern + '[^/]*)(?!/)$', 'ig');
+          } else if (pattern.indexOf('/') === 0) {
+            specPattern = new RegExp('(' + pattern + '[^/]*)(?=/)', 'ig');
           } else {
-            throw new TypeError("--filter flag seems to be in the wrong format.");
+            throw new TypeError('--filter flag seems to be in the wrong format.');
           }
 
           // push is usually faster than concat.

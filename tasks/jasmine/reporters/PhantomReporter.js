@@ -1,24 +1,23 @@
-/*global window:false, alert:false, jasmine:false, Node:false */
-/*jshint curly:false*/
+/* global window:true, alert:true, jasmine:true, Node:true */
 
 'use strict';
 
 var phantom = {};
 
 if (window._phantom) {
-  console.log = function(){
+  console.log = function() {
     phantom.sendMessage('console', Array.prototype.slice.apply(arguments).join(', '));
   };
 }
 
 
-(function(){
+(function() {
   phantom.sendMessage = function() {
-    var args = [].slice.call( arguments );
-    var payload = stringify( args );
+    var args = [].slice.call(arguments);
+    var payload = stringify(args);
     if (window._phantom) {
       // alerts are the communication bridge to grunt
-      alert( payload );
+      alert(payload);
     }
   };
 
@@ -71,36 +70,50 @@ if (window._phantom) {
       }
     }
 
-    phantom.sendMessage( 'jasmine.specDone', specMetadata);
+    phantom.sendMessage('jasmine.specDone', specMetadata);
   };
 
   function stringify(obj) {
-    if (typeof obj !== 'object') return obj;
+    if (typeof obj !== 'object') {
+      return obj;
+    }
 
-    var cache = [], keyMap = [], index;
+    var cache = [], keyMap = [];
 
     var string = JSON.stringify(obj, function(key, value) {
       // Let json stringify falsy values
-      if (!value) return value;
+      if (!value) {
+        return value;
+      }
 
       try {
         // If we're a node
-        if (typeof(Node) !== 'undefined' && value instanceof Node) return '[ Node ]';
+        if (typeof Node !== 'undefined' && value instanceof Node) {
+          return '[ Node ]';
+        }
 
         // jasmine-given has expectations on Specs. We intercept to return a
         // String to avoid stringifying the entire Jasmine environment, which
         // results in exponential string growth
-        if (value instanceof jasmine.Spec) return '[ Spec: ' + value.description + ' ]';
+        if (value instanceof jasmine.Spec) {
+          return '[ Spec: ' + value.description + ' ]';
+        }
 
         // If we're a window (logic stolen from jQuery)
-        if (value.window && value.window === value.window.window) return '[ Window ]';
+        if (value.window && value.window === value.window.window) {
+          return '[ Window ]';
+        }
 
         // Simple function reporting
-        if (typeof value === 'function') return '[ Function ]';
+        if (typeof value === 'function') {
+          return '[ Function ]';
+        }
 
         if (typeof value === 'object' && value !== null) {
 
-          if (index = cache.indexOf(value) !== -1) {
+          var index = cache.indexOf(value);
+
+          if (index !== -1) {
             // If we have it in cache, report the circle with the key we first found it in
             return '[ Circular {' + (keyMap[index] || 'root') + '} ]';
           }
@@ -108,12 +121,12 @@ if (window._phantom) {
           keyMap.push(key);
         }
       } catch (e) {
-          return "[Object]";
+          return '[Object]';
       }
       return value;
     });
     return string;
   }
 
-  jasmine.getEnv().addReporter( new PhantomReporter() );
+  jasmine.getEnv().addReporter(new PhantomReporter());
 }());
