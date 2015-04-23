@@ -77,11 +77,12 @@ Type: `String|Array`
 CSS files that get loaded after the jasmine.css
 
 #### options.version
-Type: `String`  
-Default: '2.0.1'
+Type: `String`
+Default: '2.2.0'
 
 This is the jasmine-version which will be used. currently available versions are:
 
+* 2.2.0
 * 2.0.1
 * 2.0.0
 
