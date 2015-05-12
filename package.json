@@ -1,6 +1,6 @@
 {
   "name": "grunt-contrib-jasmine",
-  "description": "Run jasmine specs headlessly through PhantomJS.",
+  "description": "Run jasmine specs headlessly through PhantomJS",
   "version": "0.8.2",
   "author": {
     "name": "Grunt Team",
