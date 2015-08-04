@@ -1,3 +1,7 @@
+v0.9.1:
+  date: 2015-09-04
+  changes:
+    - Fix summary logging
 v0.9.0:
   date: 2015-07-10
   changes:

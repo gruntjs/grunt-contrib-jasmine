@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.9.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v0.9.1 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through PhantomJS
 
@@ -295,6 +295,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2015-09-04   v0.9.1   Fix summary logging
  * 2015-07-10   v0.9.0   Fix deprecated package.json licenses. Fix Phantomjs dependency to include correct phantom kill
  * 2015-01-08   v0.8.2   Fixes to test summary reporting.
  * 2014-10-20   v0.8.1   Now removes listeners when using the build flag. Adds handler for fail.load.
@@ -323,4 +324,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Fri Jul 10 2015 11:56:26.*
+*This file was generated on Tue Aug 04 2015 10:14:41.*
