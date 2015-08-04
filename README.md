@@ -133,6 +133,12 @@ host : 'http://127.0.0.1:8000/'
 
 Without a `host`, your specs will be run from the local filesystem.
 
+#### options.customBootFile
+Type: `String`  
+Default: `lib/jasmine-core/boot.js` from [`jasmine-core`](https://github.com/jasmine/jasmine)
+
+Path to a custom boot file (see the [docs](http://jasmine.github.io/2.3/custom_boot.html)).
+
 #### options.template
 Type: `String` `Object`  
 Default: undefined
