@@ -65,7 +65,13 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
 
-    exports.copyTempFile(path.join(__dirname, '/../../node_modules/es5-shim/es5-shim.js'), 'es5-shim.js');
+    var es5shimPath;
+    // Support NPM 3+ and NPM <= 2
+    if (fs.existsSync(es5shimPath = path.join(__dirname, '/../../../es5-shim/es5-shim.js'))) {
+      exports.copyTempFile(es5shimPath, 'es5-shim.js');
+    } else if (fs.existsSync(es5shimPath = path.join(__dirname, '/../../node_modules/es5-shim/es5-shim.js'))) {
+      exports.copyTempFile(es5shimPath, 'es5-shim.js');
+    }
 
     var reporters = [
       tempDir + '/reporter.js'
