@@ -65,7 +65,7 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
 
-    exports.copyTempFile(path.join(__dirname, '/../../node_modules/es5-shim/es5-shim.js'), 'es5-shim.js');
+    exports.copyTempFile(require.resolve('es5-shim/es5-shim.js'), 'es5-shim.js');
 
     var reporters = [
       tempDir + '/reporter.js'
