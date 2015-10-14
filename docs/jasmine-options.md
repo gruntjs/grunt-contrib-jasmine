@@ -27,7 +27,7 @@ CSS files that get loaded after the jasmine.css
 
 ## options.version
 Type: `String`  
-Default: '2.0.1'
+Default: `'2.0.1'`
 
 This is the jasmine-version which will be used. currently available versions are:
 
@@ -52,7 +52,7 @@ Prevents the auto-generated specfile used to run your tests from being automatic
 
 ## options.junit.path
 Type: `String`  
-Default: undefined
+Default: `undefined`
 
 Path to output JUnit xml
 
@@ -64,13 +64,13 @@ Consolidate the JUnit XML so that there is one file per top level suite.
 
 ## options.junit.template
 Type: `String`  
-Default: undefined
+Default: `undefined`
 
 Specify a custom JUnit template instead of using the default `junitTemplate`.
 
 ## options.host
 Type: `String`  
-Default: ''
+Default: `''`
 
 The host you want PhantomJS to connect against to run your tests.
 
@@ -84,7 +84,7 @@ Without a `host`, your specs will be run from the local filesystem.
 
 ## options.template
 Type: `String` `Object`  
-Default: undefined
+Default: `undefined`
 
 Custom template used to generate your Spec Runner. Parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
@@ -105,7 +105,7 @@ Third party polyfill libraries like json2 that are loaded at the very top before
 
 ## options.display
 Type: `String`  
-Default: `full`
+Default: `'full'`
 
   * `full` displays the full specs tree
   * `short` only displays a success or failure character for each test (useful with large suites)
