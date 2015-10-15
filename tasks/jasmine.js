@@ -396,8 +396,17 @@ module.exports = function(grunt) {
     function writeJunitXml(testsuites) {
       var template = grunt.file.read(options.junit.template || junitTemplate);
       if (options.junit.consolidate) {
-        var xmlFile = path.join(options.junit.path, 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml');
-        grunt.file.write(xmlFile, grunt.util._.template(template, { testsuites: _.values(testsuites)}));
+          var fileName = '';
+
+          if (typeof options.junit.consolidate === "string") {
+              fileName = options.junit.consolidate;
+          } else {
+              fileName = 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml';
+          }
+
+          var xmlFile = path.join(options.junit.path, fileName);
+
+          grunt.file.write(xmlFile, grunt.util._.template(template, {testsuites: _.values(testsuites)}));
       } else {
         _.forEach(testsuites, function(suiteData) {
           var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
