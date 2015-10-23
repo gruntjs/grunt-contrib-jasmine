@@ -16,14 +16,14 @@ module.exports = function(grunt) {
       return500: {
         options: {
           port: 10921,
-            middleware: function(connect, options) {
-              return [function(req, res, next){
-                res.statusCode = 500;
-                res.end();
-              }];
-            }
+          middleware: function() {
+            return [function(req, res) {
+              res.statusCode = 500;
+              res.end();
+            }];
           }
         }
+      }
     },
     jshint: {
       all: [
@@ -36,10 +36,10 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       }
     },
-    watch : {
-      dev : {
-        files : ['tasks/**/*'],
-        tasks : ['jasmine:pivotal:build']
+    watch: {
+      dev: {
+        files: ['tasks/**/*'],
+        tasks: ['jasmine:pivotal:build']
       }
     },
     jasmine: {
@@ -54,10 +54,10 @@ module.exports = function(grunt) {
           }
         }
       },
-      phantom_polyfills: {
+      phantomPolyfills: {
         src: 'test/fixtures/phantom-polyfills/src/**/*.js',
-        options : {
-          specs : 'test/fixtures/phantom-polyfills/spec/**/*.js',
+        options: {
+          specs: 'test/fixtures/phantom-polyfills/spec/**/*.js'
         }
       },
       consoleDisplayOptions: {
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
           specs: 'test/fixtures/pivotal/spec/*Spec.js',
           helpers: 'test/fixtures/pivotal/spec/*Helper.js',
           display: 'short',
-          summary: true,
+          summary: true
         }
       },
       consoleDisplayOptionsNone: {
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
           specs: 'test/fixtures/pivotal/spec/*Spec.js',
           helpers: 'test/fixtures/pivotal/spec/*Helper.js',
           display: 'none',
-          summary: true,
+          summary: true
         }
       },
       deepOutfile: {
@@ -114,8 +114,8 @@ module.exports = function(grunt) {
       },
       selfTest: {
         options: {
-          specs:["test/selfTest/*.js"],
-          "--web-security": "no"
+          specs: ['test/selfTest/*.js'],
+          '--web-security': 'no'
         }
       }
     },
