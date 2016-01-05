@@ -2,7 +2,7 @@
  * grunt-contrib-jasmine
  * http://gruntjs.com/
  *
- * Copyright (c) 2015 GruntJS Team
+ * Copyright (c) 2016 GruntJS Team
  * Licensed under the MIT license.
  */
 
