@@ -77,11 +77,12 @@ Type: `String|Array`
 CSS files that get loaded after the jasmine.css
 
 #### options.version
-Type: `String`  
-Default: `'2.0.1'`
+Type: `String`
+Default: '2.2.0'
 
 This is the jasmine-version which will be used. currently available versions are:
 
+* 2.2.0
 * 2.0.1
 * 2.0.0
 
@@ -295,7 +296,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
- * 2016-01-26   v1.0.0   bump grunt-lib-phantomjs to 1.0.0
+ * 2016-01-26   v1.0.0   bump grunt-lib-phantomjs to 1.0.0 bump jasmine to 2.2.0
  * 2015-09-24   v0.9.2   Fixes npm@3 issues
  * 2015-09-04   v0.9.1   Fix summary logging
  * 2015-07-10   v0.9.0   Fix deprecated package.json licenses. Fix Phantomjs dependency to include correct phantom kill
@@ -326,4 +327,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jan 26 2016 10:43:05.*
+*This file was generated on Tue Jan 26 2016 10:58:57.*
