@@ -78,7 +78,7 @@ CSS files that get loaded after the jasmine.css
 
 #### options.version
 Type: `String`
-Default: '2.2.0'
+Default: `'2.2.0'`
 
 This is the jasmine-version which will be used. currently available versions are:
 
@@ -327,4 +327,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jan 26 2016 10:58:57.*
+*This file was generated on Tue Jan 26 2016 10:59:32.*
