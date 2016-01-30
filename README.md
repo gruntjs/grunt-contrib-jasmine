@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v0.9.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v1.0.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through PhantomJS
 
@@ -77,11 +77,12 @@ Type: `String|Array`
 CSS files that get loaded after the jasmine.css
 
 #### options.version
-Type: `String`  
-Default: '2.0.1'
+Type: `String`
+Default: `'2.2.0'`
 
 This is the jasmine-version which will be used. currently available versions are:
 
+* 2.2.0
 * 2.0.1
 * 2.0.0
 
@@ -103,7 +104,7 @@ Prevents the auto-generated specfile used to run your tests from being automatic
 
 #### options.junit.path
 Type: `String`  
-Default: undefined
+Default: `undefined`
 
 Path to output JUnit xml
 
@@ -115,13 +116,13 @@ Consolidate the JUnit XML so that there is one file per top level suite.
 
 #### options.junit.template
 Type: `String`  
-Default: undefined
+Default: `undefined`
 
 Specify a custom JUnit template instead of using the default `junitTemplate`.
 
 #### options.host
 Type: `String`  
-Default: ''
+Default: `''`
 
 The host you want PhantomJS to connect against to run your tests.
 
@@ -135,7 +136,7 @@ Without a `host`, your specs will be run from the local filesystem.
 
 #### options.template
 Type: `String` `Object`  
-Default: undefined
+Default: `undefined`
 
 Custom template used to generate your Spec Runner. Parsed as underscore templates and provided
 the expanded list of files needed to build a specrunner.
@@ -156,7 +157,7 @@ Third party polyfill libraries like json2 that are loaded at the very top before
 
 #### options.display
 Type: `String`  
-Default: `full`
+Default: `'full'`
 
   * `full` displays the full specs tree
   * `short` only displays a success or failure character for each test (useful with large suites)
@@ -259,7 +260,7 @@ grunt.initConfig({
       options: {
         specs: 'spec/*Spec.js',
         helpers: 'spec/*Helper.js',
-        template: require('exports-process.js')
+        template: require('exports-process.js'),
         vendor: [
           "vendor/*.js",
           "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"
@@ -295,6 +296,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2016-01-26   v1.0.0   bump grunt-lib-phantomjs to 1.0.0 bump jasmine to 2.2.0
  * 2015-09-24   v0.9.2   Fixes npm@3 issues
  * 2015-09-04   v0.9.1   Fix summary logging
  * 2015-07-10   v0.9.0   Fix deprecated package.json licenses. Fix Phantomjs dependency to include correct phantom kill
@@ -325,4 +327,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Sep 24 2015 13:00:10.*
+*This file was generated on Tue Jan 26 2016 10:59:32.*
