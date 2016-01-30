@@ -31,9 +31,6 @@
     "grunt-contrib-nodeunit": "^0.4.1",
     "grunt-contrib-watch": "^0.6.1"
   },
-  "peerDependencies": {
-    "grunt": ">=0.4.0"
-  },
   "keywords": [
     "gruntplugin",
     "jasmine",
