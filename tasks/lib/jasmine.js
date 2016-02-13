@@ -126,8 +126,7 @@ exports.init = function(grunt, phantomjs) {
     patterns = patterns instanceof Array ? patterns : [ patterns ];
     options = options || {};
 
-    var files = grunt.file.expand(options, grunt.util._(patterns).compact());
-    files = grunt.util._(files).map(function(file) {
+    var files = grunt.file.expand(options, _.compact(patterns)).map(function(file) {
       return (/^https?:/).test(file) ? file : path.relative(outdir, file).replace(/\\/g, '/');
     });
     return files;
@@ -174,4 +173,3 @@ exports.init = function(grunt, phantomjs) {
 
   return exports;
 };
-
