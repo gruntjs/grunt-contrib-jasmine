@@ -77,6 +77,7 @@ module.exports = function(grunt) {
       helpers: [],
       vendor: [],
       polyfills: [],
+      customBootFile: null,
       outfile: '_SpecRunner.html',
       host: '',
       template: path.join(__dirname, '/jasmine/templates/DefaultRunner.tmpl'),
