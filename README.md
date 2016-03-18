@@ -5,7 +5,6 @@
 
 
 ## Getting Started
-This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -133,12 +132,6 @@ host : 'http://127.0.0.1:8000/'
 ```
 
 Without a `host`, your specs will be run from the local filesystem.
-
-#### options.customBootFile
-Type: `String`  
-Default: `lib/jasmine-core/boot.js` from [`jasmine-core`](https://github.com/jasmine/jasmine)
-
-Path to a custom boot file (see the [docs](http://jasmine.github.io/2.3/custom_boot.html)).
 
 #### options.template
 Type: `String` `Object`  
@@ -302,35 +295,35 @@ for more information on the RequireJS template.
 
 ## Release History
 
- * 2016-01-26   v1.0.0   bump grunt-lib-phantomjs to 1.0.0 bump jasmine to 2.2.0
- * 2015-09-24   v0.9.2   Fixes npm@3 issues
- * 2015-09-04   v0.9.1   Fix summary logging
- * 2015-07-10   v0.9.0   Fix deprecated package.json licenses. Fix Phantomjs dependency to include correct phantom kill
+ * 2016-01-26   v1.0.0   Bump grunt-lib-phantomjs to 1.0.0. Bump jasmine to 2.2.0.
+ * 2015-09-24   v0.9.2   Fixes npm@3 issues.
+ * 2015-09-04   v0.9.1   Fix summary logging.
+ * 2015-07-10   v0.9.0   Fix deprecated package.json licenses. Fix Phantomjs dependency to include correct phantom kill.
  * 2015-01-08   v0.8.2   Fixes to test summary reporting.
- * 2014-10-20   v0.8.1   Now removes listeners when using the build flag. Adds handler for fail.load.
- * 2014-07-26   v0.8.0   Plugin now uses Jasmine 2.0.4 from npm. Updates other dependencies. Added "options.polyfills".
- * 2014-07-26   v0.7.0   Merged 153 to add stack trace to summary. Updated for Jasmine 2.0.1 Merged 133 for minimal output Merged 139 changing file exclusion logic
- * 2014-05-31   v0.6.5   Option to allow specifying a junitTemplate.
+ * 2014-10-20   v0.8.1   Now removes listeners when using the build flag. Adds handler for `fail.load`.
+ * 2014-07-26   v0.8.0   Plugin now uses Jasmine 2.0.4 from npm. Updates other dependencies. Added `options.polyfills`.
+ * 2014-07-26   v0.7.0   Merged #153 to add stack trace to summary. Updated for Jasmine 2.0.1. Merged #133 for minimal output. Merged #139 changing file exclusion logic.
+ * 2014-05-31   v0.6.5   Option to allow specifying a `junitTemplate`.
  * 2014-04-28   v0.6.4   Indent level fix. Moved scripts inside the body tag.
- * 2014-01-29   v0.6.0   Jasmine 2.0.0 support Improved logging support Various merges/bugfixes
- * 2013-08-02   v0.5.2   Fixed breakage with iframes /44 Added filter flag / 70 Fixed junit failure output /77
- * 2013-06-18   v0.5.1   Merged /69 grunt async not called when tests fail OR keepRunner is true
- * 2013-06-15   v0.5.0   updated rimraf made teardown async, added Function.prototype.bind polyfill breaking (templates) changed input options for getRelativeFileList breaking (usage) failing task on phantom error (SyntaxError, TypeError, et al)
- * 2013-04-03   v0.4.2   bumped grunt-lib-phantomjs to 0.3.0/1.9 (closes merged addressed
- * 2013-03-08   v0.4.0   bumped grunt-lib-phantomjs to 0.2.0/1.8 allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http) merged merged
- * 2013-02-24   v0.3.3   Added better console output (via Gabor Kiss @Neverl)
+ * 2014-01-29   v0.6.0   Jasmine 2.0.0 support. Improved logging support. Various merges/bugfixes.
+ * 2013-08-02   v0.5.2   Fixed breakage with iframes / #44. Added filter flag / #70. Fixed junit failure output / #77.
+ * 2013-06-18   v0.5.1   Merged #69: grunt async not called when tests fail or `keepRunner` is true.
+ * 2013-06-15   v0.5.0   Updated rimraf. Made teardown async. Added Function.prototype.bind polyfill. Breaking (templates) changed input options for `getRelativeFileList`. Breaking (usage) failing task on phantom error (SyntaxError, TypeError, et al).
+ * 2013-04-03   v0.4.2   Updated grunt-lib-phantomjs to 0.3.0/1.9 (closes #45). Merged #38, #51. Addressed #40, #43, #48, #45.
+ * 2013-03-08   v0.4.0   Updated grunt-lib-phantomjs to 0.2.0/1.8. Allowed spec/vendor/helper list to return non-matching files (e.g. for remote, http). Merged #30, #34.
+ * 2013-02-24   v0.3.3   Added better console output (via Gabor Kiss @Neverl).
  * 2013-02-17   v0.3.2   Ensure Gruntfile.js is included on npm.
  * 2013-02-15   v0.3.1   First official release for Grunt 0.4.0.
  * 2013-01-22   v0.3.1rc7   Exposed phantom and sendMessage to templates
  * 2013-01-22   v0.3.0rc7   Updated dependencies for grunt v0.4.0rc6/rc7
- * 2013-01-08   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to this.filesSrc api. Added JUnit xml output (via Kelvin Luck @vitch) Passing console.log from browser to verbose grunt logging Support for templates as separate node modules Removed internal requirejs template (see grunt-template-jasmine-requirejs)
- * 2012-12-03   v0.2.0   Generalized requirejs template config Added loader plugin Tests for templates Updated jasmine to 1.3.0
- * 2012-11-24   v0.1.2   Updated for new grunt/grunt-contrib apis
- * 2012-11-07   v0.1.1   Fixed race condition in requirejs template
- * 2012-11-07   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib
+ * 2013-01-08   v0.3.0rc5   Updating to work with grunt v0.4.0rc5. Switching to `this.filesSrc` API. Added JUnit xml output (via Kelvin Luck @vitch). Passing `console.log` from browser to verbose grunt logging. Support for templates as separate node modules. Removed internal requirejs template (see grunt-template-jasmine-requirejs).
+ * 2012-12-03   v0.2.0   Generalized requirejs template config. Added loader plugin. Tests for templates. Updated jasmine to 1.3.0.
+ * 2012-11-24   v0.1.2   Updated for new grunt/grunt-contrib APIs.
+ * 2012-11-07   v0.1.1   Fixed race condition in requirejs template.
+ * 2012-11-07   v0.1.0   Ported grunt-jasmine-runner and grunt-jasmine-task to grunt-contrib.
 
 ---
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jan 26 2016 10:59:32.*
+*This file was generated on Fri Mar 18 2016 21:10:16.*
