@@ -12,7 +12,8 @@ module.exports = function(grunt) {
 
   // node api
   var fs = require('fs'),
-      path = require('path');
+      path = require('path'),
+      sprintf = require('underscore.string/sprintf');
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt),
@@ -203,7 +204,7 @@ module.exports = function(grunt) {
         grunt.log.error(chalk.red(string) + ' at ');
         trace.forEach(function(line) {
           var file = line.file.replace(/^file:/, '');
-          var message = _.sprintf('%s:%d %s', path.relative('.', file), line.line, line.function);
+          var message = sprintf('%s:%d %s', path.relative('.', file), line.line, line.function);
           grunt.log.error(chalk.red(message));
         });
       } else {

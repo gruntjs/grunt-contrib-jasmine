@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v1.0.1 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v1.0.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through PhantomJS
 
@@ -295,6 +295,7 @@ for more information on the RequireJS template.
 
 ## Release History
 
+ * 2016-04-07   v1.0.2   Fix sprintf issues in error calls.
  * 2016-04-07   v1.0.1   Allow to use custom bootfile. Doc updates. Fix and use lodash directly.
  * 2016-01-26   v1.0.0   Bump grunt-lib-phantomjs to 1.0.0. Bump jasmine to 2.2.0.
  * 2015-09-24   v0.9.2   Fixes npm@3 issues.
@@ -327,4 +328,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Apr 07 2016 03:18:14.*
+*This file was generated on Thu Apr 07 2016 12:11:03.*
