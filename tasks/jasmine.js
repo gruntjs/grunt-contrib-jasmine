@@ -45,8 +45,8 @@ module.exports = function(grunt) {
     }
   };
 
-  //With node.js on Windows: use symbols available in terminal default fonts
-  //https://github.com/visionmedia/mocha/pull/641
+  // With node.js on Windows: use symbols available in terminal default fonts
+  // https://github.com/visionmedia/mocha/pull/641
   if (process && process.platform === 'win32') {
     symbols = {
       none: {
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
       summary: false
-  });
+    });
 
     if (grunt.option('debug')) {
       grunt.log.debug(options);
@@ -378,14 +378,14 @@ module.exports = function(grunt) {
     });
 
     function logSummary(tests) {
-        grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
-        _.forEach(tests, function(test) {
-            grunt.log.writeln(chalk.red(symbols[options.display].error) + ' ' + test.suite + ' ' + test.name);
-            _.forEach(test.errors, function(error) {
-              grunt.log.writeln(indent(2) + chalk.red(error.message));
-              logStack(error.stack, 2);
-            });
+      grunt.log.writeln('Summary (' + tests.length + ' tests failed)');
+      _.forEach(tests, function(test) {
+        grunt.log.writeln(chalk.red(symbols[options.display].error) + ' ' + test.suite + ' ' + test.name);
+        _.forEach(test.errors, function(error) {
+          grunt.log.writeln(indent(2) + chalk.red(error.message));
+          logStack(error.stack, 2);
         });
+      });
     }
 
     function logStack(stack, indentLevel) {
