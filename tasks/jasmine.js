@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // node api
   var fs = require('fs'),
       path = require('path'),
-      sprintf = require("sprintf-js").sprintf;
+      sprintf = require('sprintf-js').sprintf;
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt),
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
     };
   }
 
-  grunt.registerMultiTask('jasmine', 'Run jasmine specs headlessly through PhantomJS.', function() {
+  grunt.registerMultiTask('jasmine', 'Run Jasmine specs headlessly through PhantomJS.', function() {
 
     // Merge task-specific options with these defaults.
     var options = this.options({
@@ -136,7 +136,7 @@ module.exports = function(grunt) {
       file = options.host + options.outfile;
     }
 
-    grunt.verbose.subhead('Testing jasmine specs via phantom').or.writeln('Testing jasmine specs via PhantomJS');
+    grunt.verbose.subhead('Testing Jasmine specs via PhantomJS').or.writeln('Testing Jasmine specs via PhantomJS');
     grunt.log.writeln('');
 
     phantomjs.spawn(file, {
