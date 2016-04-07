@@ -1,3 +1,9 @@
+v1.0.1:
+  date: 2016-04-07
+  changes:
+    - Allow to use custom bootfile.
+    - Doc updates.
+    - Fix and use lodash directly.
 v1.0.0:
   date: 2016-01-26
   changes:
