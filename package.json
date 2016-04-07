@@ -1,7 +1,7 @@
 {
   "name": "grunt-contrib-jasmine",
   "description": "Run jasmine specs headlessly through PhantomJS",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "Grunt Team",
     "url": "http://gruntjs.com/"
@@ -22,7 +22,7 @@
     "jasmine-core": "^2.2.0",
     "lodash": "~2.4.1",
     "rimraf": "^2.1.4",
-    "underscore.string": "~3.3.4"
+    "sprintf-js": "~1.0.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

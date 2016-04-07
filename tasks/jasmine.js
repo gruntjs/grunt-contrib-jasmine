@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // node api
   var fs = require('fs'),
       path = require('path'),
-      sprintf = require('underscore.string/sprintf');
+      sprintf = require("sprintf-js").sprintf;
 
   // npm lib
   var phantomjs = require('grunt-lib-phantomjs').init(grunt),
