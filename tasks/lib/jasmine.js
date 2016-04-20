@@ -54,13 +54,13 @@ exports.init = function(grunt, phantomjs) {
     exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PhantomReporter.js'), 'reporter.js');
 
     [].concat(jasmineRequire.files.cssFiles, jasmineRequire.files.jsFiles).forEach(function(name) {
-        var srcPath = path.join(jasmineRequire.files.path, name);
-        exports.copyTempFile(srcPath, name);
+      var srcPath = path.join(jasmineRequire.files.path, name);
+      exports.copyTempFile(srcPath, name);
     });
 
     jasmineRequire.files.bootFiles.forEach(function(name) {
-        var srcPath = path.join(jasmineRequire.files.bootDir, name);
-        exports.copyTempFile(srcPath, name);
+      var srcPath = path.join(jasmineRequire.files.bootDir, name);
+      exports.copyTempFile(srcPath, name);
     });
 
     exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
