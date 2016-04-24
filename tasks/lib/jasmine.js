@@ -65,8 +65,6 @@ exports.init = function(grunt, phantomjs) {
 
     exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
 
-    exports.copyTempFile(require.resolve('es5-shim/es5-shim.js'), 'es5-shim.js');
-
     var reporters = [
       tempDir + '/reporter.js'
     ];
@@ -77,9 +75,7 @@ exports.init = function(grunt, phantomjs) {
 
     jasmineCss = jasmineCss.concat(options.styles);
 
-    var polyfills = [
-      tempDir + '/es5-shim.js'
-    ].concat(options.polyfills);
+    var polyfills = [].concat(options.polyfills);
 
     var jasmineCore = jasmineRequire.files.jsFiles.map(function(name) {
       return path.join(tempDir, name);
