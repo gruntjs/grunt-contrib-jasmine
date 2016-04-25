@@ -102,7 +102,7 @@ Options that will be passed to your template. Used to pass settings to the templ
 ## options.polyfills
 Type: `String|Array`
 
-Third party polyfill libraries like json2 that are loaded at the very top before anything else. es5-shim is loaded automatically with this library.
+Third party polyfill libraries like json2 that are loaded at the very top before anything else.
 
 ## options.display
 Type: `String`  

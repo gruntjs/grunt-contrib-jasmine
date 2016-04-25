@@ -152,7 +152,7 @@ Options that will be passed to your template. Used to pass settings to the templ
 #### options.polyfills
 Type: `String|Array`
 
-Third party polyfill libraries like json2 that are loaded at the very top before anything else. es5-shim is loaded automatically with this library.
+Third party polyfill libraries like json2 that are loaded at the very top before anything else.
 
 #### options.display
 Type: `String`  
@@ -329,4 +329,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Apr 07 2016 12:22:30.*
+*This file was generated on Mon Apr 25 2016 01:03:39.*
