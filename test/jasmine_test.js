@@ -35,6 +35,7 @@ exports.jasmine = {
         boot: ['BOOT.js']
       },
       temp: 'path/to/temp/folder',
+      favicon: 'path/to/temp/folder/jasmine_favicon.png',
       options: {}
     };
 
