@@ -10,30 +10,33 @@ exports.init = function(grunt, phantomjs) {
       _ = require('lodash'),
       jasmineRequire = require('jasmine-core');
 
-  var baseDir = '.',
-      tempDir = '.grunt/grunt-contrib-jasmine';
+  var baseDir = '.';
 
   var exports = {};
 
   exports.writeTempFile = function(dest, contents) {
-    var file = path.join(tempDir, dest);
-    grunt.file.write(file, contents);
+    grunt.file.write(dest, contents);
   };
 
   exports.copyTempFile = function(src, dest) {
-    var file = path.join(tempDir, dest);
-    grunt.file.copy(src, file);
+    grunt.file.copy(src, dest);
   };
 
-  exports.cleanTemp = function(cb) {
+  exports.cleanTemp = function(tempDir, cb) {
     rimraf(tempDir, function() {
-      // if this fails, then ./.grunt isn't empty and that's ok.
-      fs.rmdir('.grunt', cb);
+      if(tempDir === '.grunt/grunt-contrib-jasmine') {
+        // if this fails, then ./.grunt isn't empty and that's ok.
+        fs.rmdir('.grunt', cb);
+      } else {
+        // don't delete parent directory of a custom directory.
+        cb();
+      }
     });
   };
 
   exports.buildSpecrunner = function(src, options) {
     var source = '',
+      tempDir = options.tempDir,
       outfile = options.outfile,
       specrunner = path.join(baseDir, outfile),
       outdir = path.dirname(outfile),
@@ -51,19 +54,19 @@ exports.init = function(grunt, phantomjs) {
       }
     }
 
-    exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PhantomReporter.js'), 'reporter.js');
+    exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PhantomReporter.js'), path.join(tempDir, 'reporter.js'));
 
     [].concat(jasmineRequire.files.cssFiles, jasmineRequire.files.jsFiles).forEach(function(name) {
       var srcPath = path.join(jasmineRequire.files.path, name);
-      exports.copyTempFile(srcPath, name);
+      exports.copyTempFile(srcPath, path.join(tempDir, name));
     });
 
     jasmineRequire.files.bootFiles.forEach(function(name) {
       var srcPath = path.join(jasmineRequire.files.bootDir, name);
-      exports.copyTempFile(srcPath, name);
+      exports.copyTempFile(srcPath, path.join(tempDir, name));
     });
 
-    exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), 'jasmine_favicon.png');
+    exports.copyTempFile(path.join(jasmineRequire.files.imagesDir, 'jasmine_favicon.png'), path.join(tempDir, 'jasmine_favicon.png'));
 
     var reporters = [
       tempDir + '/reporter.js'
