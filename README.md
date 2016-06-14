@@ -162,6 +162,12 @@ Default: `'full'`
   * `short` only displays a success or failure character for each test (useful with large suites)
   * `none` displays nothing
 
+#### options.showLogging
+Type: `Boolean`
+Default: `false`
+
+Display console logging messages while running tests
+
 #### options.summary
 Type: `Boolean`  
 Default: `false`
