@@ -37,6 +37,13 @@ This is the jasmine-version which will be used. currently available versions are
 
 *Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
+## options.tempDir
+Type: `String`
+Default: `.grunt/grunt-contrib-jasmine`
+
+The temporary directory that runners use to load jasmine files.
+Automatically deleted upon normal runs.
+
 ## options.outfile
 Type: `String`  
 Default: `_SpecRunner.html`
