@@ -112,6 +112,13 @@ module.exports = function(grunt) {
           }
         }
       },
+      customTempDir: {
+        src: 'test/fixtures/custom-temp-dir/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/custom-temp-dir/spec/**/*.js',
+          tempDir: '.custom/'
+        }
+      },
       selfTest: {
         options: {
           specs: ['test/selfTest/*.js'],
