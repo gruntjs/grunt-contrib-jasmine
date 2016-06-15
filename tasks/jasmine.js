@@ -86,7 +86,8 @@ module.exports = function(grunt) {
       junit: {},
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
-      summary: false
+      summary: false,
+      showLogging: false
     });
 
     if (grunt.option('debug')) {
