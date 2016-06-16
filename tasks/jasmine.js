@@ -195,7 +195,7 @@ module.exports = function(grunt) {
 
     phantomjs.on('console', function(msg) {
       thisRun.cleanConsole = false;
-      if (options.display === 'full' || options.showLogging) {
+      if (options.showLogging) {
         grunt.log.writeln('\n' + chalk.yellow('log: ') + msg);
       }
     });
