@@ -195,7 +195,9 @@ module.exports = function(grunt) {
 
     phantomjs.on('console', function(msg) {
       thisRun.cleanConsole = false;
-      if (options.showLogging) {
+      // preserve existing behavior of displaying log messages in "full" mode
+      var fullLogging = (typeof(options.showLogging) === 'undefined' && options.display === 'full');
+      if (options.showLogging || fullLogging) {
         grunt.log.writeln('\n' + chalk.yellow('log: ') + msg);
       }
     });

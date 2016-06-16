@@ -168,6 +168,8 @@ Default: `undefined`
 
 Display console logging messages while running tests
 
+Note: setting `options.display` to "full" also enables console logging messages.
+
 #### options.summary
 Type: `Boolean`  
 Default: `false`
