@@ -114,7 +114,7 @@ Default: `'full'`
 
 ## options.showLogging
 Type: `Boolean`
-Default: `false`
+Default: `undefined`
 
 Display console logging messages while running tests
 

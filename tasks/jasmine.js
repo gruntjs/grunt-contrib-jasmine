@@ -87,7 +87,7 @@ module.exports = function(grunt) {
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
       summary: false,
-      showLogging: false
+      showLogging: undefined
     });
 
     if (grunt.option('debug')) {
