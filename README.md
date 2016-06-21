@@ -87,6 +87,13 @@ This is the jasmine-version which will be used. currently available versions are
 
 *Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
 
+#### options.tempDir
+Type: `String`
+Default: `.grunt/grunt-contrib-jasmine`
+
+The temporary directory that runners use to load jasmine files.
+Automatically deleted upon normal runs.
+
 #### options.outfile
 Type: `String`  
 Default: `_SpecRunner.html`
@@ -292,6 +299,27 @@ NPM Templates are just node modules, so you can write and treat them as such.
 Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) documentation
 for more information on the RequireJS template.
 
+#### Keeping temp files in an existing directory
+
+Supplying a custom temp directory
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    pivotal: {
+      src: 'src/**/*.js',
+      options: {
+        keepRunner: true,
+        tempDir: 'bin/jasmine/',
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+      }
+    }
+  }
+});
+```
+
 
 ## Release History
 
@@ -329,4 +357,4 @@ for more information on the RequireJS template.
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Apr 25 2016 01:03:39.*
+*This file was generated on Tue Jun 14 2016 11:02:35.*

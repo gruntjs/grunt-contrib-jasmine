@@ -79,6 +79,7 @@ module.exports = function(grunt) {
       vendor: [],
       polyfills: [],
       customBootFile: null,
+      tempDir: '.grunt/grunt-contrib-jasmine',
       outfile: '_SpecRunner.html',
       host: '',
       template: path.join(__dirname, '/jasmine/templates/DefaultRunner.tmpl'),
@@ -156,7 +157,7 @@ module.exports = function(grunt) {
     }
 
     if (!options.keepRunner) {
-      jasmine.cleanTemp(cb);
+      jasmine.cleanTemp(options.tempDir, cb);
     } else {
       cb();
     }

@@ -87,3 +87,24 @@ NPM Templates are just node modules, so you can write and treat them as such.
 
 Please see the [grunt-template-jasmine-requirejs](https://github.com/jsoverson/grunt-template-jasmine-requirejs) documentation
 for more information on the RequireJS template.
+
+## Keeping temp files in an existing directory
+
+Supplying a custom temp directory
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    pivotal: {
+      src: 'src/**/*.js',
+      options: {
+        keepRunner: true,
+        tempDir: 'bin/jasmine/',
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js'
+      }
+    }
+  }
+});
+```
