@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v1.0.3 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v1.1.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through PhantomJS
 
@@ -323,6 +323,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2017-01-12   v1.1.0   adds `tempDir` option. locks jasmine version
  * 2016-04-07   v1.0.3   Move to a non-deprecated sprintf.
  * 2016-04-07   v1.0.2   Fix sprintf issues in error calls.
  * 2016-04-07   v1.0.1   Allow to use custom bootfile. Doc updates. Fix and use lodash directly.
@@ -357,4 +358,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Tue Jun 14 2016 11:02:35.*
+*This file was generated on Thu Jan 12 2017 13:09:46.*
