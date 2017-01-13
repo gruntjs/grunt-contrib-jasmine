@@ -173,7 +173,10 @@ module.exports = function(grunt) {
         tabstop = 2,
         thisRun = {},
         suites = {},
-        currentSuite;
+        currentSuite,
+        optionalHandlers,
+        eventName,
+        handler;
 
     status = {
       failed: 0
@@ -421,6 +424,12 @@ module.exports = function(grunt) {
       grunt.log.error();
       grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     });
+    
+    optionalHandlers = options.handlers || {};
+    for(eventName in optionalHandlers) {
+        handler = optionalHandlers[eventName];
+        phantomjs.on(eventName, typeof handler === "function" ? handler: function(){});
+    }
   }
 
 };
