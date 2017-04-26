@@ -140,6 +140,10 @@ module.exports = function(grunt) {
     grunt.verbose.subhead('Testing Jasmine specs via PhantomJS').or.writeln('Testing Jasmine specs via PhantomJS');
     grunt.log.writeln('');
 
+    // Delete Jasmine requirejs template options. (Windows Fix #254)
+    // Not working properly, need more investigation
+    // delete options.templateOptions;
+
     phantomjs.spawn(file, {
       failCode: 90,
       options: options,
