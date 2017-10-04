@@ -153,7 +153,7 @@ module.exports = function(grunt) {
     removePhantomListeners();
 
     if (!options.keepRunner && fs.statSync(options.outfile).isFile()) {
-      fs.unlink(options.outfile);
+      fs.unlinkSync(options.outfile);
     }
 
     if (!options.keepRunner) {
