@@ -78,6 +78,15 @@ module.exports = function(grunt) {
           summary: true
         }
       },
+      consoleLoggingOptions: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          display: 'short',
+          showLogging: true
+        }
+      },
       deepOutfile: {
         src: 'test/fixtures/pivotal/src/**/*.js',
         options: {

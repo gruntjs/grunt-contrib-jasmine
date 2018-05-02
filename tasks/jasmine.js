@@ -87,7 +87,8 @@ module.exports = function(grunt) {
       junit: {},
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
-      summary: false
+      summary: false,
+      showLogging: undefined
     });
 
     if (grunt.option('debug')) {
@@ -195,7 +196,9 @@ module.exports = function(grunt) {
 
     phantomjs.on('console', function(msg) {
       thisRun.cleanConsole = false;
-      if (options.display === 'full') {
+      // preserve existing behavior of displaying log messages in "full" mode
+      var fullLogging = (typeof(options.showLogging) === 'undefined' && options.display === 'full');
+      if (options.showLogging || fullLogging) {
         grunt.log.writeln('\n' + chalk.yellow('log: ') + msg);
       }
     });
