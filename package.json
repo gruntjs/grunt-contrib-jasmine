@@ -9,7 +9,7 @@
   "repository": "gruntjs/grunt-contrib-jasmine",
   "license": "MIT",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=7.6.0"
   },
   "main": "tasks/jasmine.js",
   "scripts": {
@@ -17,9 +17,10 @@
   },
   "dependencies": {
     "chalk": "^1.0.0",
-    "grunt-lib-phantomjs": "^1.0.0",
-    "jasmine-core": "~2.4.0",
+    "grunt-eslint": "20.1.0",
+    "jasmine-core": "^3.1.0",
     "lodash": "~2.4.1",
+    "puppeteer": "1.4.0",
     "rimraf": "^2.1.4",
     "sprintf-js": "~1.0.3"
   },
@@ -27,7 +28,6 @@
     "grunt": "^1.0.1",
     "grunt-contrib-connect": "^1.0.1",
     "grunt-contrib-internal": "^1.1.0",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0"
   },

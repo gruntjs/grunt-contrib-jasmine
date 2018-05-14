@@ -1,6 +1,7 @@
 describe("custom temp directory test", function() {
 
   it("should have loaded from a custom temp directory", function() {
+    debugger;
     expect(working).toBeTruthy();
 
     var links = document.getElementsByTagName('link');
