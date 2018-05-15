@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     };
   }
 
-  grunt.registerMultiTask('jasmine', 'Run Jasmine specs headlessly through PhantomJS.', async function() {
+  grunt.registerMultiTask('jasmine', 'Run Jasmine specs headlessly.', async function() {
     // Merge task-specific options with these defaults.
     var options = this.options({
       version: '2.2.0',
@@ -97,12 +97,12 @@ module.exports = function(grunt) {
       grunt.log.debug(options);
     }
 
-    // The filter returned no spec files so skip phantom.
+    // The filter returned no spec files so skip headless.
     if (!jasmine.buildSpecrunner(this.filesSrc, options)) {
       return;
     }
 
-    // If we're just building (e.g. for web), skip phantom.
+    // If we're just building (e.g. for web), skip headless.
     if (this.flags.build) {
       return;
     }
@@ -137,15 +137,12 @@ module.exports = function(grunt) {
       file = `file://${path.join(__dirname, '..', file)}`;
     }
 
-    grunt.verbose.subhead('Testing Jasmine specs via Chrome Headless').or.writeln('Testing Jasmine specs via Chrome Headless');
-    grunt.log.writeln('');
-
+    grunt.log.subhead('Testing Jasmine specs via Chrome Headless');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     try {
       await setup(options, page);
-      grunt.log.writeln(file);
       await page.goto(file, { waitUntil: 'domcontentloaded' });
 
       await jasminePromise;
@@ -154,6 +151,7 @@ module.exports = function(grunt) {
       grunt.warn(error.stack);
     }
 
+    await page.close();
     await browser.close();
 
     return;
@@ -187,7 +185,11 @@ module.exports = function(grunt) {
     }
 
     page.on('pageerror', (error) => {
-      grunt.log.error('Error caught from Headless Chrome. More infor can be found by opening the Spec Runner in a browser.');
+      grunt.log.error('Error caught from Headless Chrome. More info can be found by opening the Spec Runner in a browser.');
+      grunt.log.warn(error.stack);
+    });
+    page.on('error', (error) => {
+      grunt.log.error('Error caught from Headless Chrome. More info can be found by opening the Spec Runner in a browser.');
       grunt.log.warn(error.stack);
     });
 
@@ -202,6 +204,7 @@ module.exports = function(grunt) {
     });
 
     await page.exposeFunction('jasmine.suiteStarted', function suiteStarted(suiteMetadata) {
+      grunt.verbose.writeln('jasmine.suiteStarted');
       currentSuite = suiteMetadata.id;
       suites[currentSuite] = {
         name: suiteMetadata.fullName,
@@ -218,7 +221,7 @@ module.exports = function(grunt) {
     });
 
     await page.exposeFunction('jasmine.specStarted', function(specMetaData) {
-      grunt.verbose.writeln('specStarted');
+      grunt.verbose.writeln('jasmine.specStarted');
       thisRun.executedSpecs++;
       thisRun.cleanConsole = true;
       if (options.display === 'full') {
@@ -229,6 +232,7 @@ module.exports = function(grunt) {
     });
 
     await page.exposeFunction('jasmine.specDone', function(specMetaData) {
+      grunt.verbose.writeln('jasmine.specDone');
       var specSummary = {
         assertions: 0,
         classname: suites[currentSuite].name,
@@ -315,6 +319,7 @@ module.exports = function(grunt) {
     });
 
     await page.exposeFunction('jasmine.suiteDone', function suiteDone(suiteMetadata) {
+      grunt.verbose.writeln('jasmine.suiteDone');
       suites[suiteMetadata.id].time = suiteMetadata.duration / 1000;
 
       if (indentLevel > 1) {
@@ -323,6 +328,7 @@ module.exports = function(grunt) {
     });
 
     await page.exposeFunction('jasmine.jasmineDone', function() {
+      grunt.verbose.writeln('jasmine.jasmineDone');
       var dur = (new Date()).getTime() - thisRun.startTime;
       var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? ' spec ' : ' specs ');
 
