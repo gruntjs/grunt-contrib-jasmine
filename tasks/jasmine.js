@@ -358,7 +358,7 @@ module.exports = function(grunt) {
 
     await page.exposeFunction('jasmine.done_fail', function(url) {
       grunt.log.error();
-      grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
+      grunt.warn('Unable to load "' + url + '" URI.', 90);
 
       resolveJasmine();
     });
