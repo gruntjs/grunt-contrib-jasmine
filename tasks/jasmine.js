@@ -184,11 +184,8 @@ module.exports = function(grunt) {
       return new Array(+times * tabstop).join(' ');
     }
 
-    page.on('pageerror', (error) => {
-      grunt.log.error('Error caught from Headless Chrome. More info can be found by opening the Spec Runner in a browser.');
-      grunt.log.warn(error.stack);
-    });
     page.on('error', (error) => {
+      // page has crashed
       grunt.log.error('Error caught from Headless Chrome. More info can be found by opening the Spec Runner in a browser.');
       grunt.log.warn(error.stack);
     });
