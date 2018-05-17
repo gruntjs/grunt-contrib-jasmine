@@ -9,7 +9,7 @@
   "repository": "gruntjs/grunt-contrib-jasmine",
   "license": "MIT",
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">=8.0.0"
   },
   "main": "tasks/jasmine.js",
   "scripts": {
