@@ -134,6 +134,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('test', ['eslint', 'connect:return500', 'jasmine', 'nodeunit']);
-  grunt.registerTask('temp', ['jasmine:selfTest', 'jasmine:customTempDir', 'jasmine:selfTest:build']);
   grunt.registerTask('default', ['test', 'build-contrib']);
 };
