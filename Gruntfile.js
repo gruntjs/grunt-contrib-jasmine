@@ -28,8 +28,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/**/*.js',
-        'test/*.js',
-        'test/selfTest/*.js'
+        'test/*.js'
       ],
       options: {
         configFile: '.eslintrc'
@@ -111,12 +110,6 @@ module.exports = function(grunt) {
         options: {
           specs: 'test/fixtures/custom-temp-dir/spec/**/*.js',
           tempDir: '.custom/'
-        }
-      },
-      selfTest: {
-        options: {
-          specs: ['test/selfTest/*.js'],
-          '--web-security': 'no'
         }
       }
     },
