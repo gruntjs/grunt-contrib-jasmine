@@ -137,7 +137,7 @@ module.exports = function(grunt) {
       file = `file://${path.join(__dirname, '..', file)}`;
     }
 
-    grunt.log.subhead('Testing Jasmine specs via Chrome Headless');
+    grunt.log.subhead('Testing Jasmine specs via Headless Chrome');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 

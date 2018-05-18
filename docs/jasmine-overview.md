@@ -1,4 +1,4 @@
-Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
+Automatically builds and maintains your spec runner and runs your tests headlessly through Headless Chrome.
 
 ## Run specs locally or on a remote server
 
@@ -20,4 +20,3 @@ Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com
 - [StealJS](https://github.com/jaredstehler/grunt-template-jasmine-steal)
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
-

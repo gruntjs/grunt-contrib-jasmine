@@ -2,13 +2,6 @@
 
 'use strict';
 
-// TODO: add as an option via grunt task parameter
-// if (window._phantom) {
-//   console.log = function() {
-//     phantom.sendMessage('console', Array.prototype.slice.apply(arguments).join(', '));
-//   };
-// }
-
 
 (function() {
   const sendMessage = (type, param) => {
