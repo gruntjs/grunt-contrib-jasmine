@@ -1,6 +1,6 @@
 # grunt-contrib-jasmine v1.1.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
-> Run jasmine specs headlessly through PhantomJS
+> Run jasmine specs headlessly through Headless Chrome
 
 
 
@@ -24,7 +24,7 @@ grunt.loadNpmTasks('grunt-contrib-jasmine');
 ## Jasmine task
 _Run this task with the `grunt jasmine` command._
 
-Automatically builds and maintains your spec runner and runs your tests headlessly through PhantomJS.
+Automatically builds and maintains your spec runner and runs your tests headlessly through Headless Chrome.
 
 #### Run specs locally or on a remote server
 
@@ -98,7 +98,7 @@ Automatically deleted upon normal runs.
 Type: `String`  
 Default: `_SpecRunner.html`
 
-The auto-generated specfile that phantomjs will use to run your tests.
+The auto-generated specfile that Headless Chrome will use to run your tests.
 Automatically deleted upon normal runs. Use the `:build` flag to generate a SpecRunner manually e.g.
 `grunt jasmine:myTask:build`
 
@@ -130,7 +130,7 @@ Specify a custom JUnit template instead of using the default `junitTemplate`.
 Type: `String`  
 Default: `''`
 
-The host you want PhantomJS to connect against to run your tests.
+The host you want Headless Chrome to connect against to run your tests.
 
 e.g. if using an ad hoc server from within grunt
 
@@ -358,4 +358,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu Jan 12 2017 13:09:46.*
+*This file was generated on Mon May 14 2018 15:35:38.*

@@ -1,6 +1,6 @@
 'use strict';
 
-exports.init = function(grunt, phantomjs) {
+exports.init = function(grunt) {
   // node api
   var fs = require('fs'),
       path = require('path');
@@ -54,7 +54,7 @@ exports.init = function(grunt, phantomjs) {
       }
     }
 
-    exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PhantomReporter.js'), path.join(tempDir, 'reporter.js'));
+    exports.copyTempFile(path.join(__dirname, '/../jasmine/reporters/PuppeteerReporter.js'), path.join(tempDir, 'reporter.js'));
 
     [].concat(jasmineRequire.files.cssFiles, jasmineRequire.files.jsFiles).forEach(function(name) {
       var srcPath = path.join(jasmineRequire.files.path, name);
@@ -111,8 +111,7 @@ exports.init = function(grunt, phantomjs) {
     if (options.template.process) {
       var task = {
         writeTempFile: exports.writeTempFile,
-        copyTempFile: exports.copyTempFile,
-        phantomjs: phantomjs
+        copyTempFile: exports.copyTempFile
       };
       source = options.template.process(grunt, task, context);
       grunt.file.write(specrunner, source);

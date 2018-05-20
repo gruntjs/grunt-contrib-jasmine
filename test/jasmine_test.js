@@ -1,8 +1,7 @@
 'use strict';
 
 var grunt = require('grunt'),
-    phantomjs = require('grunt-lib-phantomjs').init(grunt),
-    jasmine = require('../tasks/lib/jasmine.js').init(grunt, phantomjs),
+    jasmine = require('../tasks/lib/jasmine.js').init(grunt),
     _ = require('lodash');
 
 // Majority of test benefit comes from running the task itself.

@@ -48,7 +48,7 @@ Automatically deleted upon normal runs.
 Type: `String`  
 Default: `_SpecRunner.html`
 
-The auto-generated specfile that phantomjs will use to run your tests.
+The auto-generated specfile that Headless Chrome will use to run your tests.
 Automatically deleted upon normal runs. Use the `:build` flag to generate a SpecRunner manually e.g.
 `grunt jasmine:myTask:build`
 
@@ -80,7 +80,7 @@ Specify a custom JUnit template instead of using the default `junitTemplate`.
 Type: `String`  
 Default: `''`
 
-The host you want PhantomJS to connect against to run your tests.
+The host you want Headless Chrome to connect against to run your tests.
 
 e.g. if using an ad hoc server from within grunt
 

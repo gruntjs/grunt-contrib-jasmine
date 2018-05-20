@@ -11,7 +11,6 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-
     connect: {
       return500: {
         options: {
@@ -25,15 +24,14 @@ module.exports = function(grunt) {
         }
       }
     },
-    jshint: {
+    eslint: {
       all: [
         'Gruntfile.js',
         'tasks/**/*.js',
-        'test/*.js',
-        'test/selfTest/*.js'
+        'test/*.js'
       ],
       options: {
-        jshintrc: '.jshintrc'
+        configFile: '.eslintrc'
       }
     },
     watch: {
@@ -51,13 +49,8 @@ module.exports = function(grunt) {
           summary: true,
           junit: {
             path: 'junit'
-          }
-        }
-      },
-      phantomPolyfills: {
-        src: 'test/fixtures/phantom-polyfills/src/**/*.js',
-        options: {
-          specs: 'test/fixtures/phantom-polyfills/spec/**/*.js'
+          },
+          display: 'full'
         }
       },
       consoleDisplayOptions: {
@@ -118,16 +111,8 @@ module.exports = function(grunt) {
           specs: 'test/fixtures/custom-temp-dir/spec/**/*.js',
           tempDir: '.custom/'
         }
-      },
-      selfTest: {
-        options: {
-          specs: ['test/selfTest/*.js'],
-          '--web-security': 'no'
-        }
       }
     },
-
-
     nodeunit: {
       tasks: ['test/*_test.js']
     }
@@ -135,12 +120,12 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('tasks');
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('test', ['jshint', 'connect:return500', 'jasmine', 'nodeunit']);
+  grunt.registerTask('test', ['eslint', 'connect:return500', 'jasmine', 'nodeunit']);
   grunt.registerTask('default', ['test', 'build-contrib']);
 };
