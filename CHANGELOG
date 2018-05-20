@@ -2,7 +2,7 @@ v2.0.0:
   date: 2018-05-19
   changes:
     - Switch from PhantomJS to Chrome Headless via Puppeteer
-    -
+
 v1.1.0:
   date: 2017-01-12
   changes:
