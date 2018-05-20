@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v1.1.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v2.0.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -46,7 +46,6 @@ Supports AMD tests via the [grunt-template-jasmine-requirejs](https://github.com
 - [StealJS](https://github.com/jaredstehler/grunt-template-jasmine-steal)
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
-
 
 ### Options
 
@@ -323,6 +322,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2018-05-19   v2.0.0   Switch from PhantomJS to Chrome Headless via Puppeteer 
  * 2017-01-12   v1.1.0   adds `tempDir` option. locks jasmine version
  * 2016-04-07   v1.0.3   Move to a non-deprecated sprintf.
  * 2016-04-07   v1.0.2   Fix sprintf issues in error calls.
@@ -358,4 +358,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon May 14 2018 15:35:38.*
+*This file was generated on Sat May 19 2018 22:16:47.*
