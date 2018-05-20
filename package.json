@@ -1,7 +1,7 @@
 {
   "name": "grunt-contrib-jasmine",
   "description": "Run jasmine specs headlessly through Headless Chrome",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": {
     "name": "Grunt Team",
     "url": "http://gruntjs.com/"
@@ -27,8 +27,8 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-connect": "^1.0.1",
-    "grunt-contrib-internal": "^1.1.0",
-    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-internal": "^3.0.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0"
   },
   "keywords": [

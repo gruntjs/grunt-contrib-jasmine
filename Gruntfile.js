@@ -126,6 +126,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-internal');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('test', ['eslint', 'connect:return500', 'jasmine', 'nodeunit']);
+  grunt.registerTask('test', ['connect:return500', 'jasmine', 'nodeunit', 'eslint']);
   grunt.registerTask('default', ['test', 'build-contrib']);
 };
