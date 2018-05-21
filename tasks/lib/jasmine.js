@@ -48,10 +48,17 @@ exports.init = function(grunt) {
       const packageSpec = `jasmine-core@${options.version}`;
 
       grunt.verbose.writeln(`Extracting ${packageSpec}`);
+
       await pacote.extract(packageSpec, jasmineCoreFolder);
     }
 
-    const jasmineRequire = require(`../../${jasmineCoreFolder}`);
+    let jasmineRequire;
+    try {
+      jasmineRequire = require(`../../${jasmineCoreFolder}`);
+    } catch (error) {
+      grunt.log.error(`Jasmine version: ${options.verion} does not exist in npm!`);
+      grunt.fail.fatal(error);
+    }
 
     // Let's filter through the spec files here,
     // there's no need to go on if no specs matches
