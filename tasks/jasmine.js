@@ -385,11 +385,11 @@ module.exports = function(grunt) {
       var template = grunt.file.read(options.junit.template || junitTemplate);
       if (options.junit.consolidate) {
         var xmlFile = path.join(options.junit.path, 'TEST-' + testsuites.suite1.name.replace(/[^\w]/g, '') + '.xml');
-        grunt.file.write(xmlFile, _.template(template, { testsuites: _.values(testsuites) }));
+        grunt.file.write(xmlFile, _.template(template)({ testsuites: _.values(testsuites) }));
       } else {
         _.forEach(testsuites, function(suiteData) {
           var xmlFile = path.join(options.junit.path, 'TEST-' + suiteData.name.replace(/[^\w]/g, '') + '.xml');
-          grunt.file.write(xmlFile, _.template(template, { testsuites: [suiteData] }));
+          grunt.file.write(xmlFile, _.template(template)({ testsuites: [suiteData] }));
         });
       }
     }
