@@ -8,7 +8,7 @@ exports.init = function(grunt) {
   // npm
   var rimraf = require('rimraf'),
       _ = require('lodash'),
-      jasmineRequire = require('jasmine-core');
+      pacote = require('pacote');
 
   var baseDir = '.';
 
@@ -34,14 +34,24 @@ exports.init = function(grunt) {
     });
   };
 
-  exports.buildSpecrunner = function(src, options) {
+  exports.buildSpecrunner = async function(src, options) {
     var source = '',
       tempDir = options.tempDir,
       outfile = options.outfile,
       specrunner = path.join(baseDir, outfile),
       outdir = path.dirname(outfile),
       gruntfilter = grunt.option('filter'),
-      filteredSpecs = exports.getRelativeFileList(outdir, options.specs);
+      filteredSpecs = exports.getRelativeFileList(outdir, options.specs),
+      jasmineCoreFolder = path.join('node_modules', 'grunt-contrib-jasmine', '.jasmine', options.version);
+
+    if (!fs.existsSync(jasmineCoreFolder)) {
+      const packageSpec = `jasmine-core@${options.version}`;
+
+      grunt.verbose.writeln(`Extracting ${packageSpec}`);
+      await pacote.extract(packageSpec, jasmineCoreFolder);
+    }
+
+    const jasmineRequire = require(`../../${jasmineCoreFolder}`);
 
     // Let's filter through the spec files here,
     // there's no need to go on if no specs matches

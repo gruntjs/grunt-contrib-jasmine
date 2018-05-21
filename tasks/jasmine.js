@@ -74,7 +74,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('jasmine', 'Run Jasmine specs headlessly.', async function() {
     // Merge task-specific options with these defaults.
     var options = this.options({
-      version: '2.2.0',
+      version: 'latest',
       timeout: 10000,
       styles: [],
       specs: [],
@@ -137,8 +137,8 @@ module.exports = function(grunt) {
       file = `file://${path.join(__dirname, '..', file)}`;
     }
 
-    grunt.log.subhead('Testing Jasmine specs via Headless Chrome');
     const browser = await puppeteer.launch();
+    grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
 
     try {

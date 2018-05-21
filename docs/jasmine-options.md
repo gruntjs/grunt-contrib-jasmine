@@ -27,15 +27,9 @@ CSS files that get loaded after the jasmine.css
 
 ## options.version
 Type: `String`
-Default: `'2.2.0'`
+Default: `'latest'`
 
-This is the jasmine-version which will be used. currently available versions are:
-
-* 2.2.0
-* 2.0.1
-* 2.0.0
-
-*Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
+This is the version of Jasmine which will be used. Available versions are [published to npm](https://www.npmjs.com/package/jasmine-core?activeTab=versions).
 
 ## options.tempDir
 Type: `String`
