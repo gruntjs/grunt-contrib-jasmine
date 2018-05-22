@@ -118,7 +118,7 @@ exports.init = function(grunt) {
     } else {
       grunt.file.copy(options.template, specrunner, {
         process: function(src) {
-          source = _.template(src, context);
+          source = _.template(src)(context);
           return source;
         }
       });

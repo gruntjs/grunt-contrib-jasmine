@@ -8,7 +8,7 @@ var grunt = require('grunt'),
 
 function runTemplate(src, context) {
   var source = grunt.file.read(src);
-  return _.template(source, context);
+  return _.template(source)(context);
 }
 
 // Just strips whitespace for now. Should do a proper min of everything
