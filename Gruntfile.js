@@ -111,6 +111,19 @@ module.exports = function(grunt) {
           specs: 'test/fixtures/custom-temp-dir/spec/**/*.js',
           tempDir: '.custom/'
         }
+      },
+      version25: {
+        options: {
+          specs: 'test/fixtures/versions/spec/SpecVersion25.js',
+          version: '2.5.2'
+        }
+      },
+      version31: {
+        options: {
+          specs: 'test/fixtures/versions/spec/SpecVersion31.js',
+          version: '3.1.0',
+          summary: true
+        }
       }
     },
     nodeunit: {

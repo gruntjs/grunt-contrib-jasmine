@@ -8,3 +8,4 @@ junit
 .grunt
 /_SpecRunner.html
 .custom
+.jasmine
