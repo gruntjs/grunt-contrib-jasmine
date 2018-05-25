@@ -134,7 +134,7 @@ module.exports = function(grunt) {
       }
       file = options.host + options.outfile;
     } else {
-      file = `file://${path.join(__dirname, '..', file)}`;
+      file = `file://${path.join(process.cwd(), file)}`;
     }
 
     const browser = await puppeteer.launch();
