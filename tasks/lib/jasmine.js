@@ -54,7 +54,7 @@ exports.init = function(grunt) {
 
     let jasmineRequire;
     try {
-      jasmineRequire = require(`../../${jasmineCoreFolder}`);
+      jasmineRequire = require(path.join(process.cwd(), jasmineCoreFolder));
     } catch (error) {
       grunt.log.error(`Jasmine version: ${options.verion} does not exist in npm!`);
       grunt.fail.fatal(error);
