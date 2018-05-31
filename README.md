@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.0.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v2.0.1 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -76,15 +76,9 @@ CSS files that get loaded after the jasmine.css
 
 #### options.version
 Type: `String`
-Default: `'2.2.0'`
+Default: `'latest'`
 
-This is the jasmine-version which will be used. currently available versions are:
-
-* 2.2.0
-* 2.0.1
-* 2.0.0
-
-*Due to changes in Jasmine, pre-2.0 versions have been dropped and tracking will resume at 2.0.0*
+This is the version of Jasmine which will be used. Available versions are [published to npm](https://www.npmjs.com/package/jasmine-core?activeTab=versions).
 
 #### options.tempDir
 Type: `String`
@@ -322,7 +316,8 @@ grunt.initConfig({
 
 ## Release History
 
- * 2018-05-19   v2.0.0   Switch from PhantomJS to Chrome Headless via Puppeteer 
+ * 2018-05-31   v2.0.1   Use the grunt current working directory to find the jasmine core. Implement options.version. Dependency updates.
+ * 2018-05-19   v2.0.0   Switch from PhantomJS to Chrome Headless via Puppeteer
  * 2017-01-12   v1.1.0   adds `tempDir` option. locks jasmine version
  * 2016-04-07   v1.0.3   Move to a non-deprecated sprintf.
  * 2016-04-07   v1.0.2   Fix sprintf issues in error calls.
@@ -358,4 +353,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Sat May 19 2018 22:16:47.*
+*This file was generated on Thu May 31 2018 14:10:59.*
