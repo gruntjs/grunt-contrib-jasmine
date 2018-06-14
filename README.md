@@ -168,6 +168,12 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
+#### options.noSandbox
+Type: `Boolean`  
+Default: `false`
+
+Launching Puppeteer with --no-sandbox argument. (Fix [Debian issue](https://github.com/Googlechrome/puppeteer/issues/290))
+
 ### Flags
 
 Name: `build`
