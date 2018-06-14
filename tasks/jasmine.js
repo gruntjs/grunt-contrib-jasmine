@@ -137,7 +137,13 @@ module.exports = function(grunt) {
       file = `file://${path.join(process.cwd(), file)}`;
     }
 
-    const browser = await puppeteer.launch({args: ['--no-sandbox']});
+    let puppeteerLaunchSetting;
+    if(options.hasOwnProperty('noSandbox') && options.noSandbox){
+        puppeteerLaunchSetting = {args: ['--no-sandbox']};
+        delete options.noSandbox;
+    }
+
+    const browser = await puppeteer.launch(puppeteerLaunchSetting);
     grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
 
