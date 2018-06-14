@@ -137,7 +137,7 @@ module.exports = function(grunt) {
       file = `file://${path.join(process.cwd(), file)}`;
     }
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({args: ['--no-sandbox']});
     grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
 
