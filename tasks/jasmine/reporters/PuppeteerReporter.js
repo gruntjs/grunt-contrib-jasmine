@@ -14,17 +14,17 @@
     },
 
     suiteStarted: function(suiteMetadata) {
-      suiteMetadata.startTime = (new Date()).getTime();
+      suiteMetadata.startTime = Date.now();
       sendMessage('jasmine.suiteStarted', suiteMetadata);
     },
 
     specStarted: function(specMetadata) {
+      specMetadata.startTime = Date.now();
       sendMessage('jasmine.specStarted', specMetadata);
-      specMetadata.startTime = (new Date()).getTime();
     },
 
     specDone: function(specMetadata) {
-      specMetadata.duration = (new Date()).getTime() - specMetadata.startTime;
+      specMetadata.duration = Date.now() - specMetadata.startTime;
 
       // Quick hack to alleviate cyclical object breaking JSONification.
       for (var ii = 0; ii < specMetadata.failedExpectations.length; ii++) {
@@ -41,7 +41,7 @@
     },
 
     suiteDone: function(suiteMetadata) {
-      suiteMetadata.duration = (new Date()).getTime() - suiteMetadata.startTime;
+      suiteMetadata.duration = Date.now() - suiteMetadata.startTime;
       sendMessage('jasmine.suiteDone', suiteMetadata);
     },
 
