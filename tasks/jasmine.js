@@ -97,17 +97,20 @@ module.exports = function(grunt) {
       grunt.log.debug(options);
     }
 
+    var done = this.async();
+
     // The filter returned no spec files so skip headless.
-    if (!jasmine.buildSpecrunner(this.filesSrc, options)) {
+    if (!(await jasmine.buildSpecrunner(this.filesSrc, options))) {
+      done(false);
       return;
     }
 
     // If we're just building (e.g. for web), skip headless.
     if (this.flags.build) {
+      done(false);
       return;
     }
 
-    var done = this.async();
     const err = await launchPuppeteer(options);
     var success = !err && status.failed === 0;
 
