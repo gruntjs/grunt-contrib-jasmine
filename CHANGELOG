@@ -1,3 +1,9 @@
+v2.0.2:
+  date: 2018-08-13
+  changes:
+    - Fix noSandbox option.
+    - Fix startTime, and timing issues.
+
 v2.0.1:
   date: 2018-05-31
   changes:

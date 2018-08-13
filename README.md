@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.0.1 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v2.0.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -168,12 +168,6 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
-#### options.noSandbox
-Type: `Boolean`  
-Default: `false`
-
-Launching Puppeteer with --no-sandbox argument. (Fix [Debian issue](https://github.com/Googlechrome/puppeteer/issues/290))
-
 ### Flags
 
 Name: `build`
@@ -322,6 +316,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2018-08-13   v2.0.2   Fix noSandbox option. Fix startTime, and timing issues.
  * 2018-05-31   v2.0.1   Use the grunt current working directory to find the jasmine core. Implement options.version. Dependency updates.
  * 2018-05-19   v2.0.0   Switch from PhantomJS to Chrome Headless via Puppeteer
  * 2017-01-12   v1.1.0   adds `tempDir` option. locks jasmine version
@@ -359,4 +354,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu May 31 2018 14:10:59.*
+*This file was generated on Mon Aug 13 2018 21:20:51.*
