@@ -18,14 +18,14 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "grunt-eslint": "20.1.0",
-    "lodash": "~2.4.1",
+    "lodash": "^4.17.11",
     "pacote": "8.1.3",
     "puppeteer": "1.4.0",
     "rimraf": "^2.1.4",
     "sprintf-js": "~1.0.3"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
     "grunt-contrib-connect": "^1.0.1",
     "grunt-contrib-internal": "^3.0.0",
     "grunt-contrib-nodeunit": "^2.0.0",
