@@ -107,7 +107,7 @@ module.exports = function(grunt) {
 
     // If we're just building (e.g. for web), skip headless.
     if (this.flags.build) {
-      done(false);
+      done(true);
       return;
     }
 
