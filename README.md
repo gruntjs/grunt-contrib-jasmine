@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.0.2 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v2.0.3 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -6,7 +6,7 @@
 
 ## Getting Started
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [Grunt](https://gruntjs.com/) before, be sure to check out the [Getting Started](https://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](https://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm install grunt-contrib-jasmine --save-dev
@@ -316,6 +316,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2018-11-14   v2.0.3   [object Object] Build only should pass if the buildSpecrunner runs without error
  * 2018-08-13   v2.0.2   Fix noSandbox option. Fix startTime, and timing issues.
  * 2018-05-31   v2.0.1   Use the grunt current working directory to find the jasmine core. Implement options.version. Dependency updates.
  * 2018-05-19   v2.0.0   Switch from PhantomJS to Chrome Headless via Puppeteer
@@ -354,4 +355,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Mon Aug 13 2018 21:20:51.*
+*This file was generated on Wed Nov 14 2018 17:45:18.*

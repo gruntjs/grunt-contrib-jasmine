@@ -1,3 +1,8 @@
+v2.0.3:
+  date: 2018-11-14
+  changes:
+    - Fix security deps: lodash
+    - Build only should pass if the buildSpecrunner runs without error
 v2.0.2:
   date: 2018-08-13
   changes:
