@@ -199,6 +199,13 @@ module.exports = function(grunt) {
       grunt.log.warn(error.stack);
     });
 
+    page.on('console', (msg) => {
+      thisRun.cleanConsole = false;
+      if (options.display === 'full') {
+        grunt.log.writeln('\n' + chalk.yellow('log: ' + msg.text()));
+      }
+    });
+
     await page.exposeFunction('jasmine.jasmineStarted', function() {
       grunt.verbose.writeln('Jasmine Runner Starting...');
       thisRun.startTime = (new Date()).getTime();
