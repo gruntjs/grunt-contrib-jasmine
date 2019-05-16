@@ -105,6 +105,18 @@ module.exports = function(grunt) {
           }
         }
       },
+      customTemplateProcessor: {
+        src: 'test/fixtures/pivotal/src/**/*.js',
+        options: {
+          specs: 'test/fixtures/pivotal/spec/*Spec.js',
+          helpers: 'test/fixtures/pivotal/spec/*Helper.js',
+          template: require('./test/fixtures/customTemplateProcessor/template.js'),
+          junit: {
+            path: 'junit/customTemplate',
+            consolidate: true
+          }
+        }
+      },
       customTempDir: {
         src: 'test/fixtures/custom-temp-dir/src/**/*.js',
         options: {

@@ -2,11 +2,11 @@
 
 exports.init = function(grunt) {
   // node api
-  var fs = require('fs'),
+  const fs = require('fs'),
       path = require('path');
 
   // npm
-  var rimraf = require('rimraf'),
+  const rimraf = require('rimraf'),
       _ = require('lodash'),
       pacote = require('pacote');
 
@@ -34,7 +34,7 @@ exports.init = function(grunt) {
     });
   };
 
-  exports.buildSpecrunner = async function(src, options) {
+  exports.buildSpecrunner = async function(src, options, dispatcher) {
     var source = '',
       tempDir = options.tempDir,
       outfile = options.outfile,
@@ -128,7 +128,8 @@ exports.init = function(grunt) {
     if (options.template.process) {
       var task = {
         writeTempFile: exports.writeTempFile,
-        copyTempFile: exports.copyTempFile
+        copyTempFile: exports.copyTempFile,
+        eventDispatcher: dispatcher
       };
       source = options.template.process(grunt, task, context);
       grunt.file.write(specrunner, source);
