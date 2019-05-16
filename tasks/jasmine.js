@@ -11,18 +11,19 @@
 module.exports = function(grunt) {
 
   // node api
-  var fs = require('fs'),
-      path = require('path');
+  const fs = require('fs'),
+      path = require('path'),
+      events = require('events');
 
   // npm lib
-  var puppeteer = require('puppeteer'),
+  const puppeteer = require('puppeteer'),
       chalk = require('chalk'),
       _ = require('lodash');
 
   // local lib
-  var jasmine = require('./lib/jasmine').init(grunt);
+  const jasmine = require('./lib/jasmine').init(grunt);
 
-  var junitTemplate = path.join(__dirname, '/jasmine/templates/JUnit.tmpl');
+  const junitTemplate = path.join(__dirname, '/jasmine/templates/JUnit.tmpl');
 
   var status = {};
 
@@ -93,6 +94,9 @@ module.exports = function(grunt) {
       summary: false
     });
 
+    // Setup a fresh event dispatcher to catch page events
+    var dispatcher = new events.EventEmitter();
+
     if (grunt.option('debug')) {
       grunt.log.debug(options);
     }
@@ -100,7 +104,7 @@ module.exports = function(grunt) {
     var done = this.async();
 
     // The filter returned no spec files so skip headless.
-    if (!(await jasmine.buildSpecrunner(this.filesSrc, options))) {
+    if (!(await jasmine.buildSpecrunner(this.filesSrc, options, dispatcher))) {
       done(false);
       return;
     }
@@ -111,7 +115,7 @@ module.exports = function(grunt) {
       return;
     }
 
-    const err = await launchPuppeteer(options);
+    const err = await launchPuppeteer(options, dispatcher);
     var success = !err && status.failed === 0;
 
     if (err) {
@@ -128,7 +132,7 @@ module.exports = function(grunt) {
     });
   });
 
-  async function launchPuppeteer(options) {
+  async function launchPuppeteer(options, dispatcher) {
     var file = options.outfile;
 
     if (options.host) {
@@ -151,7 +155,7 @@ module.exports = function(grunt) {
     const page = await browser.newPage();
 
     try {
-      await setup(options, page);
+      await setup(options, dispatcher, page);
       await page.goto(file, { waitUntil: 'domcontentloaded' });
 
       await jasminePromise;
@@ -178,7 +182,7 @@ module.exports = function(grunt) {
     }
   }
 
-  async function setup(options, page) {
+  async function setup(options, dispatcher, page) {
     var indentLevel = 1,
       tabstop = 2,
       thisRun = {},
@@ -206,7 +210,11 @@ module.exports = function(grunt) {
       }
     });
 
-    await page.exposeFunction('jasmine.jasmineStarted', function() {
+    await page.exposeFunction('sendMessage', function () {
+      dispatcher.emit.apply(dispatcher, arguments);
+    });
+
+    dispatcher.on('jasmine.jasmineStarted', function() {
       grunt.verbose.writeln('Jasmine Runner Starting...');
       thisRun.startTime = (new Date()).getTime();
       thisRun.executedSpecs = 0;
@@ -216,7 +224,7 @@ module.exports = function(grunt) {
       thisRun.summary = [];
     });
 
-    await page.exposeFunction('jasmine.suiteStarted', function suiteStarted(suiteMetadata) {
+    dispatcher.on('jasmine.suiteStarted', function suiteStarted(suiteMetadata) {
       grunt.verbose.writeln('jasmine.suiteStarted');
       currentSuite = suiteMetadata.id;
       suites[currentSuite] = {
@@ -233,7 +241,7 @@ module.exports = function(grunt) {
       }
     });
 
-    await page.exposeFunction('jasmine.specStarted', function(specMetaData) {
+    dispatcher.on('jasmine.specStarted', function(specMetaData) {
       grunt.verbose.writeln('jasmine.specStarted');
       thisRun.executedSpecs++;
       thisRun.cleanConsole = true;
@@ -244,7 +252,7 @@ module.exports = function(grunt) {
       }
     });
 
-    await page.exposeFunction('jasmine.specDone', function(specMetaData) {
+    dispatcher.on('jasmine.specDone', function(specMetaData) {
       grunt.verbose.writeln('jasmine.specDone');
       var specSummary = {
         assertions: 0,
@@ -331,7 +339,7 @@ module.exports = function(grunt) {
 
     });
 
-    await page.exposeFunction('jasmine.suiteDone', function suiteDone(suiteMetadata) {
+    dispatcher.on('jasmine.suiteDone', function suiteDone(suiteMetadata) {
       grunt.verbose.writeln('jasmine.suiteDone');
       suites[suiteMetadata.id].time = suiteMetadata.duration / 1000;
 
@@ -340,7 +348,7 @@ module.exports = function(grunt) {
       }
     });
 
-    await page.exposeFunction('jasmine.jasmineDone', function() {
+    dispatcher.on('jasmine.jasmineDone', function() {
       grunt.verbose.writeln('jasmine.jasmineDone');
       var dur = (new Date()).getTime() - thisRun.startTime;
       var specQuantity = thisRun.executedSpecs + (thisRun.executedSpecs === 1 ? ' spec ' : ' specs ');
@@ -372,7 +380,7 @@ module.exports = function(grunt) {
       resolveJasmine();
     });
 
-    await page.exposeFunction('jasmine.done_fail', function(url) {
+    dispatcher.on('jasmine.done_fail', function(url) {
       grunt.log.error();
       grunt.warn('Unable to load "' + url + '" URI.', 90);
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var grunt = require('grunt'),
+const grunt = require('grunt'),
     jasmine = require('../tasks/lib/jasmine.js').init(grunt),
     _ = require('lodash');
 
