@@ -25,7 +25,7 @@
     "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-contrib-connect": "^2.0.0",
     "grunt-contrib-internal": "^3.1.0",
     "grunt-contrib-nodeunit": "^2.0.0",
