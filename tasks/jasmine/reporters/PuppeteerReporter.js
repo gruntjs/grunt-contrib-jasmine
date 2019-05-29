@@ -4,7 +4,7 @@
 
 
 (function() {
-  const sendMessage = window.sendMessage;
+  const sendMessage = window.sendMessage || (function () {});
 
   const reporter = {
     jasmineStarted: function() {
