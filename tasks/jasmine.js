@@ -155,7 +155,7 @@ module.exports = function(grunt) {
       }else{
           puppeteerLaunchSetting = {args: ['--allow-file-access-from-files']};
       }
-      delete options.allowFileAccess;
+      delete options.allowFileAccess; 
     }
 
 
