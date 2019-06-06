@@ -168,6 +168,12 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
+#### options.allowFileAccess
+Type: `Boolean`  
+Default: `false`
+
+Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github.com/gruntjs/grunt-contrib-jasmine/issues/298)
+
 ### Flags
 
 Name: `build`

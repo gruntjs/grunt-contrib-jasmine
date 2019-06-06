@@ -150,6 +150,15 @@ module.exports = function(grunt) {
         delete options.noSandbox;
     }
 
+    if (options.hasOwnProperty('allowFileAccess') && options.allowFileAccess) {
+      if (puppeteerLaunchSetting && puppeteerLaunchSetting.args.length > 0) {
+        puppeteerLaunchSetting.args.push('--allow-file-access-from-files');
+      } else {
+        puppeteerLaunchSetting = { args: ['--allow-file-access-from-files'] };
+      }
+      delete options.allowFileAccess;
+    }
+
     const browser = await puppeteer.launch(puppeteerLaunchSetting);
     grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
