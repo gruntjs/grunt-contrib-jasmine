@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.0.3 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
+# grunt-contrib-jasmine v2.1.0 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt-contrib-jasmine.svg?branch=master)](https://travis-ci.org/gruntjs/grunt-contrib-jasmine) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/5985958by5rhnh31/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt-contrib-jasmine/branch/master)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -168,12 +168,6 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
-#### options.allowFileAccess
-Type: `Boolean`  
-Default: `false`
-
-Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github.com/gruntjs/grunt-contrib-jasmine/issues/298)
-
 ### Flags
 
 Name: `build`
@@ -322,6 +316,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2019-07-31   v2.1.3   Fix security deps Update Puppeteer
  * 2018-11-14   v2.0.3   [object Object] Build only should pass if the buildSpecrunner runs without error
  * 2018-08-13   v2.0.2   Fix noSandbox option. Fix startTime, and timing issues.
  * 2018-05-31   v2.0.1   Use the grunt current working directory to find the jasmine core. Implement options.version. Dependency updates.
@@ -361,4 +356,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Wed Nov 14 2018 17:45:18.*
+*This file was generated on Wed Jul 31 2019 12:27:22.*
