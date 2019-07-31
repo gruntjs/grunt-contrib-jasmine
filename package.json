@@ -16,11 +16,11 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "grunt-eslint": "^21.0.0",
-    "lodash": "^4.17.11",
-    "pacote": "^9.3.0",
-    "puppeteer": "^1.13.0",
+    "chalk": "^2.4.2",
+    "grunt-eslint": "^22.0.0",
+    "lodash": "^4.17.15",
+    "pacote": "^9.5.4",
+    "puppeteer": "^1.19.0",
     "rimraf": "^2.6.3",
     "sprintf-js": "^1.1.2"
   },
