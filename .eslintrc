@@ -1,5 +1,10 @@
 {
   "extends": "eslint:recommended",
+  "rules": {
+    "no-prototype-builtins": "off",
+    "no-unused-vars": "off",
+    "no-redeclare": "off"
+  },
   "parserOptions": {
     "ecmaVersion": 2017
   },
