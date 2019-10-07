@@ -30,6 +30,7 @@ module.exports = function(grunt) {
   let resolveJasmine;
   const jasminePromise = new Promise((resolve) => {
     resolveJasmine = resolve;
+    resolve();
   });
 
   var symbols = {
