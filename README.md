@@ -168,6 +168,17 @@ Default: `false`
 
 Display a list of all failed tests and their failure messages
 
+#### options.allowFileAccess
+Type: `Boolean`
+Default: `false`
+
+Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github.com/gruntjs/grunt-contrib-jasmine/issues/298)
+
+#### options.timeout
+Type: `Number`
+
+Change the puppeteer default timeout value (reference: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#pagesetdefaulttimeouttimeout)
+
 ### Flags
 
 Name: `build`
