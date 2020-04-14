@@ -176,8 +176,9 @@ Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github
 
 #### options.timeout
 Type: `Number`
+Default: `30000`
 
-Change the puppeteer default timeout value (reference: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#pagesetdefaulttimeouttimeout)
+Change the puppeteer default timeout value in milliseconds (reference: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#pagesetdefaulttimeouttimeout)
 
 ### Flags
 
