@@ -76,7 +76,7 @@ module.exports = function(grunt) {
     // Merge task-specific options with these defaults.
     var options = this.options({
       version: 'latest',
-      timeout: 10000,
+      timeout: 30000,
       styles: [],
       specs: [],
       helpers: [],
@@ -165,6 +165,7 @@ module.exports = function(grunt) {
 
     try {
       await setup(options, dispatcher, page);
+      page.setDefaultTimeout(options.timeout);
       await page.goto(file, { waitUntil: 'domcontentloaded' });
 
       await jasminePromise;
