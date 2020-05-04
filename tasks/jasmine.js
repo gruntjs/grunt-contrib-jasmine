@@ -27,11 +27,6 @@ module.exports = function(grunt) {
 
   var status = {};
 
-  let resolveJasmine;
-  const jasminePromise = new Promise((resolve) => {
-    resolveJasmine = resolve;
-  });
-
   var symbols = {
     none: {
       check: '',
@@ -166,8 +161,14 @@ module.exports = function(grunt) {
     grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
 
+
+    let resolveJasmine;
+    const jasminePromise = new Promise((resolve) => {
+      resolveJasmine = resolve;
+    });
+
     try {
-      await setup(options, dispatcher, page);
+      await setup(options, dispatcher, page, resolveJasmine);
       await page.goto(file, { waitUntil: 'domcontentloaded' });
 
       await jasminePromise;
@@ -194,7 +195,7 @@ module.exports = function(grunt) {
     }
   }
 
-  async function setup(options, dispatcher, page) {
+  async function setup(options, dispatcher, page, resolveJasmine) {
     var indentLevel = 1,
       tabstop = 2,
       thisRun = {},
