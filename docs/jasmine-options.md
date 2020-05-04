@@ -113,6 +113,35 @@ Default: `'full'`
   * `short` only displays a success or failure character for each test (useful with large suites)
   * `none` displays nothing
 
+## options.allowFileAccess
+Type: `Boolean`
+Default: `false`
+
+Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github.com/gruntjs/grunt-contrib-jasmine/issues/298)
+
+## options.timeout
+Type: `Number`
+Default: `30000`
+
+Change the puppeteer default timeout value in milliseconds (reference: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#pagesetdefaulttimeouttimeout)
+
+
+## options.sandboxArgs
+Type: `Object`
+Default: `{ args: [] }`
+
+Pass arugments to puppeteer launcher. For the list of available options, please look at [puppeteer launch options](https://pptr.dev/#?product=Puppeteer&version=v3.0.1&show=api-puppeteerlaunchoptions).
+
+Example `sandboxArgs` object:
+```js
+{
+  args: {
+    '=-allow-file-access-from-files'
+  },
+  executeablePath: '/some/other/path/to/chrome'
+}
+```
+
 ## options.summary
 Type: `Boolean`  
 Default: `false`

@@ -162,6 +162,19 @@ Default: `'full'`
   * `short` only displays a success or failure character for each test (useful with large suites)
   * `none` displays nothing
 
+#### options.allowFileAccess
+Type: `Boolean`
+Default: `false`
+
+Launches puppeteer with --allow-file-access-from-files (Fix Issue https://github.com/gruntjs/grunt-contrib-jasmine/issues/298)
+
+#### options.timeout
+Type: `Number`
+Default: `30000`
+
+Change the puppeteer default timeout value in milliseconds (reference: https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#pagesetdefaulttimeouttimeout)
+
+
 #### options.sandboxArgs
 Type: `Object`
 Default: `{ args: [] }`
@@ -177,7 +190,6 @@ Example `sandboxArgs` object:
   executeablePath: '/some/other/path/to/chrome'
 }
 ```
-
 
 #### options.summary
 Type: `Boolean`  
@@ -287,6 +299,33 @@ grunt.initConfig({
 });
 ```
 
+#### Passing options to sandbox (puppeteer)
+
+See [puppeteer launch options](https://pptr.dev/#?product=Puppeteer&version=v3.0.1&show=api-puppeteerlaunchoptions) for a complete list of arguments.
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        template: 'custom.tmpl',
+        sandboxArgs: {
+          args: ['--no-sandbox'],
+          timeout: 3000,
+          defaultViewport: {
+            isMobile: true
+          }
+        }
+      }
+    }
+  }
+});
+```
+
 #### Sample RequireJS/NPM Template usage
 
 ```js
@@ -330,36 +369,10 @@ grunt.initConfig({
 });
 ```
 
-#### Passing options to sandbox (puppeteer)
-
-See [puppeteer launch options](https://pptr.dev/#?product=Puppeteer&version=v3.0.1&show=api-puppeteerlaunchoptions) for a complete list of arguments.
-
-```js
-// Example configuration
-grunt.initConfig({
-  jasmine: {
-    customTemplate: {
-      src: 'src/**/*.js',
-      options: {
-        specs: 'spec/*Spec.js',
-        helpers: 'spec/*Helper.js',
-        template: 'custom.tmpl',
-        sandboxArgs: {
-          args: ['--no-sandbox'],
-          timeout: 3000,
-          defaultViewport: {
-            isMobile: true
-          }
-        }
-      }
-    }
-  }
-});
-```
-
 
 ## Release History
 
+ * 2020-05-04   v2.2.0   Dependency updates set the default option timeout value to 30 secs to sync with puppeteer's default timeout value. options.sandboxArgs; passing options to puppeteer
  * 2019-07-31   v2.1.3   Fix security deps Update Puppeteer
  * 2018-11-14   v2.0.3   [object Object] Build only should pass if the buildSpecrunner runs without error
  * 2018-08-13   v2.0.2   Fix noSandbox option. Fix startTime, and timing issues.
@@ -400,4 +413,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Wed Jul 31 2019 12:27:22.*
+*This file was generated on Mon May 04 2020 15:54:00.*
