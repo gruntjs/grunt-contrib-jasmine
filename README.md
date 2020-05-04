@@ -162,6 +162,23 @@ Default: `'full'`
   * `short` only displays a success or failure character for each test (useful with large suites)
   * `none` displays nothing
 
+#### options.sandboxArgs
+Type: `Object`
+Default: `{ args: [] }`
+
+Pass arugments to puppeteer launcher. For the list of available options, please look at [puppeteer launch options](https://pptr.dev/#?product=Puppeteer&version=v3.0.1&show=api-puppeteerlaunchoptions).
+
+Example `sandboxArgs` object:
+```js
+{
+  args: {
+    '=-allow-file-access-from-files'
+  },
+  executeablePath: '/some/other/path/to/chrome'
+}
+```
+
+
 #### options.summary
 Type: `Boolean`  
 Default: `false`
@@ -307,6 +324,33 @@ grunt.initConfig({
         tempDir: 'bin/jasmine/',
         specs: 'spec/*Spec.js',
         helpers: 'spec/*Helper.js'
+      }
+    }
+  }
+});
+```
+
+#### Passing options to sandbox (puppeteer)
+
+See [puppeteer launch options](https://pptr.dev/#?product=Puppeteer&version=v3.0.1&show=api-puppeteerlaunchoptions) for a complete list of arguments.
+
+```js
+// Example configuration
+grunt.initConfig({
+  jasmine: {
+    customTemplate: {
+      src: 'src/**/*.js',
+      options: {
+        specs: 'spec/*Spec.js',
+        helpers: 'spec/*Helper.js',
+        template: 'custom.tmpl',
+        sandboxArgs: {
+          args: ['--no-sandbox'],
+          timeout: 3000,
+          defaultViewport: {
+            isMobile: true
+          }
+        }
       }
     }
   }

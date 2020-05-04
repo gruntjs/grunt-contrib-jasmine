@@ -91,6 +91,7 @@ module.exports = function(grunt) {
       junit: {},
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
+      sandboxArgs: { args: [] },
       summary: false
     });
 
@@ -144,7 +145,9 @@ module.exports = function(grunt) {
       file = `file://${path.join(process.cwd(), file)}`;
     }
 
-    let puppeteerLaunchSetting;
+    let puppeteerLaunchSetting = options.sandboxArgs || {};
+
+    // Drop these at major, to remove the option.
     if(options.hasOwnProperty('noSandbox') && options.noSandbox){
         puppeteerLaunchSetting = {args: ['--no-sandbox']};
         delete options.noSandbox;
