@@ -1,15 +1,11 @@
-sudo: required
-
 language: node_js
 
 node_js:
   - "8"
-  - "9"
   - "10"
+  - "12"
 
 matrix:
   fast_finish: true
 
-cache:
-  directories:
-    - node_modules
+cache: npm
