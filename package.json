@@ -9,7 +9,7 @@
   "repository": "gruntjs/grunt-contrib-jasmine",
   "license": "MIT",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "main": "tasks/jasmine.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "grunt-eslint": "^22.0.0",
     "lodash": "^4.17.15",
     "pacote": "^9.5.4",
-    "puppeteer": "^1.19.0",
+    "puppeteer": "^8.0.0",
     "rimraf": "^2.6.3",
     "sprintf-js": "^1.1.2"
   },
