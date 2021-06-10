@@ -187,7 +187,7 @@ Example `sandboxArgs` object:
   args: {
     '=-allow-file-access-from-files'
   },
-  executeablePath: '/some/other/path/to/chrome'
+  executablePath: '/some/other/path/to/chrome'
 }
 ```
 
