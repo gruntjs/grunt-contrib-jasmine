@@ -188,7 +188,9 @@ module.exports = function(grunt) {
     }
 
     await page.close();
-    await browser.close();
+    if (!options.hasOwnProperty('browserURL')) {
+      await browser.close();
+    }
 
     return;
   }
