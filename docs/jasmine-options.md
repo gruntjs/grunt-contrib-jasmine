@@ -142,6 +142,14 @@ Example `sandboxArgs` object:
 }
 ```
 
+#### options.browserURL
+Type: `String`
+Default: `undefined`
+
+If set [`puppeteer.connect`](https://pptr.dev/#?product=Puppeteer&version=v10.2.0&show=api-puppeteerconnectoptions) will be used instead of `puppeteer.launch`, with the provided URL.
+
+If `sandboxArgs` are provided also be provided to `connect` (merged with `browserURL`).
+
 ## options.summary
 Type: `Boolean`  
 Default: `false`
