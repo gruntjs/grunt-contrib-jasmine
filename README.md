@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.2.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
+# grunt-contrib-jasmine v3.0.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -187,7 +187,7 @@ Example `sandboxArgs` object:
   args: {
     '=-allow-file-access-from-files'
   },
-  executablePath: '/some/other/path/to/chrome'
+  executeablePath: '/some/other/path/to/chrome'
 }
 ```
 
@@ -414,4 +414,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu May 13 2021 10:47:51.*
+*This is a generated file.*
