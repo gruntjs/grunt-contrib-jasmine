@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         'test/*.js'
       ],
       options: {
-        configFile: '.eslintrc'
+        overrideConfigFile: '.eslintrc'
       }
     },
     watch: {
