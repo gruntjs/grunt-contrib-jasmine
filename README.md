@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v3.0.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
+# grunt-contrib-jasmine v4.0.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
 
 > Run jasmine specs headlessly through Headless Chrome
 
