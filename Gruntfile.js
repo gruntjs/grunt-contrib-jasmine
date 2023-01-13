@@ -50,7 +50,7 @@ module.exports = function(grunt) {
           junit: {
             path: 'junit'
           },
-          display: 'full'
+          display: 'full',
         }
       },
       consoleDisplayOptions: {
@@ -124,16 +124,10 @@ module.exports = function(grunt) {
           tempDir: '.custom/'
         }
       },
-      version25: {
+      version39: {
         options: {
-          specs: 'test/fixtures/versions/spec/SpecVersion25.js',
-          version: '2.5.2'
-        }
-      },
-      version31: {
-        options: {
-          specs: 'test/fixtures/versions/spec/SpecVersion31.js',
-          version: '3.1.0',
+          specs: 'test/fixtures/versions/spec/SpecVersion39.js',
+          version: '3.9.0',
           summary: true
         }
       }

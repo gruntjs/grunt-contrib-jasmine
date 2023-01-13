@@ -31,7 +31,8 @@ exports.jasmine = {
         src: ['SRC1.js', 'SRC2.js'],
         vendor: ['V1.js', 'V2.js'],
         reporters: ['R1.js'],
-        boot: ['BOOT.js']
+        boot: ['BOOT.js'],
+        boot2: ['BOOT2.js']
       },
       temp: 'path/to/temp/folder',
       favicon: 'path/to/temp/folder/jasmine_favicon.png',

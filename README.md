@@ -1,4 +1,4 @@
-# grunt-contrib-jasmine v2.2.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
+# grunt-contrib-jasmine v3.0.0 [![Build Status](https://github.com/gruntjs/grunt-contrib-jasmine/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-jasmine/actions?workflow=Tests)
 
 > Run jasmine specs headlessly through Headless Chrome
 
@@ -187,7 +187,7 @@ Example `sandboxArgs` object:
   args: {
     '=-allow-file-access-from-files'
   },
-  executablePath: '/some/other/path/to/chrome'
+  executeablePath: '/some/other/path/to/chrome'
 }
 ```
 
@@ -372,6 +372,7 @@ grunt.initConfig({
 
 ## Release History
 
+ * 2023-01-12   v4.0.0   Dependency Updates requires node 14+ requires jasmine 3.9.0+ bump puppeteer to version 19
  * 2021-05-13   v3.0.0   Dependency Updates drop node 8 support bump puppeteer to 8.0.0
  * 2020-05-04   v2.2.0   Dependency updates set the default option timeout value to 30 secs to sync with puppeteer's default timeout value. options.sandboxArgs; passing options to puppeteer
  * 2019-07-31   v2.1.3   Fix security deps Update Puppeteer
@@ -414,4 +415,4 @@ grunt.initConfig({
 
 Task submitted by [Jarrod Overson](http://jarrodoverson.com)
 
-*This file was generated on Thu May 13 2021 10:47:51.*
+*This is a generated file.*
