@@ -101,7 +101,8 @@ exports.init = function(grunt) {
       return path.join(tempDir, name);
     });
 
-    var bootFile = tempDir + '/boot.js';
+    var bootFile = tempDir + '/boot0.js';
+    var bootFile2 = tempDir + '/boot1.js';
 
     if (options.customBootFile !== null) {
       bootFile = options.customBootFile;
@@ -120,7 +121,8 @@ exports.init = function(grunt) {
         src: exports.getRelativeFileList(outdir, src, { nonull: true }),
         vendor: exports.getRelativeFileList(outdir, options.vendor, { nonull: true }),
         reporters: exports.getRelativeFileList(outdir, reporters),
-        boot: exports.getRelativeFileList(outdir, bootFile)
+        boot: exports.getRelativeFileList(outdir, bootFile),
+        boot2: exports.getRelativeFileList(outdir, bootFile2)
       },
       options: options.templateOptions || {}
     };

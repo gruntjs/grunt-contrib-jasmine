@@ -10,8 +10,8 @@ describe("custom temp directory test", function() {
     var scripts = document.getElementsByTagName('script');
     expect(scripts[0].src).toEqual(jasmine.stringMatching('.custom/jasmine.js'));
     expect(scripts[1].src).toEqual(jasmine.stringMatching('.custom/jasmine-html.js'));
-    expect(scripts[2].src).toEqual(jasmine.stringMatching('.custom/json2.js'));
-    expect(scripts[3].src).toEqual(jasmine.stringMatching('.custom/boot.js'));
+    expect(scripts[2].src).toEqual(jasmine.stringMatching('.custom/boot0.js'));
+    expect(scripts[3].src).toEqual(jasmine.stringMatching('.custom/boot1.js'));
     expect(scripts[4].src).toEqual(jasmine.stringMatching('test/fixtures/custom-temp-dir/src/test.js'));
     expect(scripts[5].src).toEqual(jasmine.stringMatching('test/fixtures/custom-temp-dir/spec/test-spec.js'));
     expect(scripts[6].src).toEqual(jasmine.stringMatching('.custom/reporter.js'));
