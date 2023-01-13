@@ -6,7 +6,7 @@ exports.init = function(grunt) {
       path = require('path');
 
   // npm
-  const rimraf = require('rimraf'),
+  const rimraf = require('rimraf').default,
       _ = require('lodash'),
       pacote = require('pacote');
 
@@ -23,7 +23,7 @@ exports.init = function(grunt) {
   };
 
   exports.cleanTemp = function(tempDir, cb) {
-    rimraf(tempDir, function() {
+    rimraf(tempDir).then(function() {
       if(tempDir === '.grunt/grunt-contrib-jasmine') {
         // if this fails, then ./.grunt isn't empty and that's ok.
         fs.rmdir('.grunt', cb);
