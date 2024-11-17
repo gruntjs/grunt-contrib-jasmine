@@ -87,6 +87,7 @@ module.exports = function(grunt) {
       ignoreEmpty: grunt.option('force') === true,
       display: 'full',
       sandboxArgs: { args: [] },
+      browserUrl: undefined,
       summary: false
     });
 
@@ -157,7 +158,15 @@ module.exports = function(grunt) {
       delete options.allowFileAccess;
     }
 
-    const browser = await puppeteer.launch(puppeteerLaunchSetting);
+    let browser;
+    if (options.hasOwnProperty('browserURL')) {
+      browser = await puppeteer.connect({
+        browserURL: options.browserURL,
+        ...puppeteerLaunchSetting
+      });
+    } else {
+      browser = await puppeteer.launch(puppeteerLaunchSetting);
+    }
     grunt.log.subhead(`Testing specs with Jasmine/${options.version} via ${await browser.version()}`);
     const page = await browser.newPage();
 
@@ -179,7 +188,9 @@ module.exports = function(grunt) {
     }
 
     await page.close();
-    await browser.close();
+    if (!options.hasOwnProperty('browserURL')) {
+      await browser.close();
+    }
 
     return;
   }
