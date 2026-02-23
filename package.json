@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "grunt-eslint": "^24.0.1",
+    "grunt-eslint": "^26.0.0",
     "lodash": "^4.17.21",
     "pacote": "^15.0.8",
     "puppeteer": "^19.5.2",
