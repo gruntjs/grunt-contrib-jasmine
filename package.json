@@ -19,7 +19,7 @@
     "chalk": "^4.1.2",
     "grunt-eslint": "^24.0.1",
     "lodash": "^4.17.21",
-    "pacote": "^15.0.8",
+    "pacote": "^21.3.1",
     "puppeteer": "^19.5.2",
     "rimraf": "^4.0.4",
     "sprintf-js": "^1.1.2"
